@@ -23,7 +23,7 @@ class ELMGREN_Update_Checker
         $res = json_decode($res['body'], true);
         $new_version = (float) $res['version'];
 
-        if ($new_version >= $version) {
+        if ($new_version > $version) {
             $transient->response[$basename]['url'] = $res['url'];
             $transient->response[$basename]['slug'] = $basename;
             $transient->response[$basename]['package'] = $res['package'];
