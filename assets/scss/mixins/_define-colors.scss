@@ -1,0 +1,21 @@
+@use 'sass:color';
+@use 'sass:map';
+
+@mixin defineColor($color, $hex) {
+    $colors: (#{$color}: $hex);
+
+    @for $i from 1 through 5 {
+        $colors: map.set($colors, #{$color}--dark-#{$i}, darken($hex, $i * 5%));
+        //#{$color}--dark-#{$i}: darken($hex, $i * 5%);
+    }
+    @for $i from 1 through 5 {
+        $colors: map.set($colors, #{$color}--light-#{$i}, lighten($hex, $i * 5%));
+    }
+
+    @each $name, $color in $colors {
+        #{$name}: #{$color};
+        @for $i from 1 through 9 {
+            #{$name}-a-#{$i}: color.adjust($color, $alpha: (10 - $i) * 0.1  * -1);
+        }
+    }
+}

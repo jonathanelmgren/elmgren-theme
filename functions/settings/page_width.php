@@ -20,7 +20,7 @@ function elmgren_page_width_options($field)
         $field['default_value'] = get_field('default_page_width', 'options');
     }
 
-    foreach (ELMGREN_PAGE_WIDTHS as $label => $value) {
+    foreach ($widths as $label => $value) {
         $field['choices'][$value] = $label;
     }
     return $field;
