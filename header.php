@@ -10,14 +10,14 @@
 
 <body <?php body_class(); ?>>
     <?php wp_body_open(); ?>
-    <header style="<?php echo get_field('header_absolute', 'options') ? 'position:absolute;' : '' ?>" id="header" role="banner" class='header'>
+    <header style="<?php echo elmgren_get_header_absolute() ?>" id="header" role="banner" class='header'>
         <div class='logo'>
             <?php
             if (has_custom_logo()) {
                 the_custom_logo();
             } else {
             ?>
-                <a href="<?php home_url(); ?>"><?php echo get_bloginfo('name'); ?></a>
+                <a href="<?php echo home_url(); ?>"><?php echo get_bloginfo('name'); ?></a>
             <?php
             }
             ?>

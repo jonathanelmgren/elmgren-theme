@@ -1,8 +1,6 @@
 <?php
 
-
-
-// Add page width options to theme settings and page settings
+// Register page width options to theme settings and page settings
 function elmgren_page_width_options($field)
 {
     $widths = [
@@ -27,3 +25,13 @@ function elmgren_page_width_options($field)
 }
 add_filter('acf/load_field/name=page_width', 'elmgren_page_width_options');
 add_filter('acf/load_field/name=default_page_width', 'elmgren_page_width_options');
+
+
+function elmgren_get_page_width()
+{
+    $w = get_field('page_width');
+    if (!$w) {
+        $w = get_field('default_page_width', 'options');
+    }
+    echo $w;
+}

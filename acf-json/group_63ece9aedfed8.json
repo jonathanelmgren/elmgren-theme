@@ -32,11 +32,11 @@
             "placeholder": ""
         },
         {
-            "key": "field_63edd83b6e184",
-            "label": "Transparent menu? (Absolut position)",
-            "name": "header_absolute",
+            "key": "field_63edee75996e3",
+            "label": "Header",
+            "name": "header",
             "aria-label": "",
-            "type": "true_false",
+            "type": "group",
             "instructions": "",
             "required": 0,
             "conditional_logic": 0,
@@ -45,11 +45,138 @@
                 "class": "",
                 "id": ""
             },
-            "message": "Makes the content below the header under the header instead (transparent header)",
-            "default_value": 0,
-            "ui": 0,
-            "ui_on_text": "",
-            "ui_off_text": ""
+            "layout": "block",
+            "sub_fields": [
+                {
+                    "key": "field_63edee84996e4",
+                    "label": "Main content under header",
+                    "name": "header_absolute",
+                    "aria-label": "",
+                    "type": "true_false",
+                    "instructions": "",
+                    "required": 0,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                        "width": "",
+                        "class": "",
+                        "id": ""
+                    },
+                    "message": "Makes the content under the header appear underneath instead (absolute position)",
+                    "default_value": 0,
+                    "ui": 0,
+                    "ui_on_text": "",
+                    "ui_off_text": ""
+                }
+            ]
+        },
+        {
+            "key": "field_63edee56996e2",
+            "label": "Footer",
+            "name": "footer",
+            "aria-label": "",
+            "type": "group",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "layout": "block",
+            "sub_fields": [
+                {
+                    "key": "field_63edef2c10b83",
+                    "label": "Company name",
+                    "name": "company_name",
+                    "aria-label": "",
+                    "type": "text",
+                    "instructions": "",
+                    "required": 0,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                        "width": "",
+                        "class": "",
+                        "id": ""
+                    },
+                    "default_value": "",
+                    "maxlength": "",
+                    "placeholder": "",
+                    "prepend": "",
+                    "append": ""
+                },
+                {
+                    "key": "field_63edf9451eed6",
+                    "label": "Contact info",
+                    "name": "contact_info",
+                    "aria-label": "",
+                    "type": "text",
+                    "instructions": "",
+                    "required": 0,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                        "width": "",
+                        "class": "",
+                        "id": ""
+                    },
+                    "default_value": "",
+                    "maxlength": "",
+                    "placeholder": "",
+                    "prepend": "",
+                    "append": ""
+                },
+                {
+                    "key": "field_63edf94b1eed7",
+                    "label": "Facebook",
+                    "name": "facebook",
+                    "aria-label": "",
+                    "type": "url",
+                    "instructions": "",
+                    "required": 0,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                        "width": "",
+                        "class": "",
+                        "id": ""
+                    },
+                    "default_value": "",
+                    "placeholder": ""
+                },
+                {
+                    "key": "field_63edf96a1eed8",
+                    "label": "Instagram",
+                    "name": "instagram",
+                    "aria-label": "",
+                    "type": "url",
+                    "instructions": "",
+                    "required": 0,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                        "width": "",
+                        "class": "",
+                        "id": ""
+                    },
+                    "default_value": "",
+                    "placeholder": ""
+                },
+                {
+                    "key": "field_63edf9781eed9",
+                    "label": "Youtube",
+                    "name": "youtube",
+                    "aria-label": "",
+                    "type": "url",
+                    "instructions": "",
+                    "required": 0,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                        "width": "",
+                        "class": "",
+                        "id": ""
+                    },
+                    "default_value": "",
+                    "placeholder": ""
+                }
+            ]
         }
     ],
     "location": [
@@ -70,5 +197,5 @@
     "active": true,
     "description": "",
     "show_in_rest": 0,
-    "modified": 1676536106
+    "modified": 1676540473
 }
