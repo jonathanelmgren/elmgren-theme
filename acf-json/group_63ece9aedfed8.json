@@ -33,10 +33,10 @@
         },
         {
             "key": "field_63edd83b6e184",
-            "label": "Primary Color",
-            "name": "primary_color",
+            "label": "Transparent menu? (Absolut position)",
+            "name": "header_absolute",
             "aria-label": "",
-            "type": "color_picker",
+            "type": "true_false",
             "instructions": "",
             "required": 0,
             "conditional_logic": 0,
@@ -45,9 +45,11 @@
                 "class": "",
                 "id": ""
             },
-            "default_value": "",
-            "enable_opacity": 0,
-            "return_format": "string"
+            "message": "Makes the content below the header under the header instead (transparent header)",
+            "default_value": 0,
+            "ui": 0,
+            "ui_on_text": "",
+            "ui_off_text": ""
         }
     ],
     "location": [
@@ -68,5 +70,5 @@
     "active": true,
     "description": "",
     "show_in_rest": 0,
-    "modified": 1676532958
+    "modified": 1676536106
 }
