@@ -1,3 +1,4 @@
+</main>
 <footer class='elmgren-footer'>
     <div class='elmgren-footer--content <?php elmgren_get_page_width() ?>'>
         <?php elmgren_the_footer_setting('company_name'); ?>

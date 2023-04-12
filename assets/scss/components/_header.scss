@@ -77,25 +77,6 @@
         display: flex;
         gap: 1.5rem;
         align-items: center;
-        .menu-cart {
-            display: block;
-            position: relative;
-            width: 1.75rem;
-            fill: var(--color-brand--primary);
-        }
-        .menu-cart--count {
-            position: absolute;
-            background-color: var(--color-brand--primary);
-            width: 1.5rem;
-            height: 1.5rem;
-            font-size: var(--text-xxxs);
-            color: white;
-            border-radius: 9999px;
-            top: -0.5rem;
-            right: -0.5rem;
-            display: grid;
-            place-content: center;
-        }
     }
 
     .logo {
@@ -162,4 +143,23 @@
     to {
         transform: translateY(-100%);
     }
+}
+.menu-cart {
+    display: block;
+    position: relative;
+    width: 1.75rem;
+    fill: var(--color-brand--primary);
+}
+.menu-cart--count {
+    position: absolute;
+    background-color: var(--color-brand--primary);
+    width: 1.5rem;
+    height: 1.5rem;
+    font-size: var(--text-xxxs);
+    color: white;
+    border-radius: 9999px;
+    top: -0.5rem;
+    right: -0.5rem;
+    display: grid;
+    place-content: center;
 }

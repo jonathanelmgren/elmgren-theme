@@ -5,6 +5,7 @@
     <meta charset="<?php bloginfo('charset'); ?>" />
     <meta name="viewport" content="width=device-width" />
     <meta name="description" content="">
+
     <?php wp_head(); ?>
 </head>
 
@@ -47,3 +48,4 @@
             <?php endif; ?>
         </div>
     </header>
+    <main id="content" role="main" class='<?php elmgren_get_page_width() ?>'>

@@ -35,8 +35,25 @@ function elmgren_include_folder($folder)
 function elmgren_setup()
 {
     add_theme_support('custom-logo');
-    add_theme_support('woocommerce');
+    add_theme_support('woocommerce', array(
+        'thumbnail_image_width' => 200,
+        'gallery_thumbnail_image_width' => 100,
+        'single_image_width' => 500,
+    ));
     add_theme_support('title-tag');
+    add_theme_support('post-thumbnails');
+    add_theme_support('editor-color-palette',[
+        [
+            'name' => __('Primary', 'elmgren'),
+            'slug' => 'primary',
+            'color' => 'var(--color-brand--primary)'
+        ],
+        [
+            'name' => __('Secondary', 'elmgren'),
+            'slug' => 'secondary',
+            'color' => 'var(--color-brand--secondary)'
+        ],
+    ]);
 
     register_nav_menus(array('main-menu' => esc_html__('Main Menu', 'elmgren')));
 }
@@ -55,10 +72,19 @@ function elmgren_enqueue()
     wp_enqueue_script('elmgren_plugins', get_template_directory_uri() . '/dist/plugins.js', ['jquery'], false, true);
 
     // Add elmgrenApi Javascript object to get nonce for auth with JS
-    wp_localize_script('elmgren_scripts', 'elmgrenApi', [
+    wp_localize_script('elmgren_scripts', 'wpApiSettingsTest', [
         'rest' => [
-            'nonce'     => wp_create_nonce('wp_rest'),
+            'nonce'     => wp_create_nonce( 'wp_rest' ),
+            'is_admin' => is_admin()
         ],
     ]);
 }
 add_action('wp_enqueue_scripts', 'elmgren_enqueue');
+
+function elmgren_enqueue_admin()
+{
+    // Should run in header
+    wp_enqueue_style('elmgren-style', get_stylesheet_uri());
+    wp_enqueue_style('elmgren_styles_admin', get_template_directory_uri() . '/dist/gutenberg.css');
+}
+add_action('admin_enqueue_scripts', 'elmgren_enqueue_admin');
