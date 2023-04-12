@@ -12,7 +12,7 @@ class ELMGREN_Update_Checker
     public function elmgren_check_for_updates($transient)
     {
         $basename = basename(get_template_directory());
-        $version = (float) wp_get_theme()->parent()->Version;
+        $version = (float) wp_get_theme('elmgren-theme')->Version;
 
         $res = wp_remote_get('https://elmgrentheme.elmgren.dev/latest');
 
