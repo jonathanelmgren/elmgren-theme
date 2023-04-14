@@ -1,6 +1,6 @@
 import { defineConfig } from "vite";
 import autoprefixer from "autoprefixer";
-import { readdirSync } from 'fs'
+import { readdirSync, lstatSync } from 'fs'
 
 const directories = readdirSync('blocks')
 
@@ -13,6 +13,7 @@ const input = [
 ]
 
 for (const dir of directories) {
+    if (!lstatSync(`blocks/${dir}`).isDirectory()) continue
     const files = readdirSync(`blocks/${dir}`)
     for (const file of files) {
         if (file === `${dir}.scss` || file === `${dir}.js`) {
