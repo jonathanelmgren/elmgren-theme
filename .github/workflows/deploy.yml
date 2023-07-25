@@ -39,6 +39,6 @@ jobs:
         draft: true
         prerelease: true
         files: |
-          index.php
+          **/*
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
