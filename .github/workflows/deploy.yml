@@ -37,12 +37,12 @@ jobs:
       run: npm run build # Assuming you have a build script in your package.json
 
     - name: Zip the repository
-      run: zip -r elmgren-theme-v${{ steps.get_version.outputs.version }}.zip ./* 
+      run: zip -r elmgren-theme.zip ./* 
 
     - name: Upload Release to GitHub
       uses: softprops/action-gh-release@v1
       with:
-        files: elmgren-theme-v${{ steps.get_version.outputs.version }}.zip
+        files: elmgren-theme.zip
         tag_name: ${{ steps.get_version.outputs.version }}
         name: Release-${{ steps.get_version.outputs.version }}
       env:
