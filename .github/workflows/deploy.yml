@@ -1,9 +1,9 @@
-name: Deployer
+name: PHP Composer and Node.js Build & Release
 
 on:
   push:
     branches:
-      - master
+      - main
 
 jobs:
   build:
@@ -11,28 +11,68 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Checkout code
-      uses: actions/checkout@v2
+    - uses: actions/checkout@v2
 
-    - name: Setup Node.js environment
+    - name: Set up PHP
+      uses: shivammathur/setup-php@v2
+      with:
+        php-version: '8.1'
+
+    - name: Validate composer.json and composer.lock
+      run: composer validate
+
+    - name: Install dependencies
+      run: composer install --prefer-dist --no-progress --no-suggest
+
+    - name: Set up Node.js
       uses: actions/setup-node@v2
       with:
         node-version: '16'
 
     - name: Install dependencies
-      run: |
-        npm install
-        composer install
+      run: npm ci
 
-    - name: Build
-      run: npm run build
+    - name: Build package
+      run: npm run build # Assuming you have a build script in your package.json
 
-    - name: Deploy to GitHub Releases
-      uses: softprops/action-gh-release@v1
+    - name: Zip the repository
+      run: zip -r repo.zip ./* 
+
+    - name: Upload ZIP as a Build Artifact
+      uses: actions/upload-artifact@v2
       with:
-        draft: true
-        prerelease: true
-        files: |
-          **/*
+        name: repo.zip
+        path: ./repo.zip
+
+  release:
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+    - name: Download the Build Artifact
+      uses: actions/download-artifact@v2
+      with:
+        name: repo.zip
+
+    - name: Create Release
+      id: create_release
+      uses: actions/create-release@v1
       env:
-        GITHUB_TOKEN: ${{ secrets.GH_PAT }}
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # This token is provided by Actions, you do not need to create your own token
+      with:
+        tag_name: ${{ github.ref }}
+        release_name: Release ${{ github.ref }}
+        body: |
+          Changes in this Release
+          - Add your changes here
+        draft: false
+        prerelease: false
+
+    - name: Upload Release Asset
+      uses: actions/upload-release-asset@v1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        upload_url: ${{ steps.create_release.outputs.upload_url }} # This pulls from the CREATE RELEASE step above, referencing it's ID to get its outputs object, which include a `upload_url`.
+        asset_path: ./repo.zip
+        asset_name: repo.zip
+        asset_content_type: application/zip # or whatever is the correct content type for your asset
