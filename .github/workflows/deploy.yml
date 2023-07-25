@@ -13,10 +13,17 @@ jobs:
     steps:
     - uses: actions/checkout@v2
 
+    - name: Get the version
+      id: get_version
+      run: echo "::set-output name=version::$(grep 'Version:' style.css | awk '{print $2}')"
+
     - name: Set up PHP
       uses: shivammathur/setup-php@v2
       with:
         php-version: '8.1'
+
+    - name: Validate composer.json and composer.lock
+      run: composer validate
 
     - name: Install dependencies
       run: composer install --prefer-dist --no-progress --no-suggest
@@ -33,13 +40,13 @@ jobs:
       run: npm run build # Assuming you have a build script in your package.json
 
     - name: Zip the repository
-      run: zip -r repo.zip ./* 
+      run: zip -r elmgren-theme-v${{ steps.get_version.outputs.version }}.zip ./* 
 
     - name: Upload ZIP as a Build Artifact
       uses: actions/upload-artifact@v2
       with:
-        name: repo.zip
-        path: ./repo.zip
+        name: elmgren-theme-v${{ steps.get_version.outputs.version }}.zip
+        path: ./elmgren-theme-v${{ steps.get_version.outputs.version }}.zip
 
   release:
     needs: build
@@ -48,25 +55,28 @@ jobs:
     - name: Download the Build Artifact
       uses: actions/download-artifact@v2
       with:
-        name: repo.zip
+        name: elmgren-theme-v${{ needs.build.outputs.version }}.zip
 
     - name: Create Release
       id: create_release
       uses: actions/create-release@v1
       env:
-        GITHUB_TOKEN: ${{ secrets.GH_PAT }} # This token is provided by Actions, you do not need to create your own token
+        GA_PAT: ${{ secrets.GA_PAT }} # This token should be created and stored in your repository secrets
       with:
-          tag_name: test
-          release_name: Release test
-          draft: true
-          prerelease: true
+        tag_name: ${{ needs.build.outputs.version }}
+        release_name: Release-${{ needs.build.outputs.version }}
+        body: |
+          Changes in this Release
+          - Add your changes here
+        draft: false
+        prerelease: false
 
     - name: Upload Release Asset
       uses: actions/upload-release-asset@v1
       env:
-        GITHUB_TOKEN: ${{ secrets.GH_PAT }}
+        GA_PAT: ${{ secrets.GA_PAT }}
       with:
-        upload_url: ${{ steps.create_release.outputs.upload_url }} # This pulls from the CREATE RELEASE step above, referencing it's ID to get its outputs object, which include a `upload_url`.
-        asset_path: ./repo.zip
-        asset_name: repo.zip
+        upload_url: ${{ steps.create_release.outputs.upload_url }} # This pulls from the CREATE RELEASE step above, referencing its ID to get its outputs object, which include a `upload_url`.
+        asset_path: ./elmgren-theme-v${{ needs.build.outputs.version }}.zip
+        asset_name: elmgren-theme-v${{ needs.build.outputs.version }}.zip
         asset_content_type: application/zip # or whatever is the correct content type for your asset
