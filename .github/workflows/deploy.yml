@@ -42,7 +42,7 @@ jobs:
     - name: Upload ZIP as a Build Artifact
       uses: actions/upload-artifact@v2
       with:
-        name: elmgren-theme-v${{ steps.get_version.outputs.version }}.zip
+        name: repo
         path: ./elmgren-theme-v${{ steps.get_version.outputs.version }}.zip
 
   release:
@@ -52,7 +52,7 @@ jobs:
     - name: Download the Build Artifact
       uses: actions/download-artifact@v2
       with:
-        name: elmgren-theme-v${{ needs.build.outputs.version }}.zip
+        name: repo
 
     - name: Create Release
       id: create_release
@@ -74,6 +74,6 @@ jobs:
         GA_PAT: ${{ secrets.GA_PAT }}
       with:
         upload_url: ${{ steps.create_release.outputs.upload_url }} # This pulls from the CREATE RELEASE step above, referencing its ID to get its outputs object, which include a `upload_url`.
-        asset_path: ./elmgren-theme-v${{ needs.build.outputs.version }}.zip
+        asset_path: ./repo/elmgren-theme-v${{ needs.build.outputs.version }}.zip
         asset_name: elmgren-theme-v${{ needs.build.outputs.version }}.zip
         asset_content_type: application/zip # or whatever is the correct content type for your asset
