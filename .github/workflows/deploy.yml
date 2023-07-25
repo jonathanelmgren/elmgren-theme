@@ -58,7 +58,7 @@ jobs:
       id: create_release
       uses: actions/create-release@v1
       env:
-        GA_PAT: ${{ secrets.GA_PAT }} # This token should be created and stored in your repository secrets
+        GITHUB_TOKEN: ${{ secrets.GA_PAT }} # This token should be created and stored in your repository secrets
       with:
         tag_name: ${{ needs.build.outputs.version }}
         release_name: Release-${{ needs.build.outputs.version }}
@@ -71,7 +71,7 @@ jobs:
     - name: Upload Release Asset
       uses: actions/upload-release-asset@v1
       env:
-        GA_PAT: ${{ secrets.GA_PAT }}
+        GITHUB_TOKEN: ${{ secrets.GA_PAT }}
       with:
         upload_url: ${{ steps.create_release.outputs.upload_url }} # This pulls from the CREATE RELEASE step above, referencing its ID to get its outputs object, which include a `upload_url`.
         asset_path: ./repo/elmgren-theme-v${{ needs.build.outputs.version }}.zip
