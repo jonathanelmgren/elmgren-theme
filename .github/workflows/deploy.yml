@@ -39,41 +39,11 @@ jobs:
     - name: Zip the repository
       run: zip -r elmgren-theme-v${{ steps.get_version.outputs.version }}.zip ./* 
 
-    - name: Upload ZIP as a Build Artifact
-      uses: actions/upload-artifact@v2
+    - name: Upload Release to GitHub
+      uses: softprops/action-gh-release@v1
       with:
-        name: repo
-        path: ./elmgren-theme-v${{ steps.get_version.outputs.version }}.zip
-
-  release:
-    needs: build
-    runs-on: ubuntu-latest
-    steps:
-    - name: Download the Build Artifact
-      uses: actions/download-artifact@v2
-      with:
-        name: repo
-
-    - name: Create Release
-      id: create_release
-      uses: actions/create-release@v1
-      env:
-        GITHUB_TOKEN: ${{ secrets.GA_PAT }} # This token should be created and stored in your repository secrets
-      with:
-        tag_name: ${{ needs.build.outputs.version }}
-        release_name: Release-${{ needs.build.outputs.version }}
-        body: |
-          Changes in this Release
-          - Add your changes here
-        draft: false
-        prerelease: false
-
-    - name: Upload Release Asset
-      uses: actions/upload-release-asset@v1
+        files: elmgren-theme-v${{ steps.get_version.outputs.version }}.zip
+        tag_name: ${{ steps.get_version.outputs.version }}
+        name: Release-${{ steps.get_version.outputs.version }}
       env:
         GITHUB_TOKEN: ${{ secrets.GA_PAT }}
-      with:
-        upload_url: ${{ steps.create_release.outputs.upload_url }} # This pulls from the CREATE RELEASE step above, referencing its ID to get its outputs object, which include a `upload_url`.
-        asset_path: ./repo/elmgren-theme-v${{ needs.build.outputs.version }}.zip
-        asset_name: elmgren-theme-v${{ needs.build.outputs.version }}.zip
-        asset_content_type: application/zip # or whatever is the correct content type for your asset
