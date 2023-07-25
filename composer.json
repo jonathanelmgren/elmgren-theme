@@ -1,4 +1,8 @@
+
 {
+    "name": "elmgren-theme/elmgren-deps",
+    "description": "A short description of your package.",
+    "license": "proprietary",
     "require-dev": {
         "symfony/var-dumper": "^5.4"
     }
