@@ -2,7 +2,7 @@
 <footer class='elmgren-footer'>
     <div class='elmgren-footer--content <?php elmgren_get_page_width() ?>'>
         <?php elmgren_the_footer_setting('company_name'); ?>
-        <?php elmgren_the_footer_setting('company_info'); ?>
+        <?php elmgren_the_footer_setting('contact_info'); ?>
         <?php if (elmgren_has_socials()) : ?>
             <div class='elmgren-footer--socials'>
                 <?php if (elmgren_has_socials('facebook')) : ?>

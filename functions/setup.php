@@ -3,7 +3,7 @@
 // Create generic function to include all files in specific folders
 function elmgren_include_folder($folder)
 {
-    // Make sure we have / before and after folder
+    // Make sure we have forwardslash before and after folder
     $folder = \str_starts_with($folder, '/') ? $folder : '/' . $folder;
     $folder = \str_ends_with($folder, '/') ? $folder : $folder . '/';
 
@@ -60,31 +60,23 @@ function elmgren_setup()
 add_action('after_setup_theme', 'elmgren_setup');
 
 // Register styles and scripts
-function elmgren_enqueue()
-{
-    // Should run in header
-    wp_enqueue_style('elmgren-style', get_stylesheet_uri());
+function elm_enqueue_styles_and_scripts() {
+    $dist_path = get_template_directory() . '/dist/';
+
+    // Enqueue styles.
+    foreach (glob($dist_path . 'css/*.css') as $file) {
+        $file_url = get_template_directory_uri() . '/dist/css/' . basename($file);
+        wp_enqueue_style(basename($file), $file_url);
+    }
+
+    // Enqueue scripts.
+    foreach (glob($dist_path . 'js/*.js') as $file) {
+        $file_url = get_template_directory_uri() . '/dist/js/' . basename($file);
+        wp_enqueue_script(basename($file), $file_url, array(), null, true);
+    }
+
+    // Enqueue jQuery
     wp_enqueue_script('jquery');
-    wp_enqueue_style('elmgren_styles', get_template_directory_uri() . '/dist/main.css');
-    wp_enqueue_script('elmgren_scripts', get_template_directory_uri() . '/dist/main.js');
-
-    // Should run in footer
-    wp_enqueue_script('elmgren_plugins', get_template_directory_uri() . '/dist/plugins.js', ['jquery'], false, true);
-
-    // Add elmgrenApi Javascript object to get nonce for auth with JS
-    wp_localize_script('elmgren_scripts', 'wpApiSettingsTest', [
-        'rest' => [
-            'nonce'     => wp_create_nonce( 'wp_rest' ),
-            'is_admin' => is_admin()
-        ],
-    ]);
 }
-add_action('wp_enqueue_scripts', 'elmgren_enqueue');
-
-function elmgren_enqueue_admin()
-{
-    // Should run in header
-    wp_enqueue_style('elmgren-style', get_stylesheet_uri());
-    wp_enqueue_style('elmgren_styles_admin', get_template_directory_uri() . '/dist/gutenberg.css');
-}
-add_action('admin_enqueue_scripts', 'elmgren_enqueue_admin');
+add_action('wp_enqueue_scripts', 'elm_enqueue_styles_and_scripts');
+add_action('admin_enqueue_scripts', 'elm_enqueue_styles_and_scripts');

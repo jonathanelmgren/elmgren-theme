@@ -1,42 +1,59 @@
 import { defineConfig } from "vite";
 import autoprefixer from "autoprefixer";
-import { readdirSync, lstatSync } from 'fs'
+import { readdirSync, existsSync } from 'fs';
+import { resolve } from 'path'
 
-const directories = readdirSync('blocks')
 
-const input = [
-    'assets/js/main.js',
-    'assets/js/plugins.js',
-    'assets/js/gutenberg.js',
-    'assets/scss/main.scss',
-    'assets/scss/gutenberg.scss',
-]
-
-for (const dir of directories) {
-    if (!lstatSync(`blocks/${dir}`).isDirectory()) continue
-    const files = readdirSync(`blocks/${dir}`)
-    for (const file of files) {
-        if (file === `${dir}.scss` || file === `${dir}.js`) {
-            input.push(`blocks/${dir}/${file}`)
+const input = ['assets/scss/main.scss', "assets/js/plugins.js"]
+if (existsSync(`blocks`)) {
+    for (const dir of readdirSync('blocks')) {
+        const files = readdirSync(`blocks/${dir}`)
+        for (const file of files) {
+            if (file === `${dir}.scss` || file === `${dir}.js`) {
+                input[dir] = `blocks/${dir}/${file}`
+            }
         }
     }
 }
 
+const ASSETS = {
+    images: ['svg', 'png'],
+    fonts: ['woff', 'woff2'],
+    css: ['css']
+}
+
 export default defineConfig({
-    base: "./",
+    base: './',
     css: {
         postcss: {
             plugins: [autoprefixer()],
         },
     },
     build: {
+        manifest: false,
         rollupOptions: {
-            manifest: true,
-            input: input,
+            input,
             output: {
-                entryFileNames: "[name].js",
-                assetFileNames: "[name].css",
-            }
+                entryFileNames: "js/[name].min.js",
+                assetFileNames: (assetInfo) => {
+                    let res = '[name][extname]'
+                    for (const [key, value] of Object.entries(ASSETS)) {
+                        if (value.includes(getFileExtension(assetInfo.name))) {
+                            res = `${key}/[name].min[extname]`
+                            break;
+                        }
+                    }
+                    return res
+                }
+            },
         },
     },
+    resolve: {
+        alias: {
+            '@fonts': resolve(__dirname, '/fonts'),
+            '@images': resolve(__dirname, '/images')
+        }
+    }
 });
+
+const getFileExtension = (file) => file.split('.').pop()
