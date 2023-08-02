@@ -34,7 +34,7 @@ jobs:
       run: npm ci
 
     - name: Build package
-      run: npm run build # Assuming you have a build script in your package.json
+      run: npm run build
 
     - name: Zip the repository
       run: zip -r elmgren-theme.zip ./* 
