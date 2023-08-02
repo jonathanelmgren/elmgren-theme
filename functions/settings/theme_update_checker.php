@@ -23,7 +23,7 @@ class Theme_Updater {
         $release = $this->get_latest_release();
 
         // If a new version is available, set the transient
-        if ( version_compare( $this->theme->version, $release->tag_name, '<' ) ) {
+        if ( version_compare( (float) $this->theme->version, (float) $release->tag_name, '<' ) ) {
             $asset = $this->get_asset_download_url($release->assets_url);
             if ($asset !== false) {
                 $transient->response[ $this->theme->stylesheet ] = array(
