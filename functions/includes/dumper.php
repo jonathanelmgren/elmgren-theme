@@ -1,14 +1,12 @@
 <?php
 
-use Symfony\Component\VarDumper\VarDumper;
-
 if (!function_exists('dump')) {
     function dump(mixed $var, mixed ...$moreVars): mixed
     {
-        VarDumper::dump($var);
+        Symfony\Component\VarDumper\VarDumper::dump($var);
 
         foreach ($moreVars as $v) {
-            VarDumper::dump($v);
+            Symfony\Component\VarDumper\VarDumper::dump($v);
         }
 
         if (1 < func_num_args()) {
@@ -27,7 +25,7 @@ if (!function_exists('dd')) {
         }
 
         foreach ($vars as $v) {
-            VarDumper::dump($v);
+            Symfony\Component\VarDumper\VarDumper::dump($v);
         }
 
         exit(1);

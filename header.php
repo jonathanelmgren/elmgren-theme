@@ -34,7 +34,7 @@
                     <?php wp_nav_menu(['theme_location' => 'main-menu']); ?>
                 </nav>
             </div>
-            <?php if (elmgren_has_woo()) : ?>
+            <?php if (function_exists('is_woocommerce')) : ?>
                 <a aria-label="Cart" class="menu-cart" href="<?php echo wc_get_cart_url() ?>">
                     <?php get_template_part('assets/images/icons/inline/inline', 'shoppingcart.svg');  ?>
                     <?php $count =  WC()->cart->get_cart_contents_count();

@@ -3,61 +3,6 @@
 if (function_exists('acf_add_local_field_group')) :
 
     acf_add_local_field_group(array(
-        'key' => 'group_63ece64e32a98',
-        'title' => 'Page Settings',
-        'fields' => array(
-            array(
-                'key' => 'field_63ece64ee86f1',
-                'label' => 'Page width',
-                'name' => 'page_width',
-                'aria-label' => '',
-                'type' => 'select',
-                'instructions' => '',
-                'required' => false,
-                'conditional_logic' => 0,
-                'wrapper' => array(
-                    'width' => '',
-                    'class' => '',
-                    'id' => '',
-                ),
-                'choices' => array(
-                    'width-narrow' => 'Narrow',
-                    'width-normal' => 'Normal',
-                    'width-wide' => 'Wide',
-                    'width-ultrawide' => 'Ultrawide',
-                    'width-full' => 'Fullwidth',
-                ),
-                'default_value' => 'width-wide',
-                'return_format' => 'value',
-                'multiple' => 0,
-                'allow_null' => 1,
-                'ui' => 0,
-                'ajax' => 0,
-                'placeholder' => '',
-            ),
-        ),
-        'location' => array(
-            array(
-                array(
-                    'param' => 'post_type',
-                    'operator' => '==',
-                    'value' => 'page',
-                ),
-            ),
-        ),
-        'menu_order' => 0,
-        'position' => 'side',
-        'style' => 'default',
-        'label_placement' => 'top',
-        'instruction_placement' => 'label',
-        'hide_on_screen' => '',
-        'active' => true,
-        'description' => '',
-        'show_in_rest' => 0,
-        'modified' => 1676473157,
-    ));
-
-    acf_add_local_field_group(array(
         'key' => 'group_63ece9aedfed8',
         'title' => 'Theme Settings',
         'fields' => array(
@@ -237,6 +182,60 @@ if (function_exists('acf_add_local_field_group')) :
                     ),
                 ),
             ),
+            array(
+                'key' => 'field_64cc06b200c55',
+                'label' => 'Colors',
+                'name' => 'colors',
+                'aria-label' => '',
+                'type' => 'group',
+                'instructions' => '',
+                'required' => 0,
+                'conditional_logic' => 0,
+                'wrapper' => array(
+                    'width' => '',
+                    'class' => '',
+                    'id' => '',
+                ),
+                'layout' => 'block',
+                'sub_fields' => array(
+                    array(
+                        'key' => 'field_64cc06bf00c56',
+                        'label' => 'Primary',
+                        'name' => 'color_picker_field_primary',
+                        'aria-label' => '',
+                        'type' => 'color_picker',
+                        'instructions' => '',
+                        'required' => 0,
+                        'conditional_logic' => 0,
+                        'wrapper' => array(
+                            'width' => '',
+                            'class' => '',
+                            'id' => '',
+                        ),
+                        'default_value' => '#e0783c',
+                        'enable_opacity' => 0,
+                        'return_format' => 'string',
+                    ),
+                    array(
+                        'key' => 'field_64cc06e200c58',
+                        'label' => 'Secondary',
+                        'name' => 'color_picker_field_secondary',
+                        'aria-label' => '',
+                        'type' => 'color_picker',
+                        'instructions' => '',
+                        'required' => 0,
+                        'conditional_logic' => 0,
+                        'wrapper' => array(
+                            'width' => '',
+                            'class' => '',
+                            'id' => '',
+                        ),
+                        'default_value' => '#539111',
+                        'enable_opacity' => 0,
+                        'return_format' => 'string',
+                    ),
+                ),
+            ),
         ),
         'location' => array(
             array(
@@ -256,7 +255,6 @@ if (function_exists('acf_add_local_field_group')) :
         'active' => true,
         'description' => '',
         'show_in_rest' => 0,
-        'modified' => 1676540473,
     ));
 
 endif;

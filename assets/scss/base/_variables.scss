@@ -5,7 +5,7 @@
 * opacity: 1-9 (1 = 0.1, 9 = 0.9)
 */
 :root {
-    @include defineColor(--color-brand--primary, #e09c3c);
+    @include defineColor(--color-brand--primary, #b732c9);
     @include defineColor(--color-brand--secondary, #539111);
     @include defineColor(--color-gray, #808080);
     @include defineColor(--color-black, #000);
