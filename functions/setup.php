@@ -51,24 +51,6 @@ function elm_enqueue_styles_and_scripts()
 add_action('wp_enqueue_scripts', 'elm_enqueue_styles_and_scripts');
 add_action('enqueue_block_editor_assets', 'elm_enqueue_styles_and_scripts');
 
-function recursiveCopy($src, $dst)
-{
-    $dir = opendir($src);
-    @mkdir($dst);
-
-    while (($file = readdir($dir)) !== false) {
-        if (($file !== '.') && ($file !== '..')) {
-            if (is_dir($src . '/' . $file)) {
-                recursiveCopy($src . '/' . $file, $dst . '/' . $file);
-            } else {
-                copy($src . '/' . $file, $dst . '/' . $file);
-            }
-        }
-    }
-
-    closedir($dir);
-}
-
 // Create generic function to include all files in specific folders
 if (!function_exists('elmgren_include_folder')) {
     function elmgren_include_folder($folder)
