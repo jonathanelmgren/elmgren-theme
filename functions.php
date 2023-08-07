@@ -8,8 +8,6 @@ require_once 'functions/constants.php';
 
 require_once 'functions/setup.php';
 
-require_once 'functions/includes/include_folder.php';
-
 elmgren_include_folder('functions/includes');
 
 elmgren_include_folder('functions/hooks');

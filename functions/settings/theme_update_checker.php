@@ -8,7 +8,7 @@ class Theme_Updater {
     public function __construct() {
         $this->user = 'jonathanelmgren';
         $this->repo = 'elmgren-theme';
-        $this->theme = wp_get_theme(get_template());
+        $this->theme = wp_get_theme('elmgren-theme');
 
         // Check for updates
         add_filter( 'pre_set_site_transient_update_themes', array( $this, 'check_update' ) );
