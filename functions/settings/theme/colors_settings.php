@@ -1,6 +1,6 @@
 <?php
 
-function elmgren_get_color_setting(string $setting): mixed
+/* function elmgren_get_color_setting(string $setting): mixed
 {
     $options = get_field('colors', 'options');
     if (is_array($options) && array_key_exists($setting, $options)) {
@@ -64,4 +64,4 @@ function elmgren_build_css($post_id)
 }
 
 // Use the ACF action hook
-add_action('acf/save_post', 'elmgren_build_css', 20);
+add_action('acf/save_post', 'elmgren_build_css', 20); */
