@@ -6,6 +6,8 @@ docker/*/*
 !docker/*/zwpmigrate.sh
 !docker/ssl/ssl.sh
 !docker/ssl/openssl.cfg
+!docker/ssl/server.crt
+!docker/ssl/server.key
 
 .env*
 .DS_Store
