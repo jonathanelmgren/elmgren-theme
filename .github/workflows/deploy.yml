@@ -45,7 +45,7 @@ jobs:
       run: npm run build
 
     - name: Zip the repository
-      run: zip -r ${{ steps.repo_name.outputs.repo }}.zip ./* 
+      run: zip -r ${{ steps.repo_name.outputs.repo }}.zip ./* -x "node_modules/*" "vendor/*"
 
     - name: Determine release type (live or beta)
       id: release_type
