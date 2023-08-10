@@ -1,38 +1,33 @@
 {
-  "name": "elmgren-theme",
-  "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
-  "scripts": {
-    "build:ts": "tsc -p ./tsconfig.json",
-    "build:tw": "tailwindcss -o ./dist/css/tailwind.css",
-    "build:scss": "sass assets/scss/main.scss | postcss -o dist/css/main.css --no-source-map",
-    "build": "npm run build:ts && npm run build:scss && npm run build:tw",
-    "watch:ts": "tsc -p ./tsconfig.json --watch",
-    "watch:scss": "sass --watch assets/scss/main.scss dist/css/main.css --no-source-map",
-    "watch:tw": "tailwindcss -o ./dist/css/tailwind.css --watch",
-    "dev": "concurrently \"npm:watch:ts\" \"npm:watch:scss\" \"npm:watch:tw\""
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/jonathanelmgren/elmgren-theme.git"
-  },
-  "author": "",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/jonathanelmgren/elmgren-theme/issues"
-  },
-  "homepage": "https://github.com/jonathanelmgren/elmgren-theme#readme",
-  "devDependencies": {
-    "autoprefixer": "^10.4.14",
-    "concurrently": "^8.2.0",
-    "cssnano": "^6.0.1",
-    "dotenv": "^16.3.1",
-    "postcss": "^8.4.27",
-    "postcss-cli": "^10.1.0",
-    "sass": "^1.65.1",
-    "sass-loader": "^13.3.2",
-    "tailwindcss": "^3.3.3",
-    "typescript": "^5.1.6"
-  }
+	"name": "elmgren-theme",
+	"version": "1.0.0",
+	"description": "",
+	"main": "index.js",
+	"scripts": {
+		"build": "webpack --mode production",
+		"dev": "webpack --watch --mode development"
+	},
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/jonathanelmgren/elmgren-theme.git"
+	},
+	"author": "",
+	"license": "ISC",
+	"bugs": {
+		"url": "https://github.com/jonathanelmgren/elmgren-theme/issues"
+	},
+	"homepage": "https://github.com/jonathanelmgren/elmgren-theme#readme",
+	"devDependencies": {
+		"autoprefixer": "^10.4.14",
+		"css-loader": "^6.8.1",
+		"mini-css-extract-plugin": "^2.7.6",
+		"postcss": "^8.4.27",
+		"postcss-loader": "^7.3.3",
+		"sass": "^1.65.1",
+		"sass-loader": "^13.3.2",
+		"tailwindcss": "^3.3.3",
+		"ts-loader": "^9.4.4",
+		"webpack": "^5.88.2",
+		"webpack-cli": "^5.1.4"
+	}
 }

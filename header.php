@@ -11,7 +11,7 @@
 
 <body <?php body_class(); ?>>
     <?php wp_body_open(); ?>
-    <header style="<?php echo elmgren_get_header_absolute() ?>" id="header" role="banner" class='header'>
+    <header style="<?php echo elmgren_get_header_absolute() ?>" id="header" role="banner" class='header pt-7 m-7 border'>
         <div class='logo'>
             <?php
             if (has_custom_logo()) {
