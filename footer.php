@@ -1,9 +1,9 @@
 </main>
 
-<footer class="mx-auto max-w-7xl overflow-hidden px-6 pt-20 sm:pt-24 pb-4 sm:pb-8 lg:px-8">
+<footer class="mx-auto max-w-7xl overflow-hidden px-6 pt-20 sm:pt-24 pb-4 sm:pb-4 lg:px-8">
 
     <?php if (has_nav_menu('footer-menu')) : ?>
-        <nav class="-mb-6 columns-2 sm:flex sm:justify-center sm:space-x-12" aria-label="Footer">
+        <nav class="-mb-6 columns-2 sm:flex sm:justify-center sm:gap-12" aria-label="Footer">
             <?php wp_nav_menu([
                 'theme_location' => 'footer-menu',
                 'walker' => new Elmgren_Walker_Footer_Menu(),
@@ -14,7 +14,7 @@
     <?php endif; ?>
 
     <?php if (elmgren_has_socials()) : ?>
-        <div class="mt-10 flex justify-center space-x-10">
+        <div class="mt-10 flex justify-center gap-10 flex-wrap">
             <?php
             foreach (['facebook', 'instagram', 'twitter', 'github', 'youtube'] as $social) :
                 if (elmgren_has_socials($social)) : ?>
@@ -27,7 +27,7 @@
         </div>
     <?php endif; ?>
 
-    <p class="mt-10 text-center text-xs leading-5 text-gray-500">&copy; <?= date("Y") ?> <?= get_bloginfo('name'); ?></p>
+    <p class="mt-5 text-center text-xs leading-5 text-gray-500">&copy; <?= date("Y") ?> <?= get_bloginfo('name'); ?></p>
 </footer>
 
 <?php wp_footer(); ?>

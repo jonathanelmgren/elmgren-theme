@@ -1,7 +1,7 @@
 <?php
 class Elmgren_Walker_Nav_Menu extends Walker_Nav_Menu
 {
-    function start_el(&$output, $item, $depth = 0, $args = array(), $id = 0, $class = "text-sm font-semibold leading-6 text-gray-900")
+    function start_el(&$output, $item, $depth = 0, $args = array(), $id = 0, $class = "text-sm leading-6 text-gray-900 hover:text-gray")
     {
         $args = (object) $args;  // Type cast to object
 

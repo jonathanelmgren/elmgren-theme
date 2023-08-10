@@ -36,7 +36,7 @@ function get_main_menu()
 }
 ?>
 
-<body <?php body_class(); ?>>
+<body <?php body_class('font-lato'); ?>>
     <?php wp_body_open(); ?>
     <header style="<?php echo elmgren_get_header_absolute() ?>" role="banner">
         <nav class="mx-auto flex max-w-7xl items-center justify-between p-6 lg:px-8" aria-label="Global">
@@ -66,7 +66,7 @@ function get_main_menu()
                 </div>
                 <div class="mt-6 flow-root">
                     <div class="-my-6 divide-y divide-gray-500/10">
-                        <div class="space-y-2 py-6">
+                        <div class="gap-2 py-6">
                             <?php get_main_menu(); ?>
                         </div>
                     </div>
