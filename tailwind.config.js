@@ -6,7 +6,12 @@ module.exports = {
     './templates/*.php',
   ],
   theme: {
-    extend: {},
+    extend: {
+      colors: {
+        primary: '#FF6347',
+        secondary: '#32CD32'
+      }
+    },
   },
   plugins: [],
 }

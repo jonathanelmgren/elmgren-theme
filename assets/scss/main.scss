@@ -2,12 +2,4 @@
 @import 'tailwindcss/components';
 @import 'tailwindcss/utilities';
 
-@import 'mixins/define-colors';
-@import 'mixins/media-query';
-
-@import 'base/variables'; 
-@import 'base/normalize'; 
 @import 'base/base';
-
-@import 'components/header';
-@import 'components/footer';
