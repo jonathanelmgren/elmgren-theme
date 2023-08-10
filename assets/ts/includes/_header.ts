@@ -1,4 +1,4 @@
-(function ($) {
+/* (function ($) {
     $.fn.toggleMobileMenu = function () {
         const overlay = $(this).siblings('#overlay')
         const nav = $(this).siblings('nav')
@@ -23,4 +23,6 @@
     $(function () {
         $('#mobile-menu-toggler').toggleMobileMenu();
     });
-}(jQuery));
+
+}(jQuery)); */
+console.log('ayo212')

@@ -1,5 +1,5 @@
 </main>
-<footer class='elmgren-footer'>
+<footer class='elmgren-footer text-red-50'>
     <div class='elmgren-footer--content <?php elmgren_get_page_width() ?>'>
         <?php elmgren_the_footer_setting('company_name'); ?>
         <?php elmgren_the_footer_setting('contact_info'); ?>
