@@ -1,5 +1,8 @@
 const path = require('path');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const BrowserSyncPlugin = require('browser-sync-webpack-plugin');
+const dotenv = require('dotenv');
+dotenv.config();
 
 module.exports = {
     entry: {
@@ -40,6 +43,24 @@ module.exports = {
     plugins: [
         new MiniCssExtractPlugin({
             filename: 'css/[name].css'
+        }),
+        new BrowserSyncPlugin({
+            https: {
+                key: 'docker/ssl/server.key',
+                cert: 'docker/ssl/server.crt',
+            },
+            host: process.env.WORDPRESS_SITE_URL.replace('https://',''),
+            open: "external",
+            port: 3000,
+            proxy: process.env.WORDPRESS_SITE_URL + '/',
+            files: [
+                './header.php',
+                './footer.php',
+                './templates/*.php',
+            ],
+            reloadDelay: 0,
+            injectChanges: true,
+            notify: false
         })
     ],
     resolve: {

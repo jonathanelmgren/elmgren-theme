@@ -25,4 +25,3 @@
     });
 
 }(jQuery)); */
-console.log('ayo212')

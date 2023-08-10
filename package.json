@@ -19,7 +19,10 @@
 	"homepage": "https://github.com/jonathanelmgren/elmgren-theme#readme",
 	"devDependencies": {
 		"autoprefixer": "^10.4.14",
+		"browser-sync": "^2.29.3",
+		"browser-sync-webpack-plugin": "^2.3.0",
 		"css-loader": "^6.8.1",
+		"dotenv": "^16.3.1",
 		"mini-css-extract-plugin": "^2.7.6",
 		"postcss": "^8.4.27",
 		"postcss-loader": "^7.3.3",
