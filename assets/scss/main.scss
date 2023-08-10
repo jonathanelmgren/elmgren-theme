@@ -1,9 +1,6 @@
-@import 'mixins/define-colors';
-@import 'mixins/media-query';
+@import 'tailwindcss/base';
+@import 'tailwindcss/components';
+@import 'tailwindcss/utilities';
 
-@import 'base/variables'; 
-@import 'base/normalize'; 
 @import 'base/base';
-
-@import 'components/header';
-@import 'components/footer';
+@import 'base/fonts';

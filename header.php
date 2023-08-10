@@ -4,48 +4,74 @@
 <head>
     <meta charset="<?php bloginfo('charset'); ?>" />
     <meta name="viewport" content="width=device-width" />
-    <meta name="description" content="">
-
     <?php wp_head(); ?>
 </head>
 
-<body <?php body_class(); ?>>
+<?php
+// Function to display either the logo or the blog name
+function get_logo_or_blog_name()
+{
+    $home_url = home_url();
+    $blog_name = get_bloginfo('name');
+    $logo_url = esc_url(wp_get_attachment_image_url(get_theme_mod('custom_logo'), 'full'));
+    if (has_custom_logo()) {
+        return '<a href="' . $home_url . '" class="-m-1.5 p-1.5">
+                    <span class="sr-only">' . $blog_name . '</span>
+                    <img style="height: ' . get_logo_height() . 'rem" class="w-auto" src="' . $logo_url . '" alt="logo of ' . esc_attr($blog_name) . '">
+                </a>';
+    } else {
+        return '<a href="' . $home_url . '" class="-m-1.5 p-1.5">' . $blog_name . '</a>';
+    }
+}
+
+// Function to display the main menu
+function get_main_menu()
+{
+    wp_nav_menu([
+        'theme_location' => 'main-menu',
+        'walker' => new Elmgren_Walker_Nav_Menu(),
+        'container' => false,
+        'items_wrap' => '%3$s',
+    ]);
+}
+?>
+
+<body <?php body_class('font-lato'); ?>>
     <?php wp_body_open(); ?>
-    <header style="<?php echo elmgren_get_header_absolute() ?>" id="header" role="banner" class='header'>
-        <div class='logo'>
-            <?php
-            if (has_custom_logo()) {
-                the_custom_logo();
-            } else {
-            ?>
-                <a href="<?php echo home_url(); ?>"><?php echo get_bloginfo('name'); ?></a>
-            <?php
-            }
-            ?>
-        </div>
-        <div class='menu-items'>
-            <div>
-                <div id='mobile-menu-toggler'>
-                    <?php get_template_part('assets/images/icons/inline/inline', 'hamburger.svg');  ?>
-                </div>
-                <div id='overlay'></div>
-                <nav id='nav'>
-                    <div id='close-mobile-menu'>×</div>
-                    <?php wp_nav_menu(['theme_location' => 'main-menu']); ?>
-                </nav>
+    <header style="<?php echo elmgren_get_header_absolute() ?>" role="banner">
+        <nav class="mx-auto flex max-w-7xl items-center justify-between p-6 lg:px-8" aria-label="Global">
+            <div class="flex lg:flex-1">
+                <?= get_logo_or_blog_name(); ?>
             </div>
-            <?php if (function_exists('is_woocommerce')) : ?>
-                <a aria-label="Cart" class="menu-cart" href="<?php echo wc_get_cart_url() ?>">
-                    <?php get_template_part('assets/images/icons/inline/inline', 'shoppingcart.svg');  ?>
-                    <?php $count =  WC()->cart->get_cart_contents_count();
-                    if ($count > 0) {
-                    ?>
-                        <div class="menu-cart--count"><?php echo $count ?></div>
-                    <?php
-                    }
-                    ?>
-                </a>
-            <?php endif; ?>
+            <div class="flex lg:hidden">
+                <button type="button" data-menu-toggle="open" class="-m-2.5 inline-flex items-center justify-center rounded-md p-2.5 text-gray-700">
+                    <span class="sr-only"><?php _e('Open main menu', 'elmgren') ?></span>
+                    <?php echo get_inline_svg('hamburger_open') ?>
+                </button>
+            </div>
+            <div class="hidden lg:flex lg:gap-x-12">
+                <?php get_main_menu(); ?>
+            </div>
+        </nav>
+        <!-- Mobile menu -->
+        <div class="lg:hidden hidden" role="dialog" aria-modal="true" data-menu="mobile">
+            <div data-backdrop class="fixed inset-0 z-10"></div>
+            <div class="fixed inset-y-0 right-0 z-10 w-full overflow-y-auto bg-white px-6 py-6 sm:max-w-sm sm:ring-1 sm:ring-gray-900/10">
+                <div class="flex items-center justify-between">
+                    <?= get_logo_or_blog_name(); ?>
+                    <button data-menu-toggle="close" type="button" class="-m-2.5 rounded-md p-2.5 text-gray-700">
+                        <span class="sr-only"><?php _e('Close menu', 'elmgren') ?></span>
+                        <?php get_inline_svg('hamburger_close') ?>
+                    </button>
+                </div>
+                <div class="mt-6 flow-root">
+                    <div class="-my-6 divide-y divide-gray-500/10">
+                        <div class="gap-2 py-6">
+                            <?php get_main_menu(); ?>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </header>
-    <main id="content" role="main" class='<?php elmgren_get_page_width() ?>'>
+    <main id="content" role="main" class='<?= elmgren_get_page_width() ?>'>

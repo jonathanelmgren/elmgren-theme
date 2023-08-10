@@ -24,7 +24,10 @@ function elmgren_setup()
         ],
     ]);
 
-    register_nav_menus(array('main-menu' => esc_html__('Main Menu', 'elmgren')));
+    register_nav_menus(array(
+        'main-menu' => esc_html__('Main Menu', 'elmgren'),
+        'footer-menu' => esc_html__('Footer Menu', 'elmgren'),
+    ));
 }
 add_action('after_setup_theme', 'elmgren_setup');
 
