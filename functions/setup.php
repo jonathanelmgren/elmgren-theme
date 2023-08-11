@@ -38,18 +38,17 @@ function elm_enqueue_styles_and_scripts()
 
     // Enqueue styles.
     foreach (glob($dist_path . 'css/*.css') as $file) {
+        $handle = 'elm-' . basename($file, '.css');
         $file_url = get_template_directory_uri() . '/dist/css/' . basename($file);
-        wp_enqueue_style(basename($file), $file_url);
+        wp_enqueue_style($handle, $file_url);
     }
 
     // Enqueue scripts.
     foreach (glob($dist_path . 'js/*.js') as $file) {
+        $handle = 'elm-' . basename($file, '.js');
         $file_url = get_template_directory_uri() . '/dist/js/' . basename($file);
-        wp_enqueue_script(basename($file), $file_url, array(), null, true);
+        wp_enqueue_script($handle, $file_url, array('jquery'), null, true);
     }
-
-    // Enqueue jQuery
-    wp_enqueue_script('jquery');
 }
 add_action('wp_enqueue_scripts', 'elm_enqueue_styles_and_scripts');
 add_action('enqueue_block_editor_assets', 'elm_enqueue_styles_and_scripts');
