@@ -61,6 +61,7 @@ function updateValueDropdown(selectedKey: string, valueDropdown: JQuery, colors:
     } else if (defaultColorValue) {
         valueDropdown.append(`<option value="${defaultColorValue}">${capitalize(DEFAULT_VALUE)}</option>`);
     }
+
 }
 
 
@@ -88,8 +89,10 @@ jQuery(function ($) {
                     colorPicker.iris('option', 'color', '');  // Reset color picker if needed
                 } else {
                     updateValueDropdown(selectedKey, valueDropdown, colors);
-                    const defaultShadeValue = valueDropdown.find(`option:contains(${DEFAULT_VALUE})`).val() as string;
-                    valueDropdown.val(defaultShadeValue).trigger('change');
+                    const defaultShadeValue = valueDropdown.find(`option:contains(Default)`).first().val()
+                    if (defaultShadeValue) {
+                        valueDropdown.val(defaultShadeValue).trigger('change');
+                    }
                     colorPicker.iris('option', 'color', defaultShadeValue).trigger('input');
                     valueDropdown.show();
                 }

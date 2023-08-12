@@ -41,7 +41,7 @@ $is_sticky = get_theme_mod('header_sticky', false);
 $header_class = 'w-full';
 $header_class .= $is_absolute && $is_sticky ? ' fixed top-0 z-50' : ($is_absolute ? ' absolute' : ($is_sticky ? ' sticky top-0 z-50' : ''));
 
-$header_attrs = elm_apply_color_attrs_to_element('header_bg_color', $header_class, '', 'transparent');
+$header_attrs = elm_apply_bg_color('header_bg_color', $header_class, '', 'transparent');
 
 ?>
 
