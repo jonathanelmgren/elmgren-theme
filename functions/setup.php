@@ -1,7 +1,7 @@
 <?php
 
 // Register theme supports
-function elmgren_setup()
+function elm_setup()
 {
     add_theme_support('custom-logo');
     add_theme_support('woocommerce', array(
@@ -29,7 +29,7 @@ function elmgren_setup()
         'footer-menu' => esc_html__('Footer Menu', 'elmgren'),
     ));
 }
-add_action('after_setup_theme', 'elmgren_setup');
+add_action('after_setup_theme', 'elm_setup');
 
 // Register styles and scripts
 function elm_enqueue_styles_and_scripts()
@@ -49,13 +49,18 @@ function elm_enqueue_styles_and_scripts()
         $file_url = get_template_directory_uri() . '/dist/js/' . basename($file);
         wp_enqueue_script($handle, $file_url, array('jquery'), null, true);
     }
+
+    wp_localize_script('elm-main', 'themeSettings', array(
+        'colors' => defined('TAILWIND_COLORS') ? TAILWIND_COLORS : [],
+    ));
 }
 add_action('wp_enqueue_scripts', 'elm_enqueue_styles_and_scripts');
 add_action('enqueue_block_editor_assets', 'elm_enqueue_styles_and_scripts');
 
 // Create generic function to include all files in specific folders
-if (!function_exists('elmgren_include_folder')) {
-    function elmgren_include_folder($folder)
+
+if (!function_exists('elm_include_folder')) {
+    function elm_include_folder($folder)
     {
         // Make sure we have forwardslash before and after folder
         $folder = \str_starts_with($folder, '/') ? $folder : '/' . $folder;
@@ -82,6 +87,16 @@ if (!function_exists('elmgren_include_folder')) {
             if (\str_ends_with($file, '.php')) {
                 require_once $folder . $file;
             }
+        }
+
+        // Clear folders out to only get folders
+        $content = scandir($folder, 1);
+        $content = array_filter($content, function ($item) use ($folder) {
+            return is_dir($folder . $item) && !in_array($item, ['.', '..']);
+        });
+
+        foreach ($content as $subfolder) {
+            elm_include_folder(trim(str_replace(get_template_directory(), '', $folder), '/') . '/' . $subfolder);
         }
     }
 }

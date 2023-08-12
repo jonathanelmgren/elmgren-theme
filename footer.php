@@ -20,7 +20,7 @@
                 if (elmgren_has_socials($social)) : ?>
                     <a href="<?= elmgren_the_footer_setting($social); ?>" class="text-gray-400 hover:text-gray-500">
                         <span class="sr-only"><?= ucfirst($social) ?></span>
-                        <?php get_inline_svg($social) ?>
+                        <?php elm_get_inline_svg($social) ?>
                     </a>
             <?php endif;
             endforeach; ?>

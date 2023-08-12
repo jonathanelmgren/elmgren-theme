@@ -1,13 +1,6 @@
 <?php
 
-function get_custom_logo_url()
-{
-    $custom_logo_id = get_theme_mod('custom_logo');
-    $image = wp_get_attachment_image_src($custom_logo_id, 'full');
-    return $image[0];
-}
-
-function get_inline_svg($filename)
+function elm_get_inline_svg($filename)
 {
     // Define SVG path
     $svg_path = get_template_directory() . '/assets/images/icons/' . $filename . '.svg';
@@ -19,4 +12,35 @@ function get_inline_svg($filename)
         // Return a warning (or nothing) if the SVG is not found
         echo '<!-- SVG not found -->';
     }
+}
+
+function elm_get_logo_height()
+{
+    return get_theme_mod('logo_height_setting', '8');
+}
+
+
+function elm_get_tailwind_color_from_setting($setting, $fallback = false)
+{
+    $colors = defined('TAILWIND_COLORS') ? TAILWIND_COLORS : [];
+    $color = get_theme_mod($setting, $fallback = false);
+
+    $color = strtolower($color);
+
+    foreach ($colors as $mainColor => $shades) {
+        foreach ($shades as $shade => $shadeColor) {
+            if (strtolower($shadeColor) === $color) {
+                if ($shade === 'DEFAULT') {
+                    return $mainColor;
+                }
+                return "{$mainColor}-{$shade}";
+            }
+        }
+    }
+
+    if (preg_match('/^#[a-f0-9]{6}$/i', $color)) {
+        return "[$color]";
+    }
+
+    return $color;
 }
