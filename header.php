@@ -40,13 +40,14 @@ $is_sticky = get_theme_mod('header_sticky', false);
 
 $header_class = 'w-full';
 $header_class .= $is_absolute && $is_sticky ? ' fixed top-0 z-50' : ($is_absolute ? ' absolute' : ($is_sticky ? ' sticky top-0 z-50' : ''));
-$header_class .= ' bg-' . elm_get_tailwind_color_from_setting('header_bg_color', 'transparent');
+
+$header_attrs = elm_apply_color_attrs_to_element('header_bg_color', $header_class, '', 'transparent');
 
 ?>
 
 <body <?php body_class('font-primary'); ?>>
     <?php wp_body_open(); ?>
-    <header role="banner" class="<?php echo $header_class ?>">
+    <header role="banner" <?php echo $header_attrs ?>>
         <nav class="mx-auto flex max-w-7xl items-center justify-between p-6 lg:px-8" aria-label="Global">
             <div class="flex lg:flex-1">
                 <?= get_logo_or_blog_name(); ?>

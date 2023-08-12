@@ -20,27 +20,48 @@ function elm_get_logo_height()
 }
 
 
-function elm_get_tailwind_color_from_setting($setting, $fallback = false)
+function elm_get_style_or_class_from_color($setting, $fallback = false)
 {
     $colors = defined('TAILWIND_COLORS') ? TAILWIND_COLORS : [];
-    $color = get_theme_mod($setting, $fallback = false);
-
+    $color = get_theme_mod($setting, $fallback);
     $color = strtolower($color);
 
     foreach ($colors as $mainColor => $shades) {
         foreach ($shades as $shade => $shadeColor) {
             if (strtolower($shadeColor) === $color) {
                 if ($shade === 'DEFAULT') {
-                    return $mainColor;
+                    return "bg-{$mainColor}";
                 }
-                return "{$mainColor}-{$shade}";
+                return "bg-{$mainColor}-{$shade}";
             }
         }
     }
 
     if (preg_match('/^#[a-f0-9]{6}$/i', $color)) {
-        return "[$color]";
+        return "inline-style";
     }
 
-    return $color;
+    return $fallback;
+}
+
+function elm_sanitize_attr_string($string)
+{
+    return trim(preg_replace('/\s+/', ' ', $string));
+}
+
+function elm_apply_color_attrs_to_element($setting, $classes = "", $styles = "", $fallback = false)
+{
+    $styleOrClass = elm_get_style_or_class_from_color($setting, $fallback);
+
+    $classes = elm_sanitize_attr_string($classes);
+    $styles = elm_sanitize_attr_string($styles);
+
+    if ($styleOrClass === "inline-style") {
+        $color = get_theme_mod($setting, $fallback);
+        $styles = "background-color: {$color};" . ($styles ? " {$styles}" : "");
+    } elseif ($styleOrClass) {
+        $classes = "{$styleOrClass}" . ($classes ? " {$classes}" : "");
+    }
+
+    return "style=\"{$styles}\" class=\"{$classes}\"";
 }
