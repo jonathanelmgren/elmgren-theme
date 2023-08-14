@@ -23,7 +23,7 @@ function elm_get_page_width()
 {
     $w = get_field('page_width');
     if (!$w) {
-        $w = get_field('default_page_width', 'options');
+        $w = get_theme_mod('page_width_setting', 'width-normal');
     }
 
     // Map of custom widths to the new Tailwind classes

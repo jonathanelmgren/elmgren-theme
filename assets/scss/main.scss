@@ -4,3 +4,7 @@
 
 @import 'base/base';
 @import 'base/fonts';
+
+.element-hover:hover {
+	color: var(--hover-color);
+}

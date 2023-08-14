@@ -48,19 +48,21 @@ function elm_get_style_or_class_from_color($setting, $attr, $fallback = false)
             }
 
             if ($shade === 'DEFAULT') {
-                return "{$attr}-{$mainColor}";
+                return ["tailwind" => "{$attr}-{$mainColor}", "color" => $shadeColor];
             }
 
-            return "{$attr}-{$mainColor}-{$shade}";
+            return ["tailwind" => "{$attr}-{$mainColor}-{$shade}", "color" => $shadeColor];
         }
     }
 
     if (preg_match('/^#[a-f0-9]{6}$/i', $color)) {
-        return "inline-style";
+        return ["tailwind" => null, "color" => $color];
     }
 
-    return $fallback;
+    return ["tailwind" => $fallback, "color" => null];  // Ensure the fallback is returned if no other conditions are met.
 }
+
+
 
 /**
  * Sanitizes an attribute string by trimming and removing extra spaces.
@@ -104,11 +106,16 @@ function elm_get_classes_and_styles($settings, $attr = 'text', $prefix = "", $fa
 
         $styleOrClass = elm_get_style_or_class_from_color($setting, $currentAttr, $currentFallback);
 
-        if ($styleOrClass === "inline-style") {
-            $color = get_theme_mod($setting, $currentFallback);
-            $combined_styles[] = get_inline_style($currentAttr, $color);
-        } else {
-            $combined_classes[] = get_class_name($styleOrClass, $currentPrefix);
+        if ($styleOrClass['tailwind'] || $styleOrClass['color']) {
+            if ($styleOrClass['tailwind'] === null && $currentPrefix === "hover") {
+                $combined_styles[] = "--hover-color: {$styleOrClass['color']}";
+                $combined_classes[] = "custom-hover";
+            } elseif ($styleOrClass['tailwind'] === null) {
+                // If there's no tailwind class, but there's a color, set the inline style
+                $combined_styles[] = get_inline_style($currentAttr, $styleOrClass['color']);
+            } else {
+                $combined_classes[] = get_class_name($styleOrClass['tailwind'], $currentPrefix);
+            }
         }
     }
 

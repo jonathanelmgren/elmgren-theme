@@ -75,5 +75,15 @@ function elm_customize_footer($wp_customize)
         'settings' => 'footer_text',
         'type'     => 'textarea',
     ));
+
+    // Footer text color
+    $wp_customize->add_setting('footer_text_color', array(
+        'transport' => 'refresh',
+    ));
+    $wp_customize->add_control(new WP_Customize_Color_Control($wp_customize, 'footer_text_color_control', array(
+        'label'    => __('Footer Text Color', 'elmgren'),
+        'section'  => 'elm_footer_section',
+        'settings' => 'footer_text_color',
+    )));
 }
 add_action('customize_register', 'elm_customize_footer');

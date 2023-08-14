@@ -24,8 +24,8 @@ class Elm_Header_Walker_Nav_Menu extends Elm_Walker_Nav_Menu
     protected function get_combined_attributes($item, $depth, $args): string
     {
         $settings = [
-            'header_link_color' => ['attr' => 'text'],
-            'header_link_color_hover' => ['attr' => 'text', 'prefix' => 'hover']
+            'header_link_color' => ['attr' => 'text', 'fallback' => 'text-gray-600'],
+            'header_link_color_hover' => ['attr' => 'text', 'prefix' => 'hover', 'fallback' => 'text-gray-900']
         ];
         return elm_get_classes_and_styles($settings);
     }
@@ -36,9 +36,9 @@ class Elm_Footer_Walker_Nav_Menu extends Elm_Walker_Nav_Menu
     protected function get_combined_attributes($item, $depth, $args): string
     {
         $settings = [
-            'footer_menu_link_color' => ['attr' => 'text'],
-            'footer_menu_link_color_hover' => ['attr' => 'text', 'prefix' => 'hover']
+            'footer_menu_link_color' => ['attr' => 'text', 'fallback' => 'text-gray-600'],
+            'footer_menu_link_color_hover' => ['attr' => 'text', 'prefix' => 'hover', 'fallback' => 'text-gray-900']
         ];
-        return elm_get_classes_and_styles($settings, 'text', '', false, 'text-sm font-semibold leading-6');
+        return elm_get_classes_and_styles($settings, 'text', '', false, 'text-sm leading-6');
     }
 }
