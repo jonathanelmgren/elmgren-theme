@@ -1,10 +1,10 @@
 <?php
 
-function elmgren_customize_misc($wp_customize)
+function elm_customize_misc($wp_customize)
 {
 
     // Section for Miscellaneous Settings
-    $wp_customize->add_section('elmgren_misc_section', array(
+    $wp_customize->add_section('elm_misc_section', array(
         'title'    => __('Miscellaneous Settings', 'elmgren'),
         'priority' => 50,
     ));
@@ -16,7 +16,7 @@ function elmgren_customize_misc($wp_customize)
     ));
     $wp_customize->add_control('page_width_control', array(
         'label'    => __('Select Page Width', 'elmgren'),
-        'section'  => 'elmgren_misc_section',
+        'section'  => 'elm_misc_section',
         'settings' => 'page_width_setting',
         'type'     => 'select',
         'choices'  => array(
@@ -28,4 +28,4 @@ function elmgren_customize_misc($wp_customize)
         ),
     ));
 }
-add_action('customize_register', 'elmgren_customize_misc');
+add_action('customize_register', 'elm_customize_misc');

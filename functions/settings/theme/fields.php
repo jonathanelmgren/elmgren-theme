@@ -20,7 +20,7 @@ if (function_exists('acf_add_local_field_group')) :
                     'class' => '',
                     'id' => '',
                 ),
-                'choices' => ELMGREN_PAGE_WIDTHS,
+                'choices' => ELM_PAGE_WIDTHS,
                 'default_value' => 'width-wide',
                 'return_format' => 'value',
                 'multiple' => 0,

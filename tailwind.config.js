@@ -53,7 +53,9 @@ module.exports = {
       path: 'safelist.txt',
       patterns: [
         'text-{colors}',
+        'hover:text-{colors}',
         'bg-{colors}',
+        'hover:bg-{colors}',
       ],
     }),
   ],

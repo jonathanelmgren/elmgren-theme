@@ -1,39 +1,57 @@
 <?php
 
+/**
+ * Returns the inline SVG content.
+ *
+ * @param string $filename The filename of the SVG without extension.
+ */
 function elm_get_inline_svg($filename)
 {
-    // Define SVG path
-    $svg_path = get_template_directory() . '/assets/images/icons/' . $filename . '.svg';
-    // Check if the SVG file exists
-    if (file_exists($svg_path)) {
-        // Fetch and return the content of the SVG
-        echo file_get_contents($svg_path);
-    } else {
-        // Return a warning (or nothing) if the SVG is not found
+    $fullPath = get_template_directory() . '/assets/images/icons/' . $filename . '.svg';
+
+    if (!file_exists($fullPath)) {
         echo '<!-- SVG not found -->';
+        return;
     }
+
+    echo file_get_contents($fullPath);
 }
 
+/**
+ * Returns the logo height.
+ *
+ * @return string
+ */
 function elm_get_logo_height()
 {
     return get_theme_mod('logo_height_setting', '8');
 }
 
-
+/**
+ * Returns the corresponding Tailwind class or inline style for a given color setting.
+ *
+ * @param string $setting The theme mod setting key.
+ * @param string $attr The attribute for which the color is being set, e.g., 'text', 'bg'.
+ * @param mixed $fallback The fallback value if the setting is not found.
+ *
+ * @return string
+ */
 function elm_get_style_or_class_from_color($setting, $attr, $fallback = false)
 {
     $colors = defined('TAILWIND_COLORS') ? TAILWIND_COLORS : [];
-    $color = get_theme_mod($setting, $fallback);
-    $color = strtolower($color);
+    $color = strtolower(get_theme_mod($setting, $fallback));
 
     foreach ($colors as $mainColor => $shades) {
         foreach ($shades as $shade => $shadeColor) {
-            if (strtolower($shadeColor) === $color) {
-                if ($shade === 'DEFAULT') {
-                    return "{$attr}-{$mainColor}";
-                }
-                return "{$attr}-{$mainColor}-{$shade}";
+            if (strtolower($shadeColor) !== $color) {
+                continue;
             }
+
+            if ($shade === 'DEFAULT') {
+                return "{$attr}-{$mainColor}";
+            }
+
+            return "{$attr}-{$mainColor}-{$shade}";
         }
     }
 
@@ -44,34 +62,104 @@ function elm_get_style_or_class_from_color($setting, $attr, $fallback = false)
     return $fallback;
 }
 
+/**
+ * Sanitizes an attribute string by trimming and removing extra spaces.
+ *
+ * @param string $string The string to sanitize.
+ *
+ * @return string
+ */
 function elm_sanitize_attr_string($string)
 {
     return trim(preg_replace('/\s+/', ' ', $string));
 }
 
-function elm_apply_color_attrs_to_element($setting, $attr, $classes = "", $styles = "", $fallback = false)
+/**
+ * Returns a combined class and style attribute string for given settings.
+ *
+ * @param mixed $settings The settings for which the classes and styles are being generated.
+ * @param string $attr The attribute for which the color is being set.
+ * @param string $prefix The prefix for the class.
+ * @param mixed $fallback The fallback value.
+ * @param string $additional_classes Additional classes to append.
+ * @param string $additional_styles Additional styles to append.
+ *
+ * @return string
+ */
+function elm_get_classes_and_styles($settings, $attr = 'text', $prefix = "", $fallback = false, $additional_classes = '', $additional_styles = '')
 {
-    $styleOrClass = elm_get_style_or_class_from_color($setting, $attr, $fallback);
-
-    $classes = elm_sanitize_attr_string($classes);
-    $styles = elm_sanitize_attr_string($styles);
-
-    if ($styleOrClass === "inline-style") {
-        $color = get_theme_mod($setting, $fallback);
-        $styles = "background-color: {$color};" . ($styles ? " {$styles}" : "");
-    } elseif ($styleOrClass) {
-        $classes = "{$styleOrClass}" . ($classes ? " {$classes}" : "");
+    if (is_string($settings)) {
+        $settings = [
+            $settings => ['attr' => $attr, 'prefix' => $prefix, 'fallback' => $fallback]
+        ];
     }
 
-    return "style=\"{$styles}\" class=\"{$classes}\"";
+    $combined_classes = [$additional_classes];
+    $combined_styles = [$additional_styles];
+
+    foreach ($settings as $setting => $config) {
+        $currentAttr = $config['attr'] ?? 'text';
+        $currentPrefix = $config['prefix'] ?? "";
+        $currentFallback = $config['fallback'] ?? false;
+
+        $styleOrClass = elm_get_style_or_class_from_color($setting, $currentAttr, $currentFallback);
+
+        if ($styleOrClass === "inline-style") {
+            $color = get_theme_mod($setting, $currentFallback);
+            $combined_styles[] = get_inline_style($currentAttr, $color);
+        } else {
+            $combined_classes[] = get_class_name($styleOrClass, $currentPrefix);
+        }
+    }
+
+    return format_attributes($combined_classes, $combined_styles);
 }
 
-function elm_apply_text_color($setting, $classes = "", $styles = "", $fallback = false)
+/**
+ * Returns the inline style for a given attribute and color.
+ *
+ * @param string $attr The attribute.
+ * @param string $color The color value.
+ *
+ * @return string
+ */
+function get_inline_style($attr, $color)
 {
-    return elm_apply_color_attrs_to_element($setting, 'text', $classes, $styles, $fallback);
+    $tw_attr_to_styles = [
+        'text' => 'color',
+        'bg' => 'background-color',
+    ];
+
+    $style_attr = $tw_attr_to_styles[$attr] ?? 'background-color';
+
+    return "{$style_attr}: {$color};";
 }
 
-function elm_apply_bg_color($setting, $classes = "", $styles = "", $fallback = false)
+/**
+ * Returns the class name with or without a prefix.
+ *
+ * @param string $styleOrClass The style or class.
+ * @param string $prefix The prefix.
+ *
+ * @return string
+ */
+function get_class_name($styleOrClass, $prefix)
 {
-    return elm_apply_color_attrs_to_element($setting, 'bg', $classes, $styles, $fallback);
+    return $prefix ? "{$prefix}:{$styleOrClass}" : $styleOrClass;
+}
+
+/**
+ * Returns the formatted attributes string for classes and styles.
+ *
+ * @param array $classes The array of classes.
+ * @param array $styles The array of styles.
+ *
+ * @return string
+ */
+function format_attributes($classes, $styles)
+{
+    $classes_string = implode(' ', array_filter($classes));
+    $styles_string = implode('; ', array_filter($styles));
+
+    return "style=\"$styles_string\" class=\"$classes_string\"";
 }

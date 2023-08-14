@@ -29,7 +29,7 @@ function get_main_menu()
 {
     wp_nav_menu([
         'theme_location' => 'main-menu',
-        'walker' => new Elmgren_Walker_Nav_Menu(),
+        'walker' => new Elm_Header_Walker_Nav_Menu(),
         'container' => false,
         'items_wrap' => '%3$s',
     ]);
@@ -41,7 +41,7 @@ $is_sticky = get_theme_mod('header_sticky', false);
 $header_class = 'w-full';
 $header_class .= $is_absolute && $is_sticky ? ' fixed top-0 z-50' : ($is_absolute ? ' absolute' : ($is_sticky ? ' sticky top-0 z-50' : ''));
 
-$header_attrs = elm_apply_bg_color('header_bg_color', $header_class, '', 'transparent');
+$header_attrs = elm_get_classes_and_styles('header_bg_color', 'bg', '', 'transparent', $header_class);
 
 ?>
 
@@ -83,4 +83,4 @@ $header_attrs = elm_apply_bg_color('header_bg_color', $header_class, '', 'transp
             </div>
         </div>
     </header>
-    <main id="content" role="main" class='<?= elmgren_get_page_width() ?>'>
+    <main id="content" role="main" class='<?= elm_get_page_width() ?>'>

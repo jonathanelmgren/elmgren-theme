@@ -47,8 +47,6 @@ if (!defined('TAILWIND_COLORS')) {
 
         }
     }
-
-
 ]
 
 if (typeof process.env.WORDPRESS_SITE_URL === 'string') {
@@ -110,7 +108,8 @@ module.exports = {
                     },
                     'sass-loader'
                 ]
-            }
+            },
+            
         ]
     },
     plugins,

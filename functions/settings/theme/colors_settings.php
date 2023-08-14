@@ -1,6 +1,6 @@
 <?php
 
-/* function elmgren_get_color_setting(string $setting): mixed
+/* function elm_get_color_setting(string $setting): mixed
 {
     $options = get_field('colors', 'options');
     if (is_array($options) && array_key_exists($setting, $options)) {
@@ -9,7 +9,7 @@
     return null;
 }
 
-function elmgren_build_css($post_id)
+function elm_build_css($post_id)
 {
     // Check if it's the correct post type (customize this to your needs)
     if ($post_id !== 'options') {
@@ -46,7 +46,7 @@ function elmgren_build_css($post_id)
     // For each color...
     foreach ($colors as $color_name => $acf_field) {
         // Fetch the value from the corresponding ACF field.
-        $color_value = elmgren_get_color_setting($acf_field);
+        $color_value = elm_get_color_setting($acf_field);
 
         // Replace the color definition in the SCSS file content.
         $pattern = '/(@include defineColor\(' . preg_quote($color_name, '/') . ', )#([0-9a-fA-F]{3,6})/';
@@ -64,4 +64,4 @@ function elmgren_build_css($post_id)
 }
 
 // Use the ACF action hook
-add_action('acf/save_post', 'elmgren_build_css', 20); */
+add_action('acf/save_post', 'elm_build_css', 20); */
