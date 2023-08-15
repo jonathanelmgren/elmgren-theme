@@ -170,3 +170,27 @@ function format_attributes($classes, $styles)
 
     return "style=\"$styles_string\" class=\"$classes_string\"";
 }
+
+/**
+ * Returns the width for the current page and defaults to the theme mod setting.
+ *
+ * @return string
+ */
+function elm_get_page_width()
+{
+    $w = get_field('page_width');
+    if (!$w) {
+        $w = get_theme_mod('page_width_setting', 'width-normal');
+    }
+
+    // Map of custom widths to the new Tailwind classes
+    $tailwind_classes = [
+        'width-narrow' => 'mx-[1rem] sm:mx-[6%] md:mx-[12%] lg:mx-[18%] xl:mx-[24%] 2xl:mx-[30%]',
+        'width-normal' => 'mx-[1rem] sm:mx-[5%] md:mx-[10%] lg:mx-[15%] xl:mx-[20%] 2xl:mx-[25%]',
+        'width-wide' => 'mx-[1rem] sm:mx-[4%] md:mx-[8%] lg:mx-[12%] xl:mx-[16%] 2xl:mx-[20%]',
+        'width-ultrawide' => 'mx-[0.8rem] sm:mx-[2%] md:mx-[4%] lg:mx-[6%] xl:mx-[8%] 2xl:mx-[10%]',
+        'width-full' => 'm-0'
+    ];
+
+    echo $tailwind_classes[$w] ?? '';  // Return the corresponding Tailwind class or an empty string
+}
