@@ -1,38 +1,44 @@
 <?php
-class Elmgren_Walker_Nav_Menu extends Walker_Nav_Menu
+
+class Elm_Walker_Nav_Menu extends Walker_Nav_Menu
 {
-    function start_el(&$output, $item, $depth = 0, $args = array(), $id = 0, $class = "text-sm leading-6 text-gray-900 hover:text-gray")
+    public function start_el(&$output, $item, $depth = 0, $args = [], $id = 0): void
     {
-        $args = (object) $args;  // Type cast to object
-
-        $attributes = ' href="' . esc_attr($item->url) . '" class="' . $class . '"';
-
+        $indent = str_repeat("\t", $depth);
+        $attributes = $this->get_combined_attributes($item, $depth, $args);
         $title = apply_filters('the_title', $item->title, $item->ID);
 
-        $item_output = $args->before;
-        $item_output .= '<a' . $attributes . '>';
-        $item_output .= $args->link_before . $title . $args->link_after;
-        $item_output .= '</a>';
-        $item_output .= $args->after;
+        $item_output = "{$args->before}<a href=\"" . esc_attr($item->url) . "\" $attributes>{$args->link_before}$title{$args->link_after}</a>{$args->after}";
 
-        $output .= apply_filters('walker_nav_menu_start_el', $item_output, $item, $depth, $args);
+        $output .= $indent . apply_filters('walker_nav_menu_start_el', $item_output, $item, $depth, $args);
+    }
+
+    protected function get_combined_attributes($item, $depth, $args): string
+    {
+        return "";  // Placeholder. To be overridden in child classes.
     }
 }
 
-class Elmgren_Walker_Footer_Menu extends Elmgren_Walker_Nav_Menu
+class Elm_Header_Walker_Nav_Menu extends Elm_Walker_Nav_Menu
 {
-    function start_el(&$output, $item, $depth = 0, $args = [], $id = 0, $class = "text-sm font-semibold leading-6 text-gray-900")
+    protected function get_combined_attributes($item, $depth, $args): string
     {
-        $indent = ($depth) ? str_repeat("\t", $depth) : '';
-
-        $output .= $indent . '<div class="pb-6">';
-
-        parent::start_el($output, $item, $depth, $args, 0, "text-sm leading-6 text-gray-600 hover:text-gray-900");
+        $settings = [
+            'header_link_color' => ['attr' => 'text', 'fallback' => 'text-gray-600'],
+            'header_link_color_hover' => ['attr' => 'text', 'prefix' => 'hover', 'fallback' => 'text-gray-900']
+        ];
+        return elm_get_classes_and_styles($settings);
     }
+}
 
-    // Override end_el() function to close custom wrapping div
-    function end_el(&$output, $item, $depth = 0, $args = null)
+class Elm_Footer_Walker_Nav_Menu extends Elm_Walker_Nav_Menu
+{
+    protected function get_combined_attributes($item, $depth, $args): string
     {
-        $output .= "</div>\n";
+        $settings = [
+            'footer_menu_link_color' => ['attr' => 'text', 'fallback' => 'text-gray-600'],
+            'footer_menu_link_color_hover' => ['attr' => 'text', 'prefix' => 'hover', 'fallback' => 'text-gray-900']
+        ];
+        return elm_get_classes_and_styles($settings, 'text', '', false, 'text-sm leading-6');
     }
 }

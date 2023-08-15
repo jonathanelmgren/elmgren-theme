@@ -42,6 +42,12 @@ body:not(.wp-admin) {
 }
 
 @layer components {
+	.editor-styles-wrapper {
+		@apply font-primary;
+	}
+}
+
+@layer components {
 	.alert {
 		@apply text-center p-4 mb-4;
 	}
