@@ -7,8 +7,7 @@ module.exports = {
     './templates/*.php',
     './functions/**/*.php',
     './classes/**/*.php',
-    './assets/**/*.{php,svg}',
-    './safelist.txt',
+    './assets/**/*.{php,svg}'
   ],
   safelist: ['editor-styles-wrapper'],
   theme: {
@@ -41,23 +40,69 @@ module.exports = {
           800: '#543603',
           900: '#1E1401',
           950: '#030200'
+        },
+        lightgray: {
+          DEFAULT: '#F5F5F5',
+          50: '#FFFFFF',
+          100: '#FFFFFF',
+          200: '#FDFDFD',
+          300: '#FAFAFA',
+          400: '#F8F8F8',
+          500: '#F5F5F5',
+          600: '#E8E8E8',
+          700: '#DCDCDC',
+          800: '#CFCFCF',
+          900: '#C2C2C2',
+          950: '#BCBCBC'
+        },
+        darkgray: {
+          DEFAULT: '#2E2E2E',
+          50: '#8A8A8A',
+          100: '#808080',
+          200: '#6B6B6B',
+          300: '#575757',
+          400: '#424242',
+          500: '#2E2E2E',
+          600: '#121212',
+          700: '#000000',
+          800: '#000000',
+          900: '#000000',
+          950: '#000000'
+        },
+        'accent-primary': {
+          DEFAULT: '#FFD700',
+          50: '#FFF4B8',
+          100: '#FFF1A3',
+          200: '#FFEA7A',
+          300: '#FFE452',
+          400: '#FFDD29',
+          500: '#FFD700',
+          600: '#C7A800',
+          700: '#8F7800',
+          800: '#574900',
+          900: '#1F1A00',
+          950: '#030200'
+        },
+        'accent-secondary': {
+          DEFAULT: '#A8E6CE',
+          50: '#FFFFFF',
+          100: '#F7FDFB',
+          200: '#E3F7EF',
+          300: '#D0F1E4',
+          400: '#BCECD9',
+          500: '#A8E6CE',
+          600: '#7CD9B5',
+          700: '#51CD9D',
+          800: '#33B281',
+          900: '#278762',
+          950: '#207152'
         }
       },
       fontFamily: {
         'primary': ['Lato', 'ui-sans-serif', 'system-ui', '-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'Roboto', 'Helvetica Neue', 'Arial', 'Noto Sans', 'sans-serif', 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji'],
+        'secondary': ['Lato', 'ui-sans-serif', 'system-ui', '-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'Roboto', 'Helvetica Neue', 'Arial', 'Noto Sans', 'sans-serif', 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji'],
       }
     },
   },
-  plugins: [
-    require('tailwind-safelist-generator')({
-      path: 'safelist.txt',
-      patterns: [
-        'text-{colors}',
-        'hover:text-{colors}',
-        'bg-{colors}',
-        'hover:bg-{colors}',
-      ],
-    }),
-  ],
 }
 

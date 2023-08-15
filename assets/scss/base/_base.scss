@@ -1,4 +1,5 @@
-body:not(.wp-admin) {
+.edit-post-visual-editor,
+body:not(.wp-admin, .wp-customizer) {
 	min-height: 100vh;
 	min-height: 100dvh;
 	display: flex;
@@ -6,69 +7,109 @@ body:not(.wp-admin) {
 	main {
 		flex: 1;
 	}
-}
 
-@layer components {
+	@apply font-primary text-darkgray;
+
+	/* Heading styles */
+	h1,
+	h2,
+	h3,
+	h4,
+	h5,
+	h6 {
+		@apply font-secondary;
+		@apply mt-8 mb-4; /* Margins for better spacing */
+	}
+
+	h1 {
+		@apply text-4xl;
+	}
+
+	h2 {
+		@apply text-3xl;
+	}
+
+	h3 {
+		@apply text-2xl;
+	}
+
+	h4 {
+		@apply text-xl;
+	}
+
+	h5 {
+		@apply text-lg;
+	}
+
+	h6 {
+		@apply text-base;
+	}
+
+	/* Paragraph */
+	p {
+		@apply mb-4; /* Default spacing */
+		@apply leading-relaxed; /* Line-height for readability */
+		@apply text-darkgray-500; /* Dark gray color for visibility */
+	}
+
+	/* Default link styles */
+	a {
+		@apply transition-colors duration-200; /* Smooth color transition */
+		&:not(.text-*) {
+			@apply text-primary-500;
+
+			&:hover {
+				@apply text-primary-600; /* Darker shade on hover */
+			}
+		}
+	}
+
+	/* Lists */
+	ul,
+	ol {
+		@apply pl-5 mb-4; /* Indentation and spacing */
+	}
+
+	li {
+		@apply mb-2; /* Spacing between list items */
+	}
+
+	/* Blockquotes */
+	blockquote {
+		@apply border-l-4 border-accent-primary pl-4 italic;
+		@apply text-darkgray-400; /* Slightly muted text color */
+	}
+
+	/* Default button styles */
+	button,
 	.btn {
-		@apply border border-transparent rounded-none cursor-pointer inline-block font-semibold tracking-wide py-3 px-4 text-center transition-all duration-200 border-primary bg-primary text-white;
+		@apply bg-primary-500 text-white;
+		@apply py-2 px-4; /* Padding */
+		@apply rounded; /* Rounded corners */
+		@apply transition-all duration-200; /* Smooth transition for all properties */
+
+		&:hover {
+			@apply bg-primary-600; /* Darker shade on hover */
+		}
+
+		&:active {
+			@apply bg-primary-700; /* Even darker shade on active state */
+		}
+
+		&:disabled {
+			@apply cursor-not-allowed; /* Show not-allowed cursor on disabled */
+			@apply bg-lightgray-600; /* Grayed out color for disabled */
+		}
 	}
 
-	.btn:hover {
-		@apply bg-transparent text-primary;
+	/* Images */
+	img {
+		@apply max-w-full; /* Ensure images don't overflow their containers */
 	}
 
-	.btn-fullwidth {
-		@apply w-full;
-	}
-
-	.btn-primary-inverted {
-		@apply border-primary bg-transparent text-primary;
-	}
-
-	.btn-primary-inverted:hover {
-		@apply border-primary bg-primary text-white;
-	}
-
-	.btn:disabled {
-		@apply border-gray-600 bg-gray-800 text-white cursor-not-allowed;
-	}
-}
-
-@layer components {
-	input:not([type='color']),
-	textarea {
-		@apply py-2 px-1 focus:border-primary focus:outline-none;
-	}
-}
-
-@layer components {
-	.editor-styles-wrapper {
-		@apply font-primary;
-	}
-}
-
-@layer components {
-	.alert {
-		@apply text-center p-4 mb-4;
-	}
-
-	.alert a {
-		@apply text-black;
-	}
-
-	.alert-danger {
-		@apply bg-red-200 border border-red-500;
-	}
-
-	.alert-warning {
-		@apply bg-yellow-200 border border-yellow-500;
-	}
-
-	.alert-success {
-		@apply bg-green-200 border border-green-500;
-	}
-
-	.alert-info {
-		@apply bg-blue-200 border border-blue-500;
+	/* Borders */
+	hr {
+		@apply border-t border-lightgray-300;
+		@apply my-8; /* Vertical margins */
 	}
 }
