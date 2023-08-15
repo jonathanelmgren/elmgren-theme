@@ -7,8 +7,7 @@ module.exports = {
     './templates/*.php',
     './functions/**/*.php',
     './classes/**/*.php',
-    './assets/**/*.{php,svg}',
-    './safelist.txt',
+    './assets/**/*.{php,svg}'
   ],
   safelist: ['editor-styles-wrapper'],
   theme: {
@@ -48,16 +47,5 @@ module.exports = {
       }
     },
   },
-  plugins: [
-    require('tailwind-safelist-generator')({
-      path: 'safelist.txt',
-      patterns: [
-        'text-{colors}',
-        'hover:text-{colors}',
-        'bg-{colors}',
-        'hover:bg-{colors}',
-      ],
-    }),
-  ],
 }
 
