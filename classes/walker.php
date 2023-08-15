@@ -4,6 +4,15 @@ class Elm_Walker_Nav_Menu extends Walker_Nav_Menu
 {
     public function start_el(&$output, $item, $depth = 0, $args = [], $id = 0): void
     {
+        if (!is_object($args)) {
+            $args = (object) [
+                'before' => '',
+                'link_before' => '',
+                'link_after' => '',
+                'after' => ''
+            ];
+        }
+
         $indent = str_repeat("\t", $depth);
         $attributes = $this->get_combined_attributes($item, $depth, $args);
         $title = apply_filters('the_title', $item->title, $item->ID);
