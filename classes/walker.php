@@ -1,24 +1,39 @@
+
 <?php
 
 class Elm_Walker_Nav_Menu extends Walker_Nav_Menu
 {
-    public function start_el(&$output, $item, $depth = 0, $args = [], $id = 0): void
+    // Helper function to initialize args
+    protected function initialize_args($args)
     {
         if (!is_object($args)) {
-            $args = (object) [
+            return (object) [
                 'before' => '',
                 'link_before' => '',
                 'link_after' => '',
                 'after' => ''
             ];
         }
+        return $args;
+    }
 
-        $indent = str_repeat("\t", $depth);
+    // Helper function to check if a menu item has children
+    protected function has_children($item)
+    {
+        return in_array('menu-item-has-children', $item->classes);
+    }
+
+    // Helper function to generate item output
+    protected function generate_item_output($item, $attributes, $args, $additional_content = '')
+    {
+        return $args->before . '<a href="' . esc_attr($item->url) . '" ' . $attributes . '>' . $args->link_before . $item->title . $args->link_after . $additional_content . '</a>' . $args->after;    }
+
+    public function start_el(&$output, $item, $depth = 0, $args = [], $id = 0): void
+    {
+        $args = $this->initialize_args($args);
+        $indent = str_repeat("	", $depth);
         $attributes = $this->get_combined_attributes($item, $depth, $args);
-        $title = apply_filters('the_title', $item->title, $item->ID);
-
-        $item_output = "{$args->before}<a href=\"" . esc_attr($item->url) . "\" $attributes>{$args->link_before}$title{$args->link_after}</a>{$args->after}";
-
+        $item_output = $this->generate_item_output($item, $attributes, $args);
         $output .= $indent . apply_filters('walker_nav_menu_start_el', $item_output, $item, $depth, $args);
     }
 
@@ -41,27 +56,13 @@ class Elm_Header_Walker_Nav_Menu extends Elm_Walker_Nav_Menu
             $this->isFirstItemOfSecondDepth = false;  // Reset the flag
         }
 
-
-        if (!is_object($args)) {
-            $args = (object) [
-                'before' => '',
-                'link_before' => '',
-                'link_after' => '',
-                'after' => ''
-            ];
-        }
-
-        $indent = str_repeat("\t", $depth);
+        $args = $this->initialize_args($args);
+        $indent = str_repeat("	", $depth);
         $attributes = $this->get_combined_attributes($item, $depth, $args);
-        $title = apply_filters('the_title', $item->title, $item->ID);
 
-        $arrow_down = '';
-        if (in_array('menu-item-has-children', $item->classes) && $depth === 0) {
-            $arrow_down = elm_get_inline_svg('arrow_down');
-        }
+        $arrow_down = $this->has_children($item) && $depth === 0 ? elm_get_inline_svg('arrow_down') : '';
 
-        $item_output = "{$args->before}<a href=\"" . esc_attr($item->url) . "\" $attributes>{$args->link_before}$title{$args->link_after}{$arrow_down}</a>{$args->after}";
-
+        $item_output = $this->generate_item_output($item, $attributes, $args, $arrow_down);
         $output .= $indent . apply_filters('walker_nav_menu_start_el', $item_output, $item, $depth, $args);
     }
 
@@ -85,9 +86,8 @@ class Elm_Header_Walker_Nav_Menu extends Elm_Walker_Nav_Menu
             'header_link_color' => ['attr' => 'text', 'fallback' => 'text-gray-600'],
             'header_link_color_hover' => ['attr' => 'text', 'prefix' => 'hover', 'fallback' => 'text-gray-900']
         ];
-
         $additional_classes = 'items-center gap-x-1';
-        if (in_array('menu-item-has-children', $item->classes) && $depth === 0) {
+        if ($this->has_children($item) && $depth === 0) {
             $additional_classes .= ' inline-flex';
         }
         if ($depth === 1) {
@@ -95,14 +95,12 @@ class Elm_Header_Walker_Nav_Menu extends Elm_Walker_Nav_Menu
         }
         $attrs = elm_get_classes_and_styles($settings, '', '', false, $additional_classes);
 
-        if (in_array('menu-item-has-children', $item->classes)) {
+        if ($this->has_children($item)) {
             $attrs .= ' data-has-children';  // Append the class if the item has children
         }
         if ($depth === 0) {
             $attrs .= ' data-menu-item';  // Append the class if the item has children
         }
-
-        $attrs .= ' depth-' . $depth;
 
         return $attrs;
     }
