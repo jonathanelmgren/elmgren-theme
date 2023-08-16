@@ -24,6 +24,16 @@ function elm_customize_footer($wp_customize)
         ));
     }
 
+     // Footer background
+     $wp_customize->add_setting('footer_bg_color', array(
+        'transport' => 'refresh',
+    ));
+    $wp_customize->add_control(new WP_Customize_Color_Control($wp_customize, 'footer_bg_color_control', array(
+        'label'    => __('Footer Background Color', 'elmgren'),
+        'section'  => 'elm_footer_section',
+        'settings' => 'footer_bg_color',
+    )));
+
     // Icon color setting
     $wp_customize->add_setting('footer_icon_color', array(
         'transport' => 'refresh',

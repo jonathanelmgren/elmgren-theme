@@ -21,8 +21,8 @@ const plugins = [
                 if (!changedFiles || changedFiles.has(path.resolve(__dirname, 'tailwind.config.js'))) {
                     const config = getTailwindConfig();
                     const colors = config.theme.extend.colors;
-                    const phpOutput = 
-`
+                    const phpOutput =
+                        `
 // === START: Webpack Generated Block ===
 if (!defined('TAILWIND_COLORS')) {
     define('TAILWIND_COLORS', json_decode('${JSON.stringify(colors)}', true));
@@ -64,6 +64,9 @@ if (typeof process.env.WORDPRESS_SITE_URL === 'string') {
                 './header.php',
                 './footer.php',
                 './templates/*.php',
+                './functions/**/*.php',
+                './classes/**/*.php',
+                './assets/**/*.{php,svg}'
             ],
             reloadDelay: 0,
             injectChanges: true,
@@ -109,7 +112,7 @@ module.exports = {
                     'sass-loader'
                 ]
             },
-            
+
         ]
     },
     plugins,

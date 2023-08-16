@@ -48,20 +48,22 @@ $header_attrs = elm_get_classes_and_styles('header_bg_color', 'bg', '', 'transpa
 <body <?php body_class('font-primary'); ?>>
     <?php wp_body_open(); ?>
     <header role="banner" <?php echo $header_attrs ?>>
-        <nav class="mx-auto flex max-w-7xl items-center justify-between p-6 lg:px-8" aria-label="Global">
-            <div class="flex lg:flex-1">
-                <?= get_logo_or_blog_name(); ?>
-            </div>
-            <div class="flex lg:hidden">
-                <button type="button" data-menu-toggle="open" class="-m-2.5 inline-flex items-center justify-center rounded-md p-2.5 text-gray-700">
-                    <span class="sr-only"><?php _e('Open main menu', 'elmgren') ?></span>
-                    <?php echo elm_get_inline_svg('hamburger_open') ?>
-                </button>
-            </div>
-            <div class="hidden lg:flex lg:gap-x-12">
-                <?php get_main_menu(); ?>
-            </div>
-        </nav>
+        <div class="w-full relative border-b-2">
+            <nav class="z-50 flex <?php elm_the_page_width(true) ?> items-center justify-between py-6" aria-label="Global">
+                <div class="flex lg:flex-1">
+                    <?= get_logo_or_blog_name(); ?>
+                </div>
+                <div class="flex lg:hidden">
+                    <button type="button" data-menu-toggle="open" class="-m-2.5 inline-flex items-center justify-center rounded-md p-2.5 text-gray-700">
+                        <span class="sr-only"><?php _e('Open main menu', 'elmgren') ?></span>
+                        <?php echo elm_the_inline_svg('hamburger_open') ?>
+                    </button>
+                </div>
+                <div class="hidden lg:flex lg:gap-x-12">
+                    <?php get_main_menu(); ?>
+                </div>
+            </nav>
+        </div>
         <!-- Mobile menu -->
         <div class="lg:hidden hidden" role="dialog" aria-modal="true" data-menu="mobile">
             <div data-backdrop class="fixed inset-0 z-10"></div>
@@ -70,7 +72,7 @@ $header_attrs = elm_get_classes_and_styles('header_bg_color', 'bg', '', 'transpa
                     <?= get_logo_or_blog_name(); ?>
                     <button data-menu-toggle="close" type="button" class="-m-2.5 rounded-md p-2.5 text-gray-700">
                         <span class="sr-only"><?php _e('Close menu', 'elmgren') ?></span>
-                        <?php elm_get_inline_svg('hamburger_close') ?>
+                        <?php elm_the_inline_svg('hamburger_close') ?>
                     </button>
                 </div>
                 <div class="mt-6 flow-root">
@@ -83,4 +85,4 @@ $header_attrs = elm_get_classes_and_styles('header_bg_color', 'bg', '', 'transpa
             </div>
         </div>
     </header>
-    <main id="content" role="main" class='<?= elm_get_page_width() ?>'>
+    <main id="content" role="main" class='<?= elm_the_page_width() ?>'>

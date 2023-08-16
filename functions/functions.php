@@ -14,7 +14,11 @@ function elm_get_inline_svg($filename)
         return;
     }
 
-    echo file_get_contents($fullPath);
+    return file_get_contents($fullPath);
+}
+function elm_the_inline_svg($filename)
+{
+    echo elm_get_inline_svg($filename);
 }
 
 /**
@@ -172,14 +176,19 @@ function format_attributes($classes, $styles)
 }
 
 /**
- * Returns the width for the current page and defaults to the theme mod setting.
+ * Echoes the width for the current page and defaults to the theme mod setting.
  *
- * @return string
+ * @return null
  */
-function elm_get_page_width()
+function elm_the_page_width($force_default = false)
+{
+    echo elm_get_page_width($force_default);
+}
+
+function elm_get_page_width($force_default = false)
 {
     $w = get_field('page_width');
-    if (!$w) {
+    if ($force_default || !$w) {
         $w = get_theme_mod('page_width_setting', 'width-normal');
     }
 
@@ -192,5 +201,5 @@ function elm_get_page_width()
         'width-full' => 'm-0'
     ];
 
-    echo $tailwind_classes[$w] ?? '';  // Return the corresponding Tailwind class or an empty string
+    return $tailwind_classes[$w] ?? '';  // Return the corresponding Tailwind class or an empty string
 }
