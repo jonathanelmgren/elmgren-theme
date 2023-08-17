@@ -1,7 +1,7 @@
 
 <?php
 
-require_once __DIR__ . '/default.php';
+require_once __DIR__ . '/base.php';
 
 class Elm_Footer_Walker_Nav_Menu extends Elm_Walker_Nav_Menu
 {

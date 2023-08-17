@@ -9,16 +9,27 @@
     $('[data-menu-toggle="open"], [data-menu-toggle="close"], [data-backdrop]').on("click", toggleMobileMenu);
 }(jQuery));
 
-// Mega menu
+// Dropdown menu functionality
 (function ($) {
-    $('[data-menu-item]').on('mouseenter', function () {
-        $('.flyout-menu').addClass('hidden');
-        if ($(this).has('[data-has-children]')) {
-            $(this).next('.flyout-menu').addClass('block').removeClass('hidden');
+    $('a[data-menu-item]').on('mouseenter click', function (e) {
+        const isTouchDevice = 'ontouchstart' in window || navigator.maxTouchPoints > 0
+        const hasChildren = $(this).data('hasChildren') === ''
+
+        const submenu = $(this).next('.sub-menu')
+        const onText = e.target !== this && $(e.target).hasClass('menu-item-text')
+
+        // If click directly on text on touch device keep default (redirect)
+        if (onText && isTouchDevice) return
+
+        if (isTouchDevice && e.type === 'click' && hasChildren) {
+            e.preventDefault();
+            submenu.toggle();
+        } else if (!isTouchDevice) {
+            $('.sub-menu').hide();
+            submenu.show();
         }
     });
     $('header').on('mouseleave', function () {
-        $('.flyout-menu').removeClass('block');
-        $('.flyout-menu').addClass('hidden');
+        $('.sub-menu').hide();
     })
 }(jQuery));

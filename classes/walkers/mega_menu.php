@@ -1,6 +1,6 @@
 <?php
 
-require_once __DIR__ . '/default.php';
+require_once __DIR__ . '/base.php';
 
 class Elm_Mega_Menu_Walker_Nav_Menu extends Elm_Walker_Nav_Menu
 {
@@ -10,7 +10,7 @@ class Elm_Mega_Menu_Walker_Nav_Menu extends Elm_Walker_Nav_Menu
     public function start_el(&$output, $item, $depth = 0, $args = [], $id = 0): void
     {
         if ($depth == 1 && $this->isFirstItemOfSecondDepth) {
-            $output .= '<div class="flex flex-col w-28">';  // Open the div wrapper
+            $output .= '<div class="flex flex-col grow shrink basis-0 flex-wrap">';  // Open the div wrapper
             $this->openWrapper = true;  // Set the flag
             $this->isFirstItemOfSecondDepth = false;  // Reset the flag
         }
@@ -67,7 +67,7 @@ class Elm_Mega_Menu_Walker_Nav_Menu extends Elm_Walker_Nav_Menu
     public function start_lvl(&$output, $depth = 0, $args = null)
     {
         if ($depth === 0) { // This checks if we're at the top level
-            $attr = elm_get_classes_and_styles('header_bg_color', 'bg', '', 'transparent', 'min-h-[24rem] flyout-menu mt-[2px] hidden absolute top-full z-10 left-0 py-6 w-full');
+            $attr = elm_get_classes_and_styles('header_bg_color', 'bg', '', 'transparent', 'min-h-[24rem] sub-menu mt-[2px] absolute top-full z-10 left-0 py-6 w-full', 'display:none;');
             $width = elm_get_page_width(true);
             $output .= '<div ' . $attr . '>';
             $output .= '<div class="gap-8 flex align-start ' . $width . '">';
