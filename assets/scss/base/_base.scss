@@ -83,22 +83,24 @@ body:not(.wp-admin, .wp-customizer) {
 	/* Default button styles */
 	button,
 	.btn {
-		@apply bg-primary-500 text-white;
-		@apply py-2 px-4; /* Padding */
-		@apply rounded; /* Rounded corners */
-		@apply transition-all duration-200; /* Smooth transition for all properties */
+		&:not(.btn--no-style) {
+			@apply bg-primary-500 text-white;
+			@apply py-2 px-4; /* Padding */
+			@apply rounded; /* Rounded corners */
+			@apply transition-all duration-200; /* Smooth transition for all properties */
 
-		&:hover {
-			@apply bg-primary-600; /* Darker shade on hover */
-		}
+			&:hover {
+				@apply bg-primary-600; /* Darker shade on hover */
+			}
 
-		&:active {
-			@apply bg-primary-700; /* Even darker shade on active state */
-		}
+			&:active {
+				@apply bg-primary-700; /* Even darker shade on active state */
+			}
 
-		&:disabled {
-			@apply cursor-not-allowed; /* Show not-allowed cursor on disabled */
-			@apply bg-lightgray-600; /* Grayed out color for disabled */
+			&:disabled {
+				@apply cursor-not-allowed; /* Show not-allowed cursor on disabled */
+				@apply bg-lightgray-600; /* Grayed out color for disabled */
+			}
 		}
 	}
 

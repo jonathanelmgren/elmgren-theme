@@ -1,49 +1,8 @@
-
 <?php
 
-class Elm_Walker_Nav_Menu extends Walker_Nav_Menu
-{
-    // Helper function to initialize args
-    protected function initialize_args($args)
-    {
-        if (!is_object($args)) {
-            return (object) [
-                'before' => '',
-                'link_before' => '',
-                'link_after' => '',
-                'after' => ''
-            ];
-        }
-        return $args;
-    }
+require_once __DIR__ . '/default.php';
 
-    // Helper function to check if a menu item has children
-    protected function has_children($item)
-    {
-        return in_array('menu-item-has-children', $item->classes);
-    }
-
-    // Helper function to generate item output
-    protected function generate_item_output($item, $attributes, $args, $additional_content = '')
-    {
-        return $args->before . '<a href="' . esc_attr($item->url) . '" ' . $attributes . '>' . $args->link_before . $item->title . $args->link_after . $additional_content . '</a>' . $args->after;    }
-
-    public function start_el(&$output, $item, $depth = 0, $args = [], $id = 0): void
-    {
-        $args = $this->initialize_args($args);
-        $indent = str_repeat("	", $depth);
-        $attributes = $this->get_combined_attributes($item, $depth, $args);
-        $item_output = $this->generate_item_output($item, $attributes, $args);
-        $output .= $indent . apply_filters('walker_nav_menu_start_el', $item_output, $item, $depth, $args);
-    }
-
-    protected function get_combined_attributes($item, $depth, $args): string
-    {
-        return "";  // Placeholder. To be overridden in child classes.
-    }
-}
-
-class Elm_Header_Walker_Nav_Menu extends Elm_Walker_Nav_Menu
+class Elm_Mega_Menu_Walker_Nav_Menu extends Elm_Walker_Nav_Menu
 {
     private $openWrapper = false;  // Flag to track if the div wrapper is open
     private $isFirstItemOfSecondDepth = true;  // Flag to track the first item of the second depth
@@ -111,7 +70,7 @@ class Elm_Header_Walker_Nav_Menu extends Elm_Walker_Nav_Menu
             $attr = elm_get_classes_and_styles('header_bg_color', 'bg', '', 'transparent', 'min-h-[24rem] flyout-menu mt-[2px] hidden absolute top-full z-10 left-0 py-6 w-full');
             $width = elm_get_page_width(true);
             $output .= '<div ' . $attr . '>';
-            $output .= '<div class="w-full gap-8 flex align-start ' . $width . '">';
+            $output .= '<div class="gap-8 flex align-start ' . $width . '">';
         }
     }
 
@@ -120,17 +79,5 @@ class Elm_Header_Walker_Nav_Menu extends Elm_Walker_Nav_Menu
         if ($depth === 0) {
             $output .= '</div></div>';
         }
-    }
-}
-
-class Elm_Footer_Walker_Nav_Menu extends Elm_Walker_Nav_Menu
-{
-    protected function get_combined_attributes($item, $depth, $args): string
-    {
-        $settings = [
-            'footer_menu_link_color' => ['attr' => 'text', 'fallback' => 'text-gray-600'],
-            'footer_menu_link_color_hover' => ['attr' => 'text', 'prefix' => 'hover', 'fallback' => 'text-gray-900']
-        ];
-        return elm_get_classes_and_styles($settings, 'text', '', false, 'text-sm leading-6');
     }
 }

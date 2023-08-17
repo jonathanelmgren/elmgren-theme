@@ -29,7 +29,7 @@ function get_main_menu()
 {
     wp_nav_menu([
         'theme_location' => 'main-menu',
-        'walker' => new Elm_Header_Walker_Nav_Menu(),
+        'walker' => new Elm_Mega_Menu_Walker_Nav_Menu(),
         'container' => false,
         'items_wrap' => '%3$s',
     ]);
@@ -54,7 +54,7 @@ $header_attrs = elm_get_classes_and_styles('header_bg_color', 'bg', '', 'transpa
                     <?= get_logo_or_blog_name(); ?>
                 </div>
                 <div class="flex lg:hidden">
-                    <button type="button" data-menu-toggle="open" class="-m-2.5 inline-flex items-center justify-center rounded-md p-2.5 text-gray-700">
+                    <button type="button" data-menu-toggle="open" class="btn--no-style -m-2.5 inline-flex items-center justify-center rounded-md p-2.5 text-gray-700">
                         <span class="sr-only"><?php _e('Open main menu', 'elmgren') ?></span>
                         <?php echo elm_the_inline_svg('hamburger_open') ?>
                     </button>
@@ -70,7 +70,7 @@ $header_attrs = elm_get_classes_and_styles('header_bg_color', 'bg', '', 'transpa
             <div class="fixed inset-y-0 right-0 z-10 w-full overflow-y-auto bg-white px-6 py-6 sm:max-w-sm sm:ring-1 sm:ring-gray-900/10">
                 <div class="flex items-center justify-between">
                     <?= get_logo_or_blog_name(); ?>
-                    <button data-menu-toggle="close" type="button" class="-m-2.5 rounded-md p-2.5 text-gray-700">
+                    <button data-menu-toggle="close" type="button" class="btn--no-style -m-2.5 rounded-md p-2.5 text-gray-700">
                         <span class="sr-only"><?php _e('Close menu', 'elmgren') ?></span>
                         <?php elm_the_inline_svg('hamburger_close') ?>
                     </button>
