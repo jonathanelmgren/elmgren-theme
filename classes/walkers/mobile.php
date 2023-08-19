@@ -1,4 +1,3 @@
-
 <?php
 
 require_once __DIR__ . '/base.php';
@@ -36,22 +35,20 @@ class Elm_Mobile_Walker_Nav_Menu extends Elm_Walker_Nav_Menu
         $atts['class'] = !empty($class_names) ? $class_names : '';
         $atts['style'] = 'display: none;';
 
-        /**
-         * Filters the HTML attributes applied to a menu list element.
-         *
-         * @since 6.3.0
-         *
-         * @param array $atts {
-         *     The HTML attributes applied to the `<ul>` element, empty strings are ignored.
-         *
-         *     @type string $class    HTML CSS class attribute.
-         * }
-         * @param stdClass $args      An object of `wp_nav_menu()` arguments.
-         * @param int      $depth     Depth of menu item. Used for padding.
-         */
         $atts       = apply_filters('nav_menu_submenu_attributes', $atts, $args, $depth);
         $attributes = $this->build_atts($atts);
 
         $output .= "{$n}{$indent}<ul{$attributes}>{$n}";
+    }
+
+    protected function get_combined_attributes($item, $depth, $args): string
+    {
+        $settings = [
+            'header_link_color' => ['attr' => 'text', 'fallback' => 'text-gray-600'],
+            'header_link_color_hover' => ['attr' => 'text', 'prefix' => 'hover', 'fallback' => 'text-gray-900']
+        ];
+
+        $attrs = elm_get_classes_and_styles($settings, '', '', false, $additional_classes);
+        return $attrs;
     }
 }

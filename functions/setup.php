@@ -100,3 +100,19 @@ if (!function_exists('elm_include_folder')) {
         }
     }
 }
+
+// Register blocks
+function register_acf_blocks()
+{
+    $blocks = array_diff(scandir(get_stylesheet_directory() . '/blocks/', 1), array('..', '.'));
+
+    foreach ($blocks as $block) {
+        $dir = get_stylesheet_directory() . '/blocks/' . $block;
+        $file = $dir . '/settings.php';
+        if (file_exists($file)) {
+            require_once $file;
+        }
+        register_block_type($dir);
+    }
+}
+add_action('init', 'register_acf_blocks');

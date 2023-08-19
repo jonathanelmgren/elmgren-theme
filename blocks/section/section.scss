@@ -1,0 +1,29 @@
+.faq-container {
+    --faq-text-color: var(--color-brand--primary);
+    .faq-box {
+        margin-block: 1rem;
+        user-select: none;
+        cursor: pointer;
+        &.active {
+            .faq-box--content {
+                height: auto;
+            }
+            .expand-icon {
+                transform: rotate(45deg);
+            }
+        }
+        &--title {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            color: var(--faq-text-color);
+            font-size: var(--text-h-xxs);
+        }
+        &--content {
+            height: 0;
+            overflow: hidden;
+            color: var(--color-gray--light-1);
+            font-size: var(--text-xs);
+        }
+    }
+}

@@ -83,7 +83,7 @@ body:not(.wp-admin, .wp-customizer) {
 	/* Default button styles */
 	button,
 	.btn {
-		&:not(.btn--no-style) {
+		&:not(.btn--no-style, .components-button) {
 			@apply bg-primary-500 text-white;
 			@apply py-2 px-4; /* Padding */
 			@apply rounded; /* Rounded corners */

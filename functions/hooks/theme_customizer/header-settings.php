@@ -28,6 +28,25 @@ function elm_customize_header($wp_customize)
         ),
     ));
 
+    // Adding setting for header spacing to content
+    $wp_customize->add_setting('content_spacing_setting', array(
+        'default'   => '0',  // default height
+        'transport' => 'refresh',
+    ));
+
+    // Adding control for header spacing to content
+    $wp_customize->add_control('content_spacing_control', array(
+        'label'    => __('Set header spacing to content', 'elmgren'),
+        'section'  => 'elm_header_section',
+        'settings' => 'content_spacing_setting',
+        'type'     => 'range',
+        'input_attrs' => array(
+            'min' => '0',
+            'max' => '12',
+            'step' => '0.5',
+        ),
+    ));
+
     // Absolute header positioning
     $wp_customize->add_setting('header_absolute_position', array(
         'default'   => false,
@@ -81,6 +100,27 @@ function elm_customize_header($wp_customize)
         'label'    => __('Header Link Color - Hover', 'elmgren'),
         'section'  => 'elm_header_section',
         'settings' => 'header_link_color_hover',
+    )));
+
+    // Header border
+    $wp_customize->add_setting('header_border', array(
+        'transport' => 'refresh',
+    ));
+    $wp_customize->add_control('header_border_control', array(
+        'label'    => __('Header border?', 'elmgren'),
+        'section'  => 'elm_header_section',
+        'settings' => 'header_border',
+        'type'     => 'checkbox',
+    ));
+
+    // Header border color
+    $wp_customize->add_setting('header_border_color', array(
+        'transport' => 'refresh',
+    ));
+    $wp_customize->add_control(new WP_Customize_Color_Control($wp_customize, 'header_border_color_control', array(
+        'label'    => __('Header Border color', 'elmgren'),
+        'section'  => 'elm_header_section',
+        'settings' => 'header_border_color',
     )));
 }
 add_action('customize_register', 'elm_customize_header');
