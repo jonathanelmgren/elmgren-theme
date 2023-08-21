@@ -30,10 +30,9 @@ function elm_the_inline_svg($filename)
  *
  * @return string
  */
-function elm_get_style_or_class_from_color($setting, $attr, $fallback = false)
+function elm_get_style_or_class_from_color($color, $attr)
 {
     $colors = defined('TAILWIND_COLORS') ? TAILWIND_COLORS : [];
-    $color = strtolower(get_theme_mod($setting, $fallback));
 
     foreach ($colors as $mainColor => $shades) {
         foreach ($shades as $shade => $shadeColor) {
@@ -53,7 +52,7 @@ function elm_get_style_or_class_from_color($setting, $attr, $fallback = false)
         return ["tailwind" => null, "color" => $color];
     }
 
-    return ["tailwind" => $fallback, "color" => null];  // Ensure the fallback is returned if no other conditions are met.
+    return ["tailwind" => $color, "color" => null];  // Ensure the fallback is returned if no other conditions are met.
 }
 
 
@@ -82,7 +81,7 @@ function elm_sanitize_attr_string($string)
  *
  * @return string
  */
-function elm_get_classes_and_styles($settings, $attr = 'text', $prefix = "", $fallback = false, $additional_classes = '', $additional_styles = '')
+function elm_get_classes_and_styles_from_theme_settings($settings, $attr = 'text', $prefix = "", $fallback = false, $additional_classes = '', $additional_styles = '')
 {
     if (is_string($settings)) {
         $settings = [
@@ -98,7 +97,51 @@ function elm_get_classes_and_styles($settings, $attr = 'text', $prefix = "", $fa
         $currentPrefix = $config['prefix'] ?? "";
         $currentFallback = $config['fallback'] ?? false;
 
-        $styleOrClass = elm_get_style_or_class_from_color($setting, $currentAttr, $currentFallback);
+        $color = strtolower(get_theme_mod($setting, $fallback));
+        $class = strtolower(get_theme_mod($setting . '_class', $fallback));
+
+        if ($class && !empty($class)) {
+            $combined_classes[] = get_class_name($class, $currentPrefix);
+        } else {
+            $styleOrClass = elm_get_style_or_class_from_color($color, $currentAttr, $currentFallback);
+
+            if ($styleOrClass['tailwind'] || $styleOrClass['color']) {
+                if ($styleOrClass['tailwind'] === null && $currentPrefix === "hover") {
+                    $combined_styles[] = "--hover-color: {$styleOrClass['color']}";
+                    $combined_classes[] = "custom-hover";
+                } elseif ($styleOrClass['tailwind'] === null) {
+                    // If there's no tailwind class, but there's a color, set the inline style
+                    $combined_styles[] = get_inline_style($currentAttr, $styleOrClass['color']);
+                } else {
+                    $combined_classes[] = get_class_name($styleOrClass['tailwind'], $currentPrefix);
+                }
+            }
+        }
+    }
+
+    return format_attributes($combined_classes, $combined_styles);
+}
+
+function elm_get_classes_and_styles_from_theme_settings_attrs_from_acf_field($settings, $attr = 'text', $prefix = "", $fallback = false, $additional_classes = '', $additional_styles = '')
+{
+
+    if (is_string($settings)) {
+        $settings = [
+            $settings => ['attr' => $attr, 'prefix' => $prefix, 'fallback' => $fallback]
+        ];
+    }
+
+    $combined_classes = [$additional_classes];
+    $combined_styles = [$additional_styles];
+
+    foreach ($settings as $setting => $config) {
+        $currentAttr = $config['attr'] ?? 'text';
+        $currentPrefix = $config['prefix'] ?? "";
+        $currentFallback = $config['fallback'] ?? false;
+
+        $color = get_field($setting);
+
+        $styleOrClass = elm_get_style_or_class_from_color($color, $currentAttr, $currentFallback);
 
         if ($styleOrClass['tailwind'] || $styleOrClass['color']) {
             if ($styleOrClass['tailwind'] === null && $currentPrefix === "hover") {

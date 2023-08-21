@@ -29,7 +29,7 @@ function elm_has_socials(?string $social = null): bool
     return false;
 }
 
-$footer_attrs = elm_get_classes_and_styles('footer_bg_color', 'bg', '', 'transparent', 'overflow-hidden pt-20 sm:pt-24 pb-4 sm:pb-4');
+$footer_attrs = elm_get_classes_and_styles_from_theme_settings('footer_bg_color', 'bg', '', 'transparent', 'overflow-hidden pt-20 sm:pt-24 pb-4 sm:pb-4');
 
 ?>
 
@@ -48,7 +48,7 @@ $footer_attrs = elm_get_classes_and_styles('footer_bg_color', 'bg', '', 'transpa
 
         <?php if (elm_has_socials()) : ?>
             <?php
-            $attrs = elm_get_classes_and_styles(
+            $attrs = elm_get_classes_and_styles_from_theme_settings(
                 [
                     'footer_icon_color' => ['attr' => 'text', 'fallback' => 'text-gray-600'],
                     'footer_icon_color_hover' => ['attr' => 'text', 'prefix' => 'hover', 'fallback' => 'text-gray-900'],
@@ -68,7 +68,7 @@ $footer_attrs = elm_get_classes_and_styles('footer_bg_color', 'bg', '', 'transpa
             </div>
         <?php endif; ?>
 
-        <p <?php echo elm_get_classes_and_styles('footer_text_color', 'text', '', 'text-gray-500', 'mt-5 text-center text-xs leading-5') ?>>&copy; <?= date("Y") ?> <?= get_theme_mod('footer_text', 'Elmgren Theme'); ?></p>
+        <p <?php echo elm_get_classes_and_styles_from_theme_settings('footer_text_color', 'text', '', 'text-gray-500', 'mt-5 text-center text-xs leading-5') ?>>&copy; <?= date("Y") ?> <?= get_theme_mod('footer_text', 'Elmgren Theme'); ?></p>
     </div>
 </footer>
 

@@ -48,7 +48,7 @@ class Elm_Mobile_Walker_Nav_Menu extends Elm_Walker_Nav_Menu
             'header_link_color_hover' => ['attr' => 'text', 'prefix' => 'hover', 'fallback' => 'text-gray-900']
         ];
 
-        $attrs = elm_get_classes_and_styles($settings, '', '', false, $additional_classes);
+        $attrs = elm_get_classes_and_styles_from_theme_settings($settings, '', '', false, $additional_classes);
         return $attrs;
     }
 }

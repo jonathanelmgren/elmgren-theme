@@ -71,7 +71,7 @@ class Elm_Mega_Menu_Walker_Nav_Menu extends Elm_Walker_Nav_Menu
             $class .= ' mt-[2px]';
         }
         if ($depth === 0) { // This checks if we're at the top level
-            $attr = elm_get_classes_and_styles('header_bg_color', 'bg', '', 'transparent', $class, 'display:none;');
+            $attr = elm_get_classes_and_styles_from_theme_settings('header_bg_color', 'bg', '', 'transparent', $class, 'display:none;');
             $width = elm_get_page_width(true);
             $output .= '<div ' . $attr . '>';
             $output .= '<div class="gap-8 flex align-start ' . $width . '">';

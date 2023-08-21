@@ -33,6 +33,7 @@ if (function_exists('acf_add_local_field_group')) :
                 'type' => 'color_picker',
                 'instructions' => 'Choose a background color for the section.',
                 'default_value' => '',
+                'return_format' => 'string'
             ),
             array(
                 'key' => 'field_64df84d68a586',

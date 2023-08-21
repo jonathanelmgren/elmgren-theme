@@ -10,6 +10,6 @@ class Elm_Footer_Walker_Nav_Menu extends Elm_Walker_Nav_Menu
             'footer_menu_link_color' => ['attr' => 'text', 'fallback' => 'text-gray-600'],
             'footer_menu_link_color_hover' => ['attr' => 'text', 'prefix' => 'hover', 'fallback' => 'text-gray-900']
         ];
-        return elm_get_classes_and_styles($settings, 'text', '', false, 'text-sm leading-6');
+        return elm_get_classes_and_styles_from_theme_settings($settings, 'text', '', false, 'text-sm leading-6');
     }
 }

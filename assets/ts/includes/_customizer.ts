@@ -64,13 +64,80 @@ function updateValueDropdown(selectedKey: string, valueDropdown: JQuery, colors:
 
 }
 
+jQuery(function ($) {
+    const colors = themeSettings?.colors;
+    if (!colors) return;
+    if (typeof acf === 'undefined') return;
+    acf.addAction('append_field/type=color_picker', function ({ $el }: acf.Field) {
+        const container = $($el);
+        const colorPicker = container.find('input.wp-color-picker');
+
+        console.log(colorPicker)
+
+        const keyDropdown = $('<select></select>').appendTo(container);
+        keyDropdown.append(`<option value=${NOT_PRESET}>No preset</option>`);
+        Object.keys(colors).forEach(colorKey => {
+            keyDropdown.append(`<option value="${colorKey}">${colorKey.charAt(0).toUpperCase() + colorKey.slice(1)}</option>`);
+        });
+
+        const valueDropdown = $('<select></select>').appendTo(container);
+
+        setDropdownsBasedOnColorPicker(colorPicker, valueDropdown, keyDropdown, colors);
+
+        keyDropdown.on('change', function () {
+            const selectedKey = $(this).val() as string;
+            if (selectedKey === NOT_PRESET) {
+                valueDropdown.hide();
+                colorPicker.iris('option', 'color', '');  // Reset color picker if needed
+            } else {
+                updateValueDropdown(selectedKey, valueDropdown, colors);
+                const defaultShadeValue = valueDropdown.find(`option:contains(Default)`).first().val()
+                if (defaultShadeValue) {
+                    valueDropdown.val(defaultShadeValue).trigger('change');
+                }
+                colorPicker.iris('option', 'color', defaultShadeValue).trigger('input');
+                valueDropdown.show();
+            }
+        });
+
+
+        valueDropdown.on('change', function () {
+            const selectedValue = $(this).val() as string;
+            colorPicker.iris('option', 'color', selectedValue);
+        });
+
+        colorPicker.on('irischange', function () {
+            setDropdownsBasedOnColorPicker($(this), valueDropdown, keyDropdown, colors);
+        });
+    });
+});
+
+
+
 
 jQuery(function ($) {
     const colors = themeSettings?.colors;
+    function findCorrespondingClassControl($liElement: JQuery<HTMLElement>) {
+        // Extract the base setting name from the current control's ID
+        const baseSettingName = $liElement.attr('id')?.replace('customize-control-', '').replace('_control', '');
+
+        return baseSettingName + '_class'
+    }
+    function getTailwindClassForColor(color: string): string {
+        for (const className in colors) {
+            for (const shade in colors[className]) {
+                if (colors[className][shade].toLowerCase() === color.toLowerCase()) {
+                    return `${className}-${shade}`;
+                }
+            }
+        }
+        return "";
+    }
     if (colors) {
         $('.customize-control-color').each(function () {
             const container = $(this);
             const colorPicker = container.find('.color-picker-hex');
+            const tailwindInput = findCorrespondingClassControl(container)
 
             const keyDropdown = $('<select></select>').appendTo(container);
             keyDropdown.append(`<option value=${NOT_PRESET}>No preset</option>`);
@@ -98,13 +165,15 @@ jQuery(function ($) {
                 }
             });
 
-
             valueDropdown.on('change', function () {
                 const selectedValue = $(this).val() as string;
                 colorPicker.iris('option', 'color', selectedValue);
             });
 
             colorPicker.on('irischange', function () {
+                const tailwindClass = getTailwindClassForColor(colorPicker.iris('color'));
+                console.log(tailwindClass)
+                wp.customize(tailwindInput).set(tailwindClass);
                 setDropdownsBasedOnColorPicker($(this), valueDropdown, keyDropdown, colors);
             });
         });

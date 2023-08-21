@@ -1,6 +1,10 @@
 interface JQuery {
     iris(options?: any, ...args: any[]): any;
 }
+
+declare namespace wp {
+    function customize(param: any): any
+}
 declare namespace acf {
 
     // Represents an ACF field object.

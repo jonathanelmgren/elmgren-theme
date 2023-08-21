@@ -50,9 +50,10 @@ $settings = [
     'header_link_color_hover' => ['attr' => 'text', 'prefix' => 'hover', 'fallback' => 'text-gray-900'],
     'header_bg_color' => ['attr' => 'bg', 'fallback' => 'transparent'],
 ];
+//dd(get_theme_mod('header_bg_color', 'transparent'));
 
-$header_attrs = elm_get_classes_and_styles($settings, '', '', '', $header_class, $header_margin_to_content);
-$mobile_attrs = elm_get_classes_and_styles('header_bg_color', 'bg', '', 'transparent', 'fixed inset-y-0 right-0 z-10 w-full overflow-y-auto px-6 py-6 sm:max-w-sm sm:ring-1 sm:ring-gray-900/10');
+$header_attrs = elm_get_classes_and_styles_from_theme_settings($settings, '', '', '', $header_class, $header_margin_to_content);
+$mobile_attrs = elm_get_classes_and_styles_from_theme_settings('header_bg_color', 'bg', '', 'transparent', 'fixed inset-y-0 right-0 z-10 w-full overflow-y-auto px-6 py-6 sm:max-w-sm sm:ring-1 sm:ring-gray-900/10');
 
 $border = get_theme_mod('header_border', false);
 $border_color = get_theme_mod('header_border_color', 'transparent');
@@ -60,7 +61,7 @@ $container_attrs = 'w-full relative';
 if ($border) {
     $container_attrs .= ' border-b-2';
 }
-$container_attrs = elm_get_classes_and_styles('header_border_color', 'border', '', '', $container_attrs);
+$container_attrs = elm_get_classes_and_styles_from_theme_settings('header_border_color', 'border', '', '', $container_attrs);
 ?>
 
 <body <?php body_class('font-primary'); ?>>
