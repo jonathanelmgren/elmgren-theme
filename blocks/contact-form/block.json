@@ -1,0 +1,14 @@
+{
+    "name": "elm/contact-form",
+    "title": "Contact form",
+    "description": "Contact form",
+    "category": "formatting",
+    "icon": "admin-comments",
+    "keywords": ["contact-form"],
+    "apiVersion": 2,
+    "acf": {
+        "mode": "preview",
+        "renderTemplate": "contact-form.php"
+    },
+    "align": "full"
+}
