@@ -16,9 +16,11 @@ if ($background_image) {
 }
 $additional_class = 'relative';
 $additional_class .= $is_fullwidth ? ' full-' . $width : '';
-$attrs = elm_get_classes_and_styles_from_theme_settings_attrs_from_acf_field('background_color', 'bg', '', false, $additional_class);
+//$attrs = elm_get_classes_and_styles_from_theme_settings_attrs_from_acf_field('background_color', 'bg', '', false, $additional_class);
+$attrs = '';
+//$section_bg_color = new TailwindColor('')
 ?>
-<section <?php echo $attrs ?>>
+<section class="<?php echo $additional_class ?>">
     <?php if ($background_image) : ?>
         <div class="absolute inset-0" style="<?php echo $pseudo_element_styles; ?>"></div>
     <?php endif; ?>

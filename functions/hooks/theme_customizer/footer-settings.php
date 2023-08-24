@@ -28,80 +28,50 @@ function elm_customize_footer($wp_customize)
     $wp_customize->add_setting('footer_bg_color', array(
         'transport' => 'refresh',
     ));
-    $wp_customize->add_control(new WP_Customize_Color_Control($wp_customize, 'footer_bg_color_control', array(
+    $wp_customize->add_control(new TailwindColorPickerThemeCustomizer($wp_customize, 'footer_bg_color_control', array(
         'label'    => __('Footer Background Color', 'elmgren'),
         'section'  => 'elm_footer_section',
         'settings' => 'footer_bg_color',
-    )));
-    $wp_customize->add_setting('footer_bg_color_class');
-    $wp_customize->add_control(new WP_Customize_Color_Control($wp_customize, 'footer_bg_color_class_control', array(
-        'type'    => 'hidden',
-        'section'  => 'elm_footer_section',
-        'settings' => 'footer_bg_color_class',
     )));
 
     // Icon color setting
     $wp_customize->add_setting('footer_icon_color', array(
         'transport' => 'refresh',
     ));
-    $wp_customize->add_control(new WP_Customize_Color_Control($wp_customize, 'footer_icon_color_control', array(
+    $wp_customize->add_control(new TailwindColorPickerThemeCustomizer($wp_customize, 'footer_icon_color_control', array(
         'label'    => __('Footer Icon Color', 'elmgren'),
         'section'  => 'elm_footer_section',
         'settings' => 'footer_icon_color',
-    )));
-    $wp_customize->add_setting('footer_icon_color_class');
-    $wp_customize->add_control(new WP_Customize_Color_Control($wp_customize, 'footer_icon_color_class_control', array(
-        'type'    => 'hidden',
-        'section'  => 'elm_footer_section',
-        'settings' => 'footer_icon_color_class',
     )));
 
     // Icon hover color setting
     $wp_customize->add_setting('footer_icon_color_hover', array(
         'transport' => 'refresh'
     ));
-    $wp_customize->add_control(new WP_Customize_Color_Control($wp_customize, 'footer_icon_color_hover_control', array(
+    $wp_customize->add_control(new TailwindColorPickerThemeCustomizer($wp_customize, 'footer_icon_color_hover_control', array(
         'label'    => __('Footer Icon Color - Hover', 'elmgren'),
         'section'  => 'elm_footer_section',
         'settings' => 'footer_icon_color_hover',
-    )));
-    $wp_customize->add_setting('footer_icon_color_hover_class');
-    $wp_customize->add_control(new WP_Customize_Color_Control($wp_customize, 'footer_icon_color_hover_class_control', array(
-        'type'    => 'hidden',
-        'section'  => 'elm_footer_section',
-        'settings' => 'footer_icon_color_hover_class',
     )));
 
     // Menu link color setting
     $wp_customize->add_setting('footer_menu_link_color', array(
         'transport' => 'refresh',
     ));
-    $wp_customize->add_control(new WP_Customize_Color_Control($wp_customize, 'footer_menu_link_color_control', array(
+    $wp_customize->add_control(new TailwindColorPickerThemeCustomizer($wp_customize, 'footer_menu_link_color_control', array(
         'label'    => __('Footer Menu Link Color', 'elmgren'),
         'section'  => 'elm_footer_section',
         'settings' => 'footer_menu_link_color',
-    )));
-    $wp_customize->add_setting('footer_menu_link_color_class');
-    $wp_customize->add_control(new WP_Customize_Color_Control($wp_customize, 'footer_menu_link_color_class_control', array(
-        'type'    => 'hidden',
-        'section'  => 'elm_footer_section',
-        'settings' => 'footer_menu_link_color_class',
     )));
 
     // Menu link hover color setting
     $wp_customize->add_setting('footer_menu_link_color_hover', array(
         'transport' => 'refresh',
     ));
-    $wp_customize->add_control(new WP_Customize_Color_Control($wp_customize, 'footer_menu_link_color_hover_control', array(
+    $wp_customize->add_control(new TailwindColorPickerThemeCustomizer($wp_customize, 'footer_menu_link_color_hover_control', array(
         'label'    => __('Footer Menu Link Color - Hover', 'elmgren'),
         'section'  => 'elm_footer_section',
         'settings' => 'footer_menu_link_color_hover',
-    )));
-    $wp_customize->add_setting('footer_menu_link_color_hover_class');
-    $wp_customize->add_control(new WP_Customize_Color_Control($wp_customize, 'footer_menu_link_color_hover_class_control', array(
-        'type'    => 'hidden',
-        'section'  => 'elm_footer_section',
-        'settings' => 'footer_menu_link_color_hover_class',
     )));
 
     // Footer text setting
@@ -120,16 +90,10 @@ function elm_customize_footer($wp_customize)
     $wp_customize->add_setting('footer_text_color', array(
         'transport' => 'refresh',
     ));
-    $wp_customize->add_control(new WP_Customize_Color_Control($wp_customize, 'footer_text_color_control', array(
+    $wp_customize->add_control(new TailwindColorPickerThemeCustomizer($wp_customize, 'footer_text_color_control', array(
         'label'    => __('Footer Text Color', 'elmgren'),
         'section'  => 'elm_footer_section',
         'settings' => 'footer_text_color',
-    )));
-    $wp_customize->add_setting('footer_text_color_class');
-    $wp_customize->add_control(new WP_Customize_Color_Control($wp_customize, 'footer_text_color_class_control', array(
-        'type'    => 'hidden',
-        'section'  => 'elm_footer_section',
-        'settings' => 'footer_text_color_class',
     )));
 }
 add_action('customize_register', 'elm_customize_footer');

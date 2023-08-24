@@ -75,49 +75,31 @@ function elm_customize_header($wp_customize)
     $wp_customize->add_setting('header_bg_color', array(
         'transport' => 'refresh',
     ));
-    $wp_customize->add_control(new WP_Customize_Color_Control($wp_customize, 'header_bg_color_control', array(
+    $wp_customize->add_control(new TailwindColorPickerThemeCustomizer($wp_customize, 'header_bg_color_control', array(
         'label'    => __('Header Background Color', 'elmgren'),
         'section'  => 'elm_header_section',
         'settings' => 'header_bg_color',
         'description' => 'Choose a preset or select your own color.',
     )));
-    $wp_customize->add_setting('header_bg_color_class');
-    $wp_customize->add_control('header_bg_color_class_control', array(
-        'type'    => 'hidden',
-        'section'  => 'elm_header_section',
-        'settings' => 'header_bg_color_class',
-    ));
 
     // Header link color
     $wp_customize->add_setting('header_link_color', array(
         'transport' => 'refresh',
     ));
-    $wp_customize->add_control(new WP_Customize_Color_Control($wp_customize, 'header_link_color_control', array(
+    $wp_customize->add_control(new TailwindColorPickerThemeCustomizer($wp_customize, 'header_link_color_control', array(
         'label'    => __('Header Link Color', 'elmgren'),
         'section'  => 'elm_header_section',
         'settings' => 'header_link_color',
-    )));
-    $wp_customize->add_setting('header_link_color_class');
-    $wp_customize->add_control(new WP_Customize_Color_Control($wp_customize, 'header_link_color_class_control', array(
-        'type'    => 'hidden',
-        'section'  => 'elm_header_section',
-        'settings' => 'header_link_color_class',
     )));
 
     // Header link color - Hover
     $wp_customize->add_setting('header_link_color_hover', array(
         'transport' => 'refresh',
     ));
-    $wp_customize->add_control(new WP_Customize_Color_Control($wp_customize, 'header_link_color_hover_control', array(
+    $wp_customize->add_control(new TailwindColorPickerThemeCustomizer($wp_customize, 'header_link_color_hover_control', array(
         'label'    => __('Header Link Color - Hover', 'elmgren'),
         'section'  => 'elm_header_section',
         'settings' => 'header_link_color_hover',
-    )));
-    $wp_customize->add_setting('header_link_color_hover_class');
-    $wp_customize->add_control(new WP_Customize_Color_Control($wp_customize, 'header_link_color_hover_class_control', array(
-        'type'    => 'hidden',
-        'section'  => 'elm_header_section',
-        'settings' => 'header_link_color_hover_class',
     )));
 
     // Header border
@@ -135,16 +117,10 @@ function elm_customize_header($wp_customize)
     $wp_customize->add_setting('header_border_color', array(
         'transport' => 'refresh',
     ));
-    $wp_customize->add_control(new WP_Customize_Color_Control($wp_customize, 'header_border_color_control', array(
+    $wp_customize->add_control(new TailwindColorPickerThemeCustomizer($wp_customize, 'header_border_color_control', array(
         'label'    => __('Header Border color', 'elmgren'),
         'section'  => 'elm_header_section',
         'settings' => 'header_border_color',
-    )));
-    $wp_customize->add_setting('header_border_color_class');
-    $wp_customize->add_control(new WP_Customize_Color_Control($wp_customize, 'header_border_color_class_control', array(
-        'type'    => 'hidden',
-        'section'  => 'elm_header_section',
-        'settings' => 'header_border_color_class',
     )));
 }
 add_action('customize_register', 'elm_customize_header');

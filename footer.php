@@ -29,11 +29,13 @@ function elm_has_socials(?string $social = null): bool
     return false;
 }
 
-$footer_attrs = elm_get_classes_and_styles_from_theme_settings('footer_bg_color', 'bg', '', 'transparent', 'overflow-hidden pt-20 sm:pt-24 pb-4 sm:pb-4');
-
+$footer_icon_color = new TailwindColor('footer_icon_color');
+$footer_icon_color_hover = new TailwindColor('footer_icon_color_hover');
+$footer_bg_color = new TailwindColor('footer_bg_color');
+$footer_text_color = new TailwindColor('footer_text_color');
 ?>
 
-<footer <?php echo $footer_attrs ?>>
+<footer class="overflow-hidden pt-20 sm:pt-24 pb-4 sm:pb-4 <?php echo $footer_bg_color->get_class('bg') ?>" style="<?php echo $footer_bg_color->get_style('background-color') ?>">
     <div class="<?php echo elm_get_page_width(true) ?>">
         <?php if (has_nav_menu('footer-menu')) : ?>
             <nav class="-mb-6 columns-2 sm:flex sm:justify-center sm:gap-12" aria-label="Footer">
@@ -47,19 +49,11 @@ $footer_attrs = elm_get_classes_and_styles_from_theme_settings('footer_bg_color'
         <?php endif; ?>
 
         <?php if (elm_has_socials()) : ?>
-            <?php
-            $attrs = elm_get_classes_and_styles_from_theme_settings(
-                [
-                    'footer_icon_color' => ['attr' => 'text', 'fallback' => 'text-gray-600'],
-                    'footer_icon_color_hover' => ['attr' => 'text', 'prefix' => 'hover', 'fallback' => 'text-gray-900'],
-                ]
-            );
-            ?>
             <div class="mt-10 flex justify-center gap-10 flex-wrap">
                 <?php
                 foreach (['facebook', 'instagram', 'twitter', 'github', 'youtube'] as $social) :
                     if (elm_has_socials($social)) : ?>
-                        <a href="<?php echo elm_get_footer_setting($social . '_link'); ?>" <?php echo $attrs ?>>
+                        <a href="<?php echo elm_get_footer_setting($social . '_link'); ?>" class="<?php echo $footer_icon_color->get_class('text') ?> <?php echo $footer_icon_color_hover->get_class('text', 'hover') ?>" style="<?php echo $footer_icon_color->get_style('color') ?> <?php echo $footer_icon_color_hover->get_style('color', 'hover') ?>">
                             <span class="sr-only"><?= ucfirst($social) ?></span>
                             <?php elm_the_inline_svg($social) ?>
                         </a>
@@ -68,7 +62,7 @@ $footer_attrs = elm_get_classes_and_styles_from_theme_settings('footer_bg_color'
             </div>
         <?php endif; ?>
 
-        <p <?php echo elm_get_classes_and_styles_from_theme_settings('footer_text_color', 'text', '', 'text-gray-500', 'mt-5 text-center text-xs leading-5') ?>>&copy; <?= date("Y") ?> <?= get_theme_mod('footer_text', 'Elmgren Theme'); ?></p>
+        <p class="mt-5 text-center text-xs leading-5 <?php echo $footer_text_color->get_class('text') ?>" style="<?php echo $footer_text_color->get_style('color') ?>">&copy; <?= date("Y") ?> <?= get_theme_mod('footer_text', 'Elmgren Theme'); ?></p>
     </div>
 </footer>
 

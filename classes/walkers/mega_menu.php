@@ -41,16 +41,30 @@ class Elm_Mega_Menu_Walker_Nav_Menu extends Elm_Walker_Nav_Menu
 
     protected function get_combined_attributes($item, $depth, $args): string
     {
+        $header_link_color = new TailwindColor('header_link_color');
+        $header_link_color_hover = new TailwindColor('header_link_color_hover');
+
+        $header_styles = $header_link_color->get_style('color');
+        $header_styles .= $header_link_color_hover->get_style('color', 'hover');
+
+        $header_class = $header_link_color->get_class('text');
+        $header_class .= ' ' . $header_link_color_hover->get_class('text', 'hover');
+
         $class = 'class="items-center gap-x-1';
         if ($this->has_children($item) && $depth === 0) {
             $class .= ' inline-flex';
         }
+
         if ($depth === 1) {
             $class .= ' font-bold mb-2';
         }
+        $class .= ' ' . $header_class;
         $class .= '"';
 
-        $attrs = $class;
+
+        $styles = 'style="' . $header_styles . '"';
+
+        $attrs = $class . ' ' . $styles;
 
         if ($this->has_children($item)) {
             $attrs .= ' data-has-children';  // Append the class if the item has children
@@ -64,16 +78,16 @@ class Elm_Mega_Menu_Walker_Nav_Menu extends Elm_Walker_Nav_Menu
 
     public function start_lvl(&$output, $depth = 0, $args = null)
     {
-        // If border we need to add margin
-        $has_border = get_theme_mod('header_border', false);
-        $class = 'min-h-[24rem] sub-menu  absolute top-full z-10 left-0 py-6 w-full';
-        if ($has_border) {
-            $class .= ' mt-[2px]';
-        }
         if ($depth === 0) { // This checks if we're at the top level
-            $attr = elm_get_classes_and_styles_from_theme_settings('header_bg_color', 'bg', '', 'transparent', $class, 'display:none;');
+            $has_border = get_theme_mod('header_border', false);
+            $header_bg_color = new TailwindColor('header_bg_color');
             $width = elm_get_page_width(true);
-            $output .= '<div ' . $attr . '>';
+
+            $class = 'min-h-[24rem] sub-menu  absolute top-full z-10 left-0 py-6 w-full';
+            $class .= ' ' . $header_bg_color->get_class('bg');
+            $class .= $has_border ? ' mt-[2px]' : '';
+
+            $output .= '<div class="' . $class . '" style="display:none;' . $header_bg_color->get_style('background-color') . '">';
             $output .= '<div class="gap-8 flex align-start ' . $width . '">';
         }
     }

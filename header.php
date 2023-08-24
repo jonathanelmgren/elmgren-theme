@@ -25,49 +25,44 @@ function get_logo_or_blog_name($link_class = '-m-1.5 p-1.5', $img_class = 'w-aut
     }
 }
 
-// Function to display the main menu
-function get_main_menu()
-{
-    wp_nav_menu([
-        'theme_location' => 'main-menu',
-        'walker' => new Elm_Mega_Menu_Walker_Nav_Menu(),
-        'container' => false,
-        'items_wrap' => '%3$s',
-    ]);
-}
-
 $is_absolute = get_theme_mod('header_absolute_position', false);
 $is_sticky = get_theme_mod('header_sticky', false);
+$border = get_theme_mod('header_border', false);
+$header_margin_to_content = (float) get_theme_mod('content_spacing_setting', '0');
+$border_color = new TailwindColor('header_border_color');
+$header_color = new TailwindColor('header_bg_color');
+$header_link_color = new TailwindColor('header_link_color');
+$header_link_color_hover = new TailwindColor('header_link_color_hover');
+
+
+$mobile_header_class = 'fixed inset-y-0 right-0 z-10 w-full overflow-y-auto px-6 py-6 sm:max-w-sm sm:ring-1 sm:ring-gray-900/10';
+$mobile_header_class .= ' ' . $header_color->get_class('bg');
+$mobile_header_class .= ' ' . $header_link_color->get_class('text');
+$mobile_header_class .= ' ' . $header_link_color_hover->get_class('text', 'hover');
+
+$mobile_header_styles = '';
+$mobile_header_styles .= $header_color->get_style('background-color');
+$mobile_header_styles .= $header_link_color->get_style('color');
+$mobile_header_styles .= $header_link_color_hover->get_style('color', 'hover');
 
 $header_class = 'w-full';
 $header_class .= $is_absolute && $is_sticky ? ' fixed top-0 z-50' : ($is_absolute ? ' absolute' : ($is_sticky ? ' sticky top-0 z-50' : ''));
+$header_class .= ' ' . $header_color->get_class('bg');
 
-$header_margin_to_content = (float) get_theme_mod('content_spacing_setting', '0');
-$header_margin_to_content = 'margin-bottom: ' . $header_margin_to_content . 'rem;';
+$header_styles = '';
+$header_styles .= $header_color->get_style('background-color');
+$header_styles .= 'margin-bottom: ' . $header_margin_to_content . 'rem;';
 
-$settings = [
-    'header_link_color' => ['attr' => 'text', 'fallback' => 'text-gray-600'],
-    'header_link_color_hover' => ['attr' => 'text', 'prefix' => 'hover', 'fallback' => 'text-gray-900'],
-    'header_bg_color' => ['attr' => 'bg', 'fallback' => 'transparent'],
-];
-//dd(get_theme_mod('header_bg_color', 'transparent'));
+$container_class = 'w-full relative';
+$container_class .= $border ? ' border-b-2 ' . $border_color->get_class('border') : '';
 
-$header_attrs = elm_get_classes_and_styles_from_theme_settings($settings, '', '', '', $header_class, $header_margin_to_content);
-$mobile_attrs = elm_get_classes_and_styles_from_theme_settings('header_bg_color', 'bg', '', 'transparent', 'fixed inset-y-0 right-0 z-10 w-full overflow-y-auto px-6 py-6 sm:max-w-sm sm:ring-1 sm:ring-gray-900/10');
-
-$border = get_theme_mod('header_border', false);
-$border_color = get_theme_mod('header_border_color', 'transparent');
-$container_attrs = 'w-full relative';
-if ($border) {
-    $container_attrs .= ' border-b-2';
-}
-$container_attrs = elm_get_classes_and_styles_from_theme_settings('header_border_color', 'border', '', '', $container_attrs);
+$container_styles = $border ? $border_color->get_style('border-color') : '';
 ?>
 
 <body <?php body_class('font-primary'); ?>>
     <?php wp_body_open(); ?>
-    <header role="banner" <?php echo $header_attrs ?>>
-        <div <?php echo $container_attrs ?>>
+    <header role="banner" style="<?php echo $header_styles ?>" class="<?php echo $header_class ?>">
+        <div class="<?php echo $container_class ?>" style="<?php echo $container_styles ?>">
             <nav class="z-50 flex <?php elm_the_page_width(true) ?> items-center justify-between py-6" aria-label="Global">
                 <div class="flex lg:flex-1">
                     <?= get_logo_or_blog_name(); ?>
@@ -93,7 +88,7 @@ $container_attrs = elm_get_classes_and_styles_from_theme_settings('header_border
         <!-- Mobile menu -->
         <div class="lg:hidden hidden" role="dialog" aria-modal="true" data-menu="mobile">
             <div data-backdrop class="fixed inset-0 z-10"></div>
-            <div <?php echo $mobile_attrs ?>>
+            <div class="<?php echo $mobile_header_class ?>" style="<?php echo $mobile_header_styles ?>">
                 <div class="flex items-center justify-between">
                     <?= get_logo_or_blog_name(); ?>
                     <button data-menu-toggle="close" type="button" class="btn--no-style rounded-md">
