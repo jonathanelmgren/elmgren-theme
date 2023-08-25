@@ -39,7 +39,7 @@ $footer_icon_colors = new TailwindColor([
 ]);
 ?>
 
-<footer class="overflow-hidden pt-20 sm:pt-24 pb-4 sm:pb-4 <?php $footer_colors->the_class('footer_bg_color') ?>" style="<?php $footer_colors->the_style('footer_bg_color-color') ?>">
+<footer class="overflow-hidden pt-20 sm:pt-24 pb-4 sm:pb-4 <?php $footer_colors->the_class('footer_bg_color') ?>" style="<?php $footer_colors->the_style('footer_bg_color') ?>">
     <div class="<?php echo elm_get_page_width(true) ?>">
         <?php if (has_nav_menu('footer-menu')) : ?>
             <nav class="-mb-6 columns-2 sm:flex sm:justify-center sm:gap-12" aria-label="Footer">

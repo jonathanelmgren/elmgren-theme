@@ -3,6 +3,24 @@
 // Register theme supports
 function elm_setup()
 {
+
+    $palette = [];
+
+    foreach (TAILWIND_COLORS as $colorName => $shades) {
+        foreach ($shades as $shade => $value) {
+            // Prepare a human-readable name
+            $humanReadableShade = strtoupper($shade) === 'DEFAULT' ? 'Default' : $shade;
+            $humanReadableName = ucfirst($colorName) . ' ' . $humanReadableShade;
+
+            // Add to the palette array
+            $palette[] = [
+                'name'  => __($humanReadableName, 'elmgren'),
+                'slug'  => $colorName . '-' . $shade,
+                'color' => 'var(--color-' . $colorName . '-' . $shade . ')'
+            ];
+        }
+    }
+
     add_theme_support('custom-logo');
     add_theme_support('woocommerce', array(
         'thumbnail_image_width' => 200,
@@ -11,18 +29,7 @@ function elm_setup()
     ));
     add_theme_support('title-tag');
     add_theme_support('post-thumbnails');
-    add_theme_support('editor-color-palette', [
-        [
-            'name' => __('Primary', 'elmgren'),
-            'slug' => 'primary',
-            'color' => 'var(--color-brand--primary)'
-        ],
-        [
-            'name' => __('Secondary', 'elmgren'),
-            'slug' => 'secondary',
-            'color' => 'var(--color-brand--secondary)'
-        ],
-    ]);
+    add_theme_support('editor-color-palette', $palette);
 
     register_nav_menus(array(
         'main-menu' => esc_html__('Main Menu', 'elmgren'),
@@ -30,6 +37,22 @@ function elm_setup()
     ));
 }
 add_action('after_setup_theme', 'elm_setup');
+
+function generate_color_palette_styles() {
+    $palette = get_theme_support('editor-color-palette')[0];
+    
+    if (!$palette) return;
+
+    echo '<style type="text/css" id="dynamic-color-palette-styles">';
+    foreach ($palette as $color) {
+        $slug = strtolower($color['slug']);
+        echo ".has-{$slug}-color { color: {$color['color']}; }";
+        echo ".has-{$slug}-background-color { background-color: {$color['color']}; }";
+    }
+    echo '</style>';
+}
+
+add_action('wp_head', 'generate_color_palette_styles');
 
 // Register styles and scripts
 function elm_enqueue_styles_and_scripts()

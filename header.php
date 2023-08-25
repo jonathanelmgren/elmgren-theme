@@ -97,4 +97,5 @@ $sticky_absolute_class = $is_absolute && $is_sticky ? ' fixed top-0 z-50 ' : ($i
             </div>
         </div>
     </header>
+    <?php Elm_Notice::display() ?>
     <main id="content" role="main" class='<?= elm_the_page_width() ?>'>

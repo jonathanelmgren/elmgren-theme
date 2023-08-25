@@ -29,6 +29,10 @@ class TailwindColor
     {
         $setting = $this->settings[$setting];
 
+        if (!isset($this->attr_converter[$setting['attr']])) {
+            wp_die('Invalid attribute: ' . $setting['attr'] . ' for setting: ' . $setting);
+        }
+
         $active = $setting['active'];
         $attr = $this->attr_converter[$setting['attr']];
         $prefix = $setting['prefix'];
