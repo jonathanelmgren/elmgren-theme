@@ -27,6 +27,7 @@ function elm_customize_footer($wp_customize)
     // Footer background
     $wp_customize->add_setting('footer_bg_color', array(
         'transport' => 'refresh',
+        'sanitize_callback' => 'sanitize_tailwind'
     ));
     $wp_customize->add_control(new TailwindColorPickerThemeCustomizer($wp_customize, 'footer_bg_color_control', array(
         'label'    => __('Footer Background Color', 'elmgren'),
@@ -37,6 +38,8 @@ function elm_customize_footer($wp_customize)
     // Icon color setting
     $wp_customize->add_setting('footer_icon_color', array(
         'transport' => 'refresh',
+        'sanitize_callback' => 'sanitize_tailwind'
+
     ));
     $wp_customize->add_control(new TailwindColorPickerThemeCustomizer($wp_customize, 'footer_icon_color_control', array(
         'label'    => __('Footer Icon Color', 'elmgren'),
@@ -46,7 +49,8 @@ function elm_customize_footer($wp_customize)
 
     // Icon hover color setting
     $wp_customize->add_setting('footer_icon_color_hover', array(
-        'transport' => 'refresh'
+        'transport' => 'refresh',
+        'sanitize_callback' => 'sanitize_tailwind'
     ));
     $wp_customize->add_control(new TailwindColorPickerThemeCustomizer($wp_customize, 'footer_icon_color_hover_control', array(
         'label'    => __('Footer Icon Color - Hover', 'elmgren'),
@@ -57,6 +61,7 @@ function elm_customize_footer($wp_customize)
     // Menu link color setting
     $wp_customize->add_setting('footer_menu_link_color', array(
         'transport' => 'refresh',
+        'sanitize_callback' => 'sanitize_tailwind'
     ));
     $wp_customize->add_control(new TailwindColorPickerThemeCustomizer($wp_customize, 'footer_menu_link_color_control', array(
         'label'    => __('Footer Menu Link Color', 'elmgren'),
@@ -67,6 +72,7 @@ function elm_customize_footer($wp_customize)
     // Menu link hover color setting
     $wp_customize->add_setting('footer_menu_link_color_hover', array(
         'transport' => 'refresh',
+        'sanitize_callback' => 'sanitize_tailwind'
     ));
     $wp_customize->add_control(new TailwindColorPickerThemeCustomizer($wp_customize, 'footer_menu_link_color_hover_control', array(
         'label'    => __('Footer Menu Link Color - Hover', 'elmgren'),
@@ -89,6 +95,7 @@ function elm_customize_footer($wp_customize)
     // Footer text color
     $wp_customize->add_setting('footer_text_color', array(
         'transport' => 'refresh',
+        'sanitize_callback' => 'sanitize_tailwind'
     ));
     $wp_customize->add_control(new TailwindColorPickerThemeCustomizer($wp_customize, 'footer_text_color_control', array(
         'label'    => __('Footer Text Color', 'elmgren'),

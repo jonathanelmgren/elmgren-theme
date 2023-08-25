@@ -17,15 +17,17 @@ class TailwindColor
             $fallback = $option['fallback'] ?? false;
             $active = $option['active'] ?? true;
             $extra_attrs = $option['extra_attrs'] ?? ''; // setting specific extra styles
-            $value = get_theme_mod($setting, $fallback);
+            $value = get_theme_mod($setting);
+            $value = $value ? $value : get_field($setting);
+            $value = $value ? $value : $fallback;
 
             $this->settings[$setting] = ['attr' => $attr, 'prefix' => $prefix, 'color' => $value['color'] ?? null, 'tailwind' => $value['tailwind'] ?? null, 'active' => $active, 'extra_attrs' => $extra_attrs];
         }
     }
 
-    public function get_style(string $settingKey): string
+    public function get_style(string $setting): string
     {
-        $setting = $this->settings[$settingKey];
+        $setting = $this->settings[$setting];
 
         $active = $setting['active'];
         $attr = $this->attr_converter[$setting['attr']];
@@ -41,7 +43,7 @@ class TailwindColor
         if ($prefix === 'hover') {
             $attr = '--hover-color';
         }
-        if (!$this->isTailwind($settingKey)) {
+        if (!$this->isTailwind($setting)) {
             $style = $attr . ': ' . $color . ';';
             if (!empty($extra_attrs)) {
                 $style .= ' ' . $extra_attrs;
@@ -51,9 +53,9 @@ class TailwindColor
         return '';
     }
 
-    public function get_class(string $settingKey): string
+    public function get_class(string $setting): string
     {
-        $setting = $this->settings[$settingKey];
+        $setting = $this->settings[$setting];
 
         $active = $setting['active'];
         $attr = $setting['attr'];
@@ -66,7 +68,7 @@ class TailwindColor
             return '';
         }
 
-        if ($this->isTailwind($settingKey)) {
+        if ($this->isTailwind($setting)) {
             $class = $attr . '-' . $tailwind;
             $class = $prefix ? $prefix . ':' . $class : $class;
             if (!empty($extra_attrs)) {
@@ -97,7 +99,7 @@ class TailwindColor
         return $this->sanitize_attr_string($styles . ' ' . $additional_styles);
     }
 
-    public function isTailwind(string $setting): bool
+    public function isTailwind(array $setting): bool
     {
         return isset($setting['tailwind']) && is_string($setting['tailwind']);
     }

@@ -1,29 +1,19 @@
 jQuery($ => {
     const { colors } = tailwindColorPicker || {};
 
-    if (typeof wp === 'undefined' || typeof wp.customize === 'undefined') {
-        console.error('wp.customize is not available');
-        return;
-    }
-    if (!colors) return;
-
-    $('.tailwind-color-picker').each(function () {
-        const container = $(this);
+    const init = (container) => {
+        const setting = container.data('setting')
         const settingId = container.data('settingId')?.replace('_control', '');
         const nameSelect = container.find('.tailwind-color-name');
         const shadeSelect = container.find('.tailwind-color-shade');
         const colorPicker = container.find('.iris-color-picker');
+        const valueInput = container.find('#tailwind-color-picker-value');
 
         const getTailwindClass = (val) => {
             const option = shadeSelect.find('option:selected')
             const tailwindColor = colors[nameSelect.val()]?.[option.data('shade')];
             if (val.toLowerCase() === tailwindColor?.toLowerCase()) return `${nameSelect.val()}-${option.data('shade')}`
         }
-        const updateCustomizerValue = (val) => {
-            const res = { tailwind: getTailwindClass(val), color: val }
-            console.log(settingId, res)
-            wp.customize(settingId).set(res)
-        };
         const updateSelects = (val) => {
             const color = getTailwindClass(val);
             if (!color) {
@@ -78,8 +68,12 @@ jQuery($ => {
 
         $(colorPicker).wpColorPicker({
             change: (e, ui) => {
-                updateCustomizerValue(ui.color.toString())
-                updateSelects(ui.color.toString())
+                const value = ui.color.toString();
+                valueInput.val(value).trigger('change')
+                if (setting === 'customizer') {
+                    wp.customize(settingId).set(value)
+                }
+                updateSelects(value)
             },
             clear: () => {
                 updateCustomizerValue(undefined)
@@ -97,5 +91,17 @@ jQuery($ => {
             }
 
         });
-    });
+    }
+
+    if (!colors) return;
+
+    // Init customizer
+    if (typeof wp.customize !== 'undefined') {
+        $('.tailwind-color-picker[data-setting="customizer"]').each(function () { init($(this)) });
+    }
+
+    // Init ACF
+    if (typeof acf !== 'undefined') {
+        acf.add_action('append_field/type=tailwind_color_picker', function (e) { init($(e).find('.tailwind-color-picker[data-setting="acf"]')) });
+    }
 });

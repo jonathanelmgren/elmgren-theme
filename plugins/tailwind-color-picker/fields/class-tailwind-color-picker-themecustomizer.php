@@ -14,7 +14,6 @@ class TailwindColorPickerThemeCustomizer extends WP_Customize_Control
     public function render_content()
     {
         echo $this->label;
-        echo $this->generate_picker_html($this->id, $this->value());
-
+        echo $this->generate_picker_html($this->id, $this->value(), 'customizer', $this->id);
     }
 }

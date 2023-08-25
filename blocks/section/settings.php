@@ -30,7 +30,7 @@ if (function_exists('acf_add_local_field_group')) :
                 'key' => 'field_64df84d68a585',
                 'label' => 'Background Color',
                 'name' => 'background_color',
-                'type' => 'color_picker',
+                'type' => 'tailwind_color_picker',
                 'instructions' => 'Choose a background color for the section.',
                 'default_value' => '',
                 'return_format' => 'string'
