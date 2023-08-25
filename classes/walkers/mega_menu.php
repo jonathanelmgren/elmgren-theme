@@ -41,14 +41,10 @@ class Elm_Mega_Menu_Walker_Nav_Menu extends Elm_Walker_Nav_Menu
 
     protected function get_combined_attributes($item, $depth, $args): string
     {
-        $header_link_color = new TailwindColor('header_link_color');
-        $header_link_color_hover = new TailwindColor('header_link_color_hover');
-
-        $header_styles = $header_link_color->get_style('color');
-        $header_styles .= $header_link_color_hover->get_style('color', 'hover');
-
-        $header_class = $header_link_color->get_class('text');
-        $header_class .= ' ' . $header_link_color_hover->get_class('text', 'hover');
+        $header_link_colors = new TailwindColor([
+            'header_link_color' => ['attr' => 'text', 'fallback' => 'text-gray-600'],
+            'header_link_color_hover' => ['attr' => 'text', 'prefix' => 'hover', 'fallback' => 'text-gray-900']
+        ]);
 
         $class = 'class="items-center gap-x-1';
         if ($this->has_children($item) && $depth === 0) {
@@ -58,11 +54,11 @@ class Elm_Mega_Menu_Walker_Nav_Menu extends Elm_Walker_Nav_Menu
         if ($depth === 1) {
             $class .= ' font-bold mb-2';
         }
-        $class .= ' ' . $header_class;
+        $class .= ' ' . $header_link_colors->get_classes();
         $class .= '"';
 
 
-        $styles = 'style="' . $header_styles . '"';
+        $styles = 'style="' . $header_link_colors->get_styles() . '"';
 
         $attrs = $class . ' ' . $styles;
 
@@ -80,14 +76,14 @@ class Elm_Mega_Menu_Walker_Nav_Menu extends Elm_Walker_Nav_Menu
     {
         if ($depth === 0) { // This checks if we're at the top level
             $has_border = get_theme_mod('header_border', false);
-            $header_bg_color = new TailwindColor('header_bg_color');
+            $header_bg_color = new TailwindColor(['header_bg_color' => ['attr' => 'bg', 'fallback' => 'transparent']]);
             $width = elm_get_page_width(true);
 
             $class = 'min-h-[24rem] sub-menu  absolute top-full z-10 left-0 py-6 w-full';
-            $class .= ' ' . $header_bg_color->get_class('bg');
+            $class .= ' ' . $header_bg_color->get_classes();
             $class .= $has_border ? ' mt-[2px]' : '';
 
-            $output .= '<div class="' . $class . '" style="display:none;' . $header_bg_color->get_style('background-color') . '">';
+            $output .= '<div class="' . $class . '" style="display:none;' . $header_bg_color->get_styles() . '">';
             $output .= '<div class="gap-8 flex align-start ' . $width . '">';
         }
     }

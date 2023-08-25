@@ -2,35 +2,76 @@
 
 class TailwindColor
 {
-    private $setting;
+    private $settings;
+    private $attr_converter = [
+        'bg' => 'background-color',
+        'text' => 'color',
+        'border' => 'border-color',
+    ];
 
-    public function __construct(string $setting, string | bool $fallback = false)
+    public function __construct(array $settings, string | bool $fallback = false)
     {
-        $this->setting = get_theme_mod($setting, $fallback);
+        foreach ($settings as $setting => $option) {
+            $attr = $option['attr'];
+            $prefix = $option['prefix'] ?? null;
+            $fallback = $option['fallback'] ?? false;
+            $active = $option['active'] ?? true;
+            $extra_attrs = $option['extra_attrs'] ?? ''; // setting specific extra styles
+            $value = get_theme_mod($setting, $fallback);
 
-        $this->tailwind = $this->setting['tailwind'] ?? null;
-        $this->color = $this->setting['color'] ?? null;
-        if ($setting === 'header_bg_color') {
-            //dd($this->setting);
+            $this->settings[$setting] = ['attr' => $attr, 'prefix' => $prefix, 'color' => $value['color'] ?? null, 'tailwind' => $value['tailwind'] ?? null, 'active' => $active, 'extra_attrs' => $extra_attrs];
         }
     }
 
-    public function get_style(string $attr, string | null $prefix = null): string
+    public function get_style(string $settingKey): string
     {
+        $setting = $this->settings[$settingKey];
+
+        $active = $setting['active'];
+        $attr = $this->attr_converter[$setting['attr']];
+        $prefix = $setting['prefix'];
+        $color = $setting['color'];
+        $tailwind = $setting['tailwind'];
+        $extra_attrs = $setting['extra_attrs'];
+
+        if (!$active) {
+            return '';
+        }
+
         if ($prefix === 'hover') {
             $attr = '--hover-color';
         }
-        if (!$this->isTailwind()) {
-            return $attr . ': ' . $this->color . ';';
+        if (!$this->isTailwind($settingKey)) {
+            $style = $attr . ': ' . $color . ';';
+            if (!empty($extra_attrs)) {
+                $style .= ' ' . $extra_attrs;
+            }
+            return $style;
         }
         return '';
     }
 
-    public function get_class(string $attr, string | null $prefix = null): string
+    public function get_class(string $settingKey): string
     {
-        if ($this->isTailwind()) {
-            $class = $attr . '-' . $this->tailwind;
+        $setting = $this->settings[$settingKey];
+
+        $active = $setting['active'];
+        $attr = $setting['attr'];
+        $prefix = $setting['prefix'];
+        $color = $setting['color'];
+        $tailwind = $setting['tailwind'];
+        $extra_attrs = $setting['extra_attrs'];
+
+        if (!$active) {
+            return '';
+        }
+
+        if ($this->isTailwind($settingKey)) {
+            $class = $attr . '-' . $tailwind;
             $class = $prefix ? $prefix . ':' . $class : $class;
+            if (!empty($extra_attrs)) {
+                $class .= ' ' . $extra_attrs;
+            }
             return $class;
         } elseif ($prefix === 'hover') {
             return 'custom-hover';
@@ -38,8 +79,51 @@ class TailwindColor
         return '';
     }
 
-    public function isTailwind(): bool
+    public function get_classes(string $additional_classes = ''): string
     {
-        return isset($this->tailwind) && is_string($this->tailwind);
+        $classes = '';
+        foreach ($this->settings as $setting => $option) {
+            $classes .= $this->get_class($setting) . ' ';
+        }
+        return $this->sanitize_attr_string($classes . ' ' . $additional_classes);
+    }
+
+    public function get_styles(string $additional_styles = ''): string
+    {
+        $styles = '';
+        foreach ($this->settings as $setting => $option) {
+            $styles .= $this->get_style($setting) . ' ';
+        }
+        return $this->sanitize_attr_string($styles . ' ' . $additional_styles);
+    }
+
+    public function isTailwind(string $setting): bool
+    {
+        return isset($setting['tailwind']) && is_string($setting['tailwind']);
+    }
+
+    private function sanitize_attr_string(string $string)
+    {
+        return trim(preg_replace('/\s+/', ' ', $string));
+    }
+
+    public function the_class(string $setting): void
+    {
+        echo $this->get_class($setting);
+    }
+
+    public function the_classes(string $additional_classes = ''): void
+    {
+        echo $this->get_classes($additional_classes);
+    }
+
+    public function the_styles(string $additional_styles = ''): void
+    {
+        echo $this->get_styles($additional_styles);
+    }
+
+    public function the_style(string $setting): void
+    {
+        echo $this->get_style($setting);
     }
 }

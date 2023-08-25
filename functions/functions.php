@@ -22,18 +22,6 @@ function elm_the_inline_svg($filename)
 }
 
 /**
- * Sanitizes an attribute string by trimming and removing extra spaces.
- *
- * @param string $string The string to sanitize.
- *
- * @return string
- */
-function elm_sanitize_attr_string($string)
-{
-    return trim(preg_replace('/\s+/', ' ', $string));
-}
-
-/**
  * Echoes the width for the current page and defaults to the theme mod setting.
  *
  * @return null
