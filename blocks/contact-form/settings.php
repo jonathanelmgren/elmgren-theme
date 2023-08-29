@@ -28,9 +28,9 @@ function handle_contact_form_submission()
 
     // Send the email
     if (wp_mail($to, $subject, $email_content, $headers)) {
-        Elm_Notice::add('Your message was sent successfully!', 'success');
+        Elm_Notice::add('Your message was sent successfully!', 'success', 'inline', ['target' => '#contact-form-notices']);
         // Redirect to a thank you page after sending
-        wp_redirect($_SERVER['HTTP_REFERER']);
+        wp_redirect($_SERVER['HTTP_REFERER'] . '#contact-form');
     } else {
         // Handle mail sending failure
         wp_die('There was an error sending the email. Please try again later.');

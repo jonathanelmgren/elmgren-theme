@@ -13,7 +13,7 @@ $input_class = $base_colors->get_classes('block w-full rounded-md border-0 px-3.
 $label_class = 'block text-sm font-semibold leading-6 ' . $base_colors->get_class('text_color');
 ?>
 
-<form action="<?php echo esc_url(admin_url('admin-post.php')); ?>" method="POST">
+<form id="contact-form" action="<?php echo esc_url(admin_url('admin-post.php')); ?>" method="POST">
     <?php wp_nonce_field('contact_form_action', 'contact_form_nonce'); ?>
     <input type="hidden" name="action" value="contact_form_submission">
     <input type="hidden" name="send-to" value="<?php the_field('send_to') ?>">
@@ -63,4 +63,5 @@ $label_class = 'block text-sm font-semibold leading-6 ' . $base_colors->get_clas
             <button type="submit" style="<?php $button_colors->the_styles() ?>" class="<?php $button_colors->the_classes('rounded-md px-3.5 py-2.5 text-center text-sm font-semibold shadow-sm  focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2') ?>">Send message</button>
         </div>
     </div>
+    <div id="contact-form-notices"></div>
 </form>

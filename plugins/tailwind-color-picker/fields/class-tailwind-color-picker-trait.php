@@ -12,7 +12,7 @@ trait TailwindColorPickerTrait
         add_action('init', [__CLASS__, 'register_acf_class']);
     }
 
-    protected function generate_picker_html($input_name, $value = [], $setting, $id)
+    protected function generate_picker_html($input_name, $value, $setting, $id)
     {
         $this->presets = defined('TAILWIND_COLORS') ? TAILWIND_COLORS : [];
 
