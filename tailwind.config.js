@@ -8,6 +8,7 @@ module.exports = {
     './footer.php',
     './templates/*.php',
     './functions/**/*.php',
+    './blocks/**/*.php',
     './classes/**/*.php',
     './assets/**/*.{php,svg}',
     './safelist.txt'
@@ -134,6 +135,7 @@ module.exports = {
       path: 'safelist.txt',
       patterns: [
         'text-{colors}',
+        'border-{colors}',
         'hover:text-{colors}',
         'hover:bg-{colors}',
         'placeholder:text-{colors}',
@@ -142,6 +144,9 @@ module.exports = {
         'focus:ring-{colors}',
         'focus-visible:outline-{colors}',
         'outline-{colors}',
+        'text-center',
+        'text-left',
+        'text-right',
       ],
     }),
   ],

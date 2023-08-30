@@ -18,10 +18,16 @@ class TailwindColor
             $active = $option['active'] ?? true;
             $extra_attrs = $option['extra_attrs'] ?? ''; // setting specific extra styles
             $value = get_theme_mod($setting);
-            $value = $value ? $value : get_field($setting);
-            $value = $value ? $value : $fallback;
+            $value = !empty($value) ? $value : get_field($setting);
+            $value = !empty($value) ? $value : $fallback;
 
-            $this->settings[$setting] = ['attr' => $attr, 'prefix' => $prefix, 'color' => $value['color'] ?? null, 'tailwind' => $value['tailwind'] ?? null, 'active' => $active, 'extra_attrs' => $extra_attrs];
+            if (is_string($value) && (str_starts_with('#', $value) || str_starts_with('rgb', $value))) {
+                $value = ['color' => $value, 'tailwind' => null];
+            } elseif (is_string($value)) {
+                $value = ['tailwind' => $value, 'color' => null];
+            }
+
+            $this->settings[$setting] = ['attr' => $attr, 'fallback' => $fallback, 'prefix' => $prefix, 'color' => $value['color'] ?? null, 'tailwind' => $value['tailwind'] ?? null, 'active' => $active, 'extra_attrs' => $extra_attrs];
         }
     }
 

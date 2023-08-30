@@ -17,7 +17,8 @@ $label_class = 'block text-sm font-semibold leading-6 ' . $base_colors->get_clas
     <?php wp_nonce_field('contact_form_action', 'contact_form_nonce'); ?>
     <input type="hidden" name="action" value="contact_form_submission">
     <input type="hidden" name="send-to" value="<?php the_field('send_to') ?>">
-    <div class="mx-auto max-w-xl lg:mr-0 lg:max-w-lg">
+    <input type="hidden" name="post-id" value="<?php echo get_the_ID() ?>">
+    <div class="mx-auto">
         <div class="grid grid-cols-1 gap-x-8 gap-y-6 sm:grid-cols-2">
             <!-- First name -->
             <div>
@@ -63,5 +64,7 @@ $label_class = 'block text-sm font-semibold leading-6 ' . $base_colors->get_clas
             <button type="submit" style="<?php $button_colors->the_styles() ?>" class="<?php $button_colors->the_classes('rounded-md px-3.5 py-2.5 text-center text-sm font-semibold shadow-sm  focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2') ?>">Send message</button>
         </div>
     </div>
-    <div id="contact-form-notices"></div>
+    <div id="contact-form-notices" class="my-5">
+       
+    </div>
 </form>

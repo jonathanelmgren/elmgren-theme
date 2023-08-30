@@ -11,6 +11,7 @@ define('ELM_PAGE_WIDTHS', [
     'Ultrawide' => 'width-ultrawide',
     'Fullwidth' => 'width-full',
 ]);
+define('ELM_PAGE_WIDTHS_REVERSE', array_flip(ELM_PAGE_WIDTHS));
 
 
 // === START: Webpack Generated Block ===
