@@ -1,3 +1,5 @@
+const plugin = require('tailwindcss/plugin');
+
 /** @type {import('tailwindcss').Config} */
 
 module.exports = {
@@ -6,8 +8,10 @@ module.exports = {
     './footer.php',
     './templates/*.php',
     './functions/**/*.php',
+    './blocks/**/*.php',
     './classes/**/*.php',
-    './assets/**/*.{php,svg}'
+    './assets/**/*.{php,svg}',
+    './safelist.txt'
   ],
   safelist: ['editor-styles-wrapper'],
   theme: {
@@ -103,6 +107,48 @@ module.exports = {
         'secondary': ['Lato', 'ui-sans-serif', 'system-ui', '-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'Roboto', 'Helvetica Neue', 'Arial', 'Noto Sans', 'sans-serif', 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji'],
       }
     },
+
   },
+  plugins: [
+    plugin(function ({ addBase, theme }) {
+      const colors = theme('colors', {});
+      const cssVariables = {};
+
+      Object.keys(colors).forEach(colorName => {
+        if (typeof colors[colorName] === 'object') {
+          Object.keys(colors[colorName]).forEach(shade => {
+            const variableName = `--color-${colorName}-${shade}`;
+            cssVariables[variableName] = colors[colorName][shade];
+          });
+        } else {
+          const variableName = `--color-${colorName}`;
+          cssVariables[variableName] = colors[colorName];
+        }
+      });
+
+      addBase({
+        ':root': cssVariables,
+      });
+    }),
+    require('@tailwindcss/forms'),
+    require('tailwind-safelist-generator')({
+      path: 'safelist.txt',
+      patterns: [
+        'text-{colors}',
+        'border-{colors}',
+        'hover:text-{colors}',
+        'hover:bg-{colors}',
+        'placeholder:text-{colors}',
+        'bg-{colors}',
+        'ring-{colors}',
+        'focus:ring-{colors}',
+        'focus-visible:outline-{colors}',
+        'outline-{colors}',
+        'text-center',
+        'text-left',
+        'text-right',
+      ],
+    }),
+  ],
 }
 

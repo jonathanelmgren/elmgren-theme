@@ -1,0 +1,35 @@
+.width-narrow {
+	@apply mx-[1rem] sm:mx-[6%] md:mx-[12%] lg:mx-[18%] xl:mx-[24%] 2xl:mx-[30%];
+}
+
+.width-normal {
+	@apply mx-[1rem] sm:mx-[5%] md:mx-[10%] lg:mx-[15%] xl:mx-[20%] 2xl:mx-[25%];
+}
+
+.width-wide {
+	@apply mx-[1rem] sm:mx-[4%] md:mx-[8%] lg:mx-[12%] xl:mx-[16%] 2xl:mx-[20%];
+}
+
+.width-ultrawide {
+	@apply mx-[0.8rem] sm:mx-[2%] md:mx-[4%] lg:mx-[6%] xl:mx-[8%] 2xl:mx-[10%];
+}
+
+.width-full {
+	@apply m-0;
+}
+
+.full-width-narrow {
+	@apply -mx-[1rem] sm:-mx-[6.82%] md:-mx-[15.79%] lg:-mx-[28.13%] xl:-mx-[46.15%] 2xl:-mx-[75%];
+}
+
+.full-width-normal {
+	@apply -mx-[1rem] sm:-mx-[5.56%] md:-mx-[12.5%] lg:-mx-[21.43%] xl:-mx-[33.33%] 2xl:-mx-[50%];
+}
+
+.full-width-wide {
+	@apply -mx-[1rem] sm:-mx-[4.35%] md:-mx-[9.52%] lg:-mx-[15.79%] xl:-mx-[23.53%] 2xl:-mx-[33.33%];
+}
+
+.full-width-ultrawide {
+	@apply -mx-[0.8rem] sm:-mx-[2.08%] md:-mx-[4.35%] lg:-mx-[6.82%] xl:-mx-[9.52%] 2xl:-mx-[12.5%];
+}

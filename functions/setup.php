@@ -11,18 +11,6 @@ function elm_setup()
     ));
     add_theme_support('title-tag');
     add_theme_support('post-thumbnails');
-    add_theme_support('editor-color-palette', [
-        [
-            'name' => __('Primary', 'elmgren'),
-            'slug' => 'primary',
-            'color' => 'var(--color-brand--primary)'
-        ],
-        [
-            'name' => __('Secondary', 'elmgren'),
-            'slug' => 'secondary',
-            'color' => 'var(--color-brand--secondary)'
-        ],
-    ]);
 
     register_nav_menus(array(
         'main-menu' => esc_html__('Main Menu', 'elmgren'),
@@ -49,10 +37,6 @@ function elm_enqueue_styles_and_scripts()
         $file_url = get_template_directory_uri() . '/dist/js/' . basename($file);
         wp_enqueue_script($handle, $file_url, array('jquery'), null, true);
     }
-
-    wp_localize_script('elm-main', 'themeSettings', array(
-        'colors' => defined('TAILWIND_COLORS') ? TAILWIND_COLORS : [],
-    ));
 }
 add_action('wp_enqueue_scripts', 'elm_enqueue_styles_and_scripts');
 add_action('enqueue_block_editor_assets', 'elm_enqueue_styles_and_scripts');
@@ -84,7 +68,7 @@ if (!function_exists('elm_include_folder')) {
         });
 
         foreach ($content as $file) {
-            if (\str_ends_with($file, '.php')) {
+            if (\str_ends_with($file, '.php') && !\str_starts_with($file, '_')) {
                 require_once $folder . $file;
             }
         }
@@ -99,4 +83,31 @@ if (!function_exists('elm_include_folder')) {
             elm_include_folder(trim(str_replace(get_template_directory(), '', $folder), '/') . '/' . $subfolder);
         }
     }
+}
+
+// Register blocks
+function register_acf_blocks()
+{
+    $blocks = array_diff(scandir(get_template_directory() . '/blocks/', 1), array('..', '.'));
+
+    foreach ($blocks as $block) {
+        $dir = get_template_directory() . '/blocks/' . $block;
+        $file = $dir . '/settings.php';
+        if (file_exists($file)) {
+            require_once $file;
+        }
+        register_block_type($dir);
+    }
+}
+add_action('init', 'register_acf_blocks');
+
+// Use mailhog if in docker container
+function elm_use_mailhog(PHPMailer\PHPMailer\PHPMailer $phpmailer)
+{
+    $phpmailer->Host = 'mailhog';
+    $phpmailer->Port = 1025;
+    $phpmailer->IsSMTP();
+}
+if (is_file("/.dockerenv")) {
+    add_action('phpmailer_init', 'elm_use_mailhog');
 }

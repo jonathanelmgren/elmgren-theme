@@ -1,0 +1,14 @@
+{
+    "name": "elm/section",
+    "title": "Section",
+    "description": "Section",
+    "category": "formatting",
+    "icon": "admin-comments",
+    "keywords": ["section"],
+    "apiVersion": 2,
+    "acf": {
+        "mode": "preview",
+        "renderTemplate": "section.php"
+    },
+    "align": "full"
+}
