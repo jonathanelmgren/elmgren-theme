@@ -59,7 +59,6 @@ jQuery($ => {
             }
 
             const currentColor = container.data('currentColor');
-            console.log(currentColor)
             let initialOption;
             if (currentColor) {
                 // Find the option that matches the current color
@@ -69,7 +68,6 @@ jQuery($ => {
                 container.removeAttr('data-current-color');
                 container.removeData('currentColor');
             } else {
-                console.log('here')
                 // If not the first load, pick the default option
                 initialOption = shadeSelect.find('option[data-is-default="true"]');
             }
