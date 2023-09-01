@@ -86,7 +86,7 @@ if (!function_exists('elm_include_folder')) {
 }
 
 // Register blocks
-function register_acf_blocks()
+function elm_register_acf_blocks()
 {
     $blocks = array_diff(scandir(get_template_directory() . '/blocks/', 1), array('..', '.'));
 
@@ -99,7 +99,7 @@ function register_acf_blocks()
         register_block_type($dir);
     }
 }
-add_action('init', 'register_acf_blocks');
+add_action('init', 'elm_register_acf_blocks');
 
 // Use mailhog if in docker container
 function elm_use_mailhog(PHPMailer\PHPMailer\PHPMailer $phpmailer)
