@@ -45,30 +45,47 @@ function elm_get_page_width($force_default = false)
     return $w;  // Return the corresponding Tailwind class or an empty string
 }
 
-function add_elm_notice_from_acf($post_id = false, $field_name_prefix = '')
+// Function to display either the logo or the blog name
+function get_logo_or_blog_name($link_class = '-m-1.5 p-1.5', $img_class = 'w-auto')
 {
-    // Adding the prefix if there is one
-    $field_name_prefix = $field_name_prefix ? $field_name_prefix . '_' : '';
-    // Get the settings from ACF
-    $notice_type = get_field($field_name_prefix . 'notice_type', $post_id);
-    //dd(get_field($field_name_prefix . 'notice_type'));
-    $notice_variant = get_field($field_name_prefix . 'notice_variant', $post_id);
-    $submission_text = get_field($field_name_prefix . 'submission_text', $post_id);
-    $target = get_field($field_name_prefix . 'target', $post_id);
+    $logo_height = get_theme_mod('logo_height_setting', '8');
+    $home_url = home_url();
+    $blog_name = get_bloginfo('name');
+    $logo_url = esc_url(wp_get_attachment_image_url(get_theme_mod('custom_logo'), 'full'));
+    if (has_custom_logo()) {
+        return '<a href="' . $home_url . '" class="' . $link_class . '">
+                    <span class="sr-only">' . $blog_name . '</span>
+                    <img style="height: ' . $logo_height . 'rem" class="' . $img_class . '" src="' . $logo_url . '" alt="logo of ' . esc_attr($blog_name) . '">
+                </a>';
+    } else {
+        return '<a href="' . $home_url . '" class="' . $link_class . '">' . $blog_name . '</a>';
+    }
+}
 
-    // Check if required fields are filled
-    if (!$notice_type || !$notice_variant || !$submission_text) {
-        return;
+function elm_get_footer_setting(string $setting): mixed
+{
+    // Fetch setting from Theme Customizer
+    $value = get_theme_mod('footer_' . $setting);
+    if (!empty($value)) {
+        return $value;
+    }
+    return null;
+}
+
+function elm_has_socials(?string $social = null): bool
+{
+    $socials = array('facebook_link', 'instagram_link', 'youtube_link', 'github_link', 'twitter_link');
+
+    // If a specific social is provided
+    if ($social) {
+        return (bool) elm_get_footer_setting($social . '_link');
     }
 
-    // Create settings array
-    $settings = [];
-
-    // Add target if variant is inline
-    if ($notice_variant === 'inline' && $target) {
-        $settings['target'] = $target;
+    // Check if any social link is set
+    foreach ($socials as $social_link) {
+        if (elm_get_footer_setting($social_link)) {
+            return true;
+        }
     }
-    dd($submission_text);
-    // Add the notice
-    Elm_Notice::add($submission_text, $notice_type, $notice_variant, $settings);
+    return false;
 }
