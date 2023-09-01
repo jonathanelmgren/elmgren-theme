@@ -8,6 +8,7 @@ class Elm_Notice
     public static function init()
     {
         add_action('init', [__CLASS__, 'start_session']);
+        add_action('wp_head', [__CLASS__, 'display']);
     }
 
     public static function start_session()
@@ -120,4 +121,4 @@ class Elm_Notice
     }
 }
 
-$notices = Elm_Notice::init();
+Elm_Notice::init();
