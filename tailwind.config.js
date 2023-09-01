@@ -125,7 +125,7 @@ module.exports = {
   content: [
     './header.php',
     './footer.php',
-    './templates/*.php',
+    './templates/**/*.php',
     './functions/**/*.php',
     './blocks/**/*.php',
     './classes/**/*.php',
