@@ -58,8 +58,22 @@ jQuery($ => {
                 }
             }
 
-            const defaultOption = shadeSelect.find('option[data-is-default="true"]')
-            shadeSelect.val(defaultOption.val()).trigger('change')
+            const currentColor = container.data('currentColor');
+            console.log(currentColor)
+            let initialOption;
+            if (currentColor) {
+                // Find the option that matches the current color
+                initialOption = shadeSelect.find(`option[value="${currentColor.toUpperCase()}"]`);
+                
+                // Remove the data attribute so that this only happens on first load
+                container.removeAttr('data-current-color');
+                container.removeData('currentColor');
+            } else {
+                console.log('here')
+                // If not the first load, pick the default option
+                initialOption = shadeSelect.find('option[data-is-default="true"]');
+            }
+            shadeSelect.val(initialOption.val());
 
             // Trigger shade dropdown change to update the color picker
             shadeSelect.trigger('change');

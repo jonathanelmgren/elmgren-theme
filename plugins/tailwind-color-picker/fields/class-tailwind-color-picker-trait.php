@@ -18,9 +18,16 @@ trait TailwindColorPickerTrait
 
         $tailwind_color = $value['tailwind'] ?? null;
         $current_color = $value['color'] ?? null;
-        list($preset, $shade) = array_pad(explode('-', $tailwind_color, 2), 2, null);
+        // Reverse the string, then explode by hyphen
+        $reversed_explode = explode('-', strrev($tailwind_color), 2);
 
-        $html = '<div data-setting="' . $setting . '" data-setting-id="' . $id . '" class="tailwind-color-picker">';
+        // Reverse the elements and the array itself back to normal
+        $preset_shade = array_map('strrev', array_reverse($reversed_explode));
+
+        // Unpack array into variables
+        list($preset, $shade) = array_pad($preset_shade, 2, null);
+
+        $html = '<div data-current-color="' . $current_color . '" data-setting="' . $setting . '" data-setting-id="' . $id . '" class="tailwind-color-picker">';
         $html .= '<input type="hidden" id="tailwind-color-picker-value" name="' . $input_name . '" value="' . $current_color . '" />';
         $html .= '<input class="iris-color-picker" value="' . $current_color . '" />';
 
