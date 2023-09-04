@@ -9,14 +9,15 @@ if (isset($args['border_colors'])) {
     <nav class="z-50 flex <?php elm_the_page_width(true) ?> items-center justify-between py-6" aria-label="Global">
         <?php get_template_part('templates/header/logo'); ?>
 
-        <div class="flex lg:hidden">
+        <div class="flex lg:hidden items-center gap-3">
             <button type="button" data-menu-toggle="open" class="btn--no-style inline-flex items-center justify-center rounded-md">
                 <span class="sr-only"><?php _e('Open main menu', 'elmgren') ?></span>
                 <?php echo elm_the_inline_svg('hamburger_open') ?>
             </button>
+            <?php get_template_part('templates/header/cart'); ?>
         </div>
 
-        <div class="hidden lg:flex lg:gap-x-12">
+        <div class="hidden lg:flex lg:gap-x-12 items-center">
             <?php
             wp_nav_menu([
                 'theme_location' => 'main-menu',
@@ -25,6 +26,7 @@ if (isset($args['border_colors'])) {
                 'items_wrap' => '%3$s',
             ]);
             ?>
+            <?php get_template_part('templates/header/cart'); ?>
         </div>
     </nav>
 </div>

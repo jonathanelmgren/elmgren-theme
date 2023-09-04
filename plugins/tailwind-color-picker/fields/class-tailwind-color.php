@@ -138,4 +138,30 @@ class TailwindColor
     {
         echo $this->get_style($setting);
     }
+
+    public function get_attrs($additional_classes = '', $additional_styles = '')
+    {
+        $classes = $this->get_classes($additional_classes);
+        $styles = $this->get_styles($additional_styles);
+
+        return 'class="' . esc_attr($classes) . '" style="' . esc_attr($styles) . '"';
+    }
+
+    public function the_attrs($additional_classes = '', $additional_styles = '')
+    {
+        echo $this->get_attrs($additional_classes, $additional_styles);
+    }
+
+    public function get_attr($setting, $additional_classes = '', $additional_styles = '')
+    {
+        $classes = $this->get_class($setting);
+        $styles = $this->get_style($setting);
+
+        return 'class="' . esc_attr($classes . ' ' . $additional_classes) . '" style="' . esc_attr($styles . ' ' . $additional_styles) . '"';
+    }
+
+    public function the_attr($setting, $additional_classes = '', $additional_styles = '')
+    {
+        echo $this->get_attrs($additional_classes, $additional_styles);
+    }
 }

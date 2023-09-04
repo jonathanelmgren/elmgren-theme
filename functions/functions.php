@@ -89,3 +89,8 @@ function elm_has_socials(?string $social = null): bool
     }
     return false;
 }
+
+function elm_is_woocommerce_activated()
+{
+    return class_exists('WooCommerce') ? true : false;
+}

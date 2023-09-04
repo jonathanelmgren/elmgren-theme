@@ -4,13 +4,10 @@
 function elm_setup()
 {
     add_theme_support('custom-logo');
-    add_theme_support('woocommerce', array(
-        'thumbnail_image_width' => 200,
-        'gallery_thumbnail_image_width' => 100,
-        'single_image_width' => 500,
-    ));
+    add_theme_support('woocommerce');
     add_theme_support('title-tag');
     add_theme_support('post-thumbnails');
+    add_post_type_support('page', 'excerpt');
 
     register_nav_menus(array(
         'main-menu' => esc_html__('Main Menu', 'elmgren'),
@@ -111,3 +108,6 @@ function elm_use_mailhog(PHPMailer\PHPMailer\PHPMailer $phpmailer)
 if (is_file("/.dockerenv")) {
     add_action('phpmailer_init', 'elm_use_mailhog');
 }
+
+// Disable woocommerce styles
+add_filter('woocommerce_enqueue_styles', '__return_empty_array');
