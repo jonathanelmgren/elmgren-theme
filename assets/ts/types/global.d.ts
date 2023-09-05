@@ -2,6 +2,20 @@ interface JQuery {
     iris(options?: any, ...args: any[]): any;
 }
 
+declare namespace productVariations {
+    const availableVariations: Record<string, any> | undefined
+}
+
+declare namespace wc_add_to_cart_params {
+    const ajax_url: string;
+    const ajax_url: string
+    const wc_ajax_url: string
+    const i18n_view_cart: string
+    const cart_url: string
+    const is_cart: string
+    const cart_redirect_after_add: string
+}
+
 declare namespace wp {
     function customize(param: any): any
 }

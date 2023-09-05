@@ -126,10 +126,11 @@ module.exports = {
     './header.php',
     './footer.php',
     './templates/**/*.php',
+    './woocommerce/**/*.php',
     './functions/**/*.php',
     './blocks/**/*.php',
     './classes/**/*.php',
-    './assets/**/*.{php,svg}',
+    './assets/**/*.{php,svg,ts}',
     './safelist.txt'
   ],
   safelist: [
@@ -149,31 +150,33 @@ module.exports = {
 
   },
   plugins: [
-    plugin(function ({ addBase, theme }) {
-      const colors = theme('colors', {});
-      const cssVariables = {};
-
-      Object.keys(colors).forEach(colorName => {
-        if (typeof colors[colorName] === 'object') {
-          Object.keys(colors[colorName]).forEach(shade => {
-            const variableName = `--color-${colorName}-${shade}`;
-            cssVariables[variableName] = colors[colorName][shade];
-          });
-        } else {
-          const variableName = `--color-${colorName}`;
-          cssVariables[variableName] = colors[colorName];
-        }
-      });
-
-      addBase({
-        ':root': cssVariables,
-      });
-    }),
     require('@tailwindcss/forms'),
-    require('tailwind-safelist-generator')({
-      path: 'safelist.txt',
-      patterns: patterns,
-    }),
+    require('@tailwindcss/aspect-ratio'),
+    ...(process.env.RENDER_ASSETS === 'TRUE' ? [
+      require('tailwind-safelist-generator')({
+        path: 'safelist.txt',
+        patterns: patterns,
+      }),
+      plugin(function ({ addBase, theme }) {
+        const colors = theme('colors', {});
+        const cssVariables = {};
+
+        Object.keys(colors).forEach(colorName => {
+          if (typeof colors[colorName] === 'object') {
+            Object.keys(colors[colorName]).forEach(shade => {
+              const variableName = `--color-${colorName}-${shade}`;
+              cssVariables[variableName] = colors[colorName][shade];
+            });
+          } else {
+            const variableName = `--color-${colorName}`;
+            cssVariables[variableName] = colors[colorName];
+          }
+        });
+        addBase({
+          ':root': cssVariables,
+        });
+      }),
+    ] : []),
   ],
 }
 

@@ -16,27 +16,32 @@ function elm_setup()
 }
 add_action('after_setup_theme', 'elm_setup');
 
-// Register styles and scripts
+// Register public styles and scripts
 function elm_enqueue_styles_and_scripts()
 {
-    $dist_path = get_template_directory() . '/dist/';
+    $dist_path = get_template_directory_uri() . '/dist/';
+    $css_path = $dist_path . 'css/';
+    $js_path = $dist_path . 'js/';
 
-    // Enqueue styles.
-    foreach (glob($dist_path . 'css/*.css') as $file) {
-        $handle = 'elm-' . basename($file, '.css');
-        $file_url = get_template_directory_uri() . '/dist/css/' . basename($file);
-        wp_enqueue_style($handle, $file_url);
+    // Scripts
+    wp_enqueue_script('jquery');
+    wp_enqueue_script('elm-main-js', $js_path . 'main.js', ['jquery'], false, true);
+
+    if (is_product()) {
+        global $product;
+        if (is_string($product)) {
+            $product = wc_get_product(get_the_ID());
+        }
+        if ($product instanceof WC_Product && $product->is_type('variable')) {
+            wp_enqueue_script('elm-single-product-variable-js', $js_path . 'single-product-variable.js', ['jquery'], false, true);
+        }
+        wp_enqueue_script('elm-add-to-cart-ajax-js', $js_path . 'add-to-cart-ajax.js', ['jquery'], false, true);
     }
 
-    // Enqueue scripts.
-    foreach (glob($dist_path . 'js/*.js') as $file) {
-        $handle = 'elm-' . basename($file, '.js');
-        $file_url = get_template_directory_uri() . '/dist/js/' . basename($file);
-        wp_enqueue_script($handle, $file_url, array('jquery'), null, true);
-    }
+    // Styles
+    wp_enqueue_style('elm-main-css', $css_path . 'main.css');
 }
 add_action('wp_enqueue_scripts', 'elm_enqueue_styles_and_scripts');
-add_action('enqueue_block_editor_assets', 'elm_enqueue_styles_and_scripts');
 
 // Create generic function to include all files in specific folders
 
