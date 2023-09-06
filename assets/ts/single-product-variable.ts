@@ -1,6 +1,9 @@
 jQuery(function ($) {
     const submit_btn = $('button[name="add-to-cart"]');
     const attribute_length = $('div[data-product-attribute]').length;
+    const productImage = $('img[data-product-image]')
+    const addToCartContainer = $('div[data-add-to-cart-container]')
+    const variantPriceContainer = $('div[data-product-variant-price]')
 
     let selectedAttributes: Record<string, string> = {};
 
@@ -43,7 +46,13 @@ jQuery(function ($) {
                 return false;
             });
             if (matchingVariation && Object.keys(selectedAttributes).length === attribute_length) {
-                const variation_id = matchingVariation.variation_id;
+                const { image, variation_id, price_html } = matchingVariation
+                const { src, alt } = image
+                productImage.attr('src', src)
+                productImage.attr('alt', alt)
+
+                variantPriceContainer.html(price_html)
+
                 submit_btn.prop('disabled', false);
                 submit_btn.attr('variation-id', variation_id)
             } else {

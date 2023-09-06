@@ -24,8 +24,9 @@
         <?php endforeach; ?>
 
     <?php endif; ?>
+    <div data-product-variant-price></div>
 
-    <div class="flex">
+    <div data-add-to-cart-container class="flex">
         <?php woocommerce_quantity_input(['classes' => 'max-w-[5rem] rounded-l border-gray-300']); ?>
         <button <?php echo $is_variable ? 'disabled' : '' ?> type="submit" name="add-to-cart" value="<?php echo esc_attr($product->get_id()); ?>" class="bg-primary rounded-r hover:bg-primary-600 text-white px-8">
             <?php _e('Add to cart', 'woocommerce') ?>
