@@ -6,6 +6,10 @@ declare namespace productVariations {
     const availableVariations: Record<string, any> | undefined
 }
 
+declare namespace elmAjax {
+    const url: string
+}
+
 declare namespace wc_add_to_cart_params {
     const ajax_url: string;
     const ajax_url: string

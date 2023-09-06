@@ -1,6 +1,6 @@
 <?php
 
-require_once __DIR__ . '/base.php';
+require_once __DIR__ . '/class-elm-base-walker.php';
 
 class Elm_Mega_Menu_Walker_Nav_Menu extends Elm_Walker_Nav_Menu
 {

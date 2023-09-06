@@ -19,13 +19,9 @@ add_action('after_setup_theme', 'elm_setup');
 // Register public styles and scripts
 function elm_enqueue_styles_and_scripts()
 {
-    $dist_path = get_template_directory_uri() . '/dist/';
-    $css_path = $dist_path . 'css/';
-    $js_path = $dist_path . 'js/';
-
     // Scripts
     wp_enqueue_script('jquery');
-    wp_enqueue_script('elm-main-js', $js_path . 'main.js', ['jquery'], false, true);
+    wp_enqueue_script('elm-main-js', JS_PATH . 'main.js', ['jquery'], false, true);
 
     if (is_product()) {
         global $product;
@@ -33,13 +29,12 @@ function elm_enqueue_styles_and_scripts()
             $product = wc_get_product(get_the_ID());
         }
         if ($product instanceof WC_Product && $product->is_type('variable')) {
-            wp_enqueue_script('elm-single-product-variable-js', $js_path . 'single-product-variable.js', ['jquery'], false, true);
+            wp_enqueue_script('elm-single-product-variable-js', JS_PATH . 'single-product-variable.js', ['jquery'], false, true);
         }
-        wp_enqueue_script('elm-add-to-cart-ajax-js', $js_path . 'add-to-cart-ajax.js', ['jquery'], false, true);
     }
 
     // Styles
-    wp_enqueue_style('elm-main-css', $css_path . 'main.css');
+    wp_enqueue_style('elm-main-css', CSS_PATH . 'main.css');
 }
 add_action('wp_enqueue_scripts', 'elm_enqueue_styles_and_scripts');
 

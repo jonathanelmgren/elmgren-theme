@@ -1,4 +1,5 @@
-import { Notice } from "./classes/Notice";
+import { ElmAjax } from "./classes/ElmAjax";
+import { getActiveAttributes } from "./includes";
 
 jQuery(function ($) {
     $('form#add-to-cart').on('submit', function (e) {
@@ -14,26 +15,10 @@ jQuery(function ($) {
         const variation_id = submit_btn.attr('variation-id');
         const input = $('input[name="quantity"]').val();
 
-        $.ajax({
-            url: wc_add_to_cart_params.wc_ajax_url.toString().replace('%%endpoint%%', 'add_to_cart'),
-            data: {
-                action: "add_to_cart",
-                product_id: product_id,
-                variation_id: variation_id,
-                quantity: input || 1
-            },
-            type: 'POST',
-            complete: function (response) {
-                new Notice({
-                    message: 'Product added to cart',
-                    type: 'success',
-                    variant: 'toast',
-                    settings: {
-                        visibility: 'auto-dismiss',
-                        interaction: 'clickable'
-                    }
-                })
-            }
-        });
+        new ElmAjax('add_to_cart', {
+            product_id: variation_id || product_id,
+            variation: getActiveAttributes(),
+            quantity: input || 1
+        })
     })
 });

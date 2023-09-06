@@ -1,8 +1,9 @@
+import { getActiveAttributes } from "./includes";
+
 jQuery(function ($) {
     const submit_btn = $('button[name="add-to-cart"]');
     const attribute_length = $('div[data-product-attribute]').length;
     const productImage = $('img[data-product-image]')
-    const addToCartContainer = $('div[data-add-to-cart-container]')
     const variantPriceContainer = $('div[data-product-variant-price]')
 
     let selectedAttributes: Record<string, string> = {};
@@ -16,16 +17,7 @@ jQuery(function ($) {
             $(this).addClass('active').siblings().removeClass('active')
         }
 
-        $('button[data-attr-button].active').each(function () {
-            const attr = $(this).closest('div[data-product-attribute]').data('productAttribute')
-            const value = $(this).children(`input[name="${attr}"]`).val()
-
-            if (typeof attr !== 'string' || typeof value !== 'string') {
-                return
-            }
-
-            selectedAttributes[`attribute_${attr}`] = value
-        })
+        selectedAttributes = getActiveAttributes()
 
         if (productVariations.availableVariations) {
             // Find the matching variation

@@ -4,6 +4,10 @@
 define('ELM_ACF_PATH', get_template_directory() . '/plugins/acf/');
 define('ELM_ACF_URL', get_template_directory_uri() . '/plugins/acf/');
 
+define('DIST_PATH', get_template_directory_uri() . '/dist/');
+define('CSS_PATH', DIST_PATH . 'css/');
+define('JS_PATH', DIST_PATH . 'js/');
+
 define('ELM_PAGE_WIDTHS', [
     'Narrow' => 'width-narrow',
     'Normal' => 'width-normal',

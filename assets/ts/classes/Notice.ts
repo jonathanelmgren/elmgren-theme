@@ -7,8 +7,8 @@ interface New_Notice {
 }
 
 export class Notice {
-    constructor(notice: HTMLElement | New_Notice) {
-        if (notice instanceof HTMLElement) {
+    constructor(notice: HTMLElement | New_Notice | string) {
+        if (notice instanceof HTMLElement || typeof notice === 'string') {
             this.showNotice(notice);
         } else {
             this.addNotice(notice)
@@ -33,33 +33,43 @@ export class Notice {
             variant,
             settings,
         }).done(response => {
-            const nativeElement = $(response).first();
-            this.showNotice(nativeElement as any);
+            const nativeElement = $(response).first().get(0);
+            if (nativeElement instanceof HTMLElement) {
+                this.showNotice(nativeElement);
+            }
         });
     }
 
-    showNotice(notice: HTMLElement) {
-        const variant = $(notice).data('variant');
-        const visibility = $(notice).data('visibility');
-        const interaction = $(notice).data('interaction');
+    showNotice(notice: HTMLElement | string) {
+        let nativeElement: HTMLElement;
+
+        if (typeof notice === 'string') {
+            nativeElement = $(notice)[0];
+        } else {
+            nativeElement = notice;
+        }
+
+        const variant = $(nativeElement).data('variant');
+        const visibility = $(nativeElement).data('visibility');
+        const interaction = $(nativeElement).data('interaction');
         switch (variant) {
             case 'top-fixed':
-                $(notice).insertAfter('header');  // Changed from $('header').append(notice);
+                $(nativeElement).insertAfter('header');
                 break;
             case 'bottom-fixed':
-                $(notice).insertBefore('footer');  // Changed from $('footer').prepend(notice);
+                $(nativeElement).insertBefore('footer');
                 break;
             case 'top-scroll':
-                $(notice).insertAfter('header');  // Changed from $('header').append(notice);
+                $(nativeElement).insertAfter('header');
                 break;
             case 'bottom-scroll':
-                $(notice).insertBefore('footer');  // Changed from $('footer').prepend(notice);
+                $(nativeElement).insertBefore('footer');
                 break;
             case 'toast':
-                $(notice).insertAfter('header');
+                $(nativeElement).insertAfter('header');
                 break;
             case 'inline':
-                const target = $(notice).data('target');
+                const target = $(nativeElement).data('target');
                 let $targetElement = $('#' + target);
 
                 if ($targetElement.length === 0) {
@@ -67,7 +77,7 @@ export class Notice {
                 }
 
                 if ($targetElement.length !== 0) {
-                    $targetElement.append(notice);
+                    $targetElement.append(nativeElement);
                 } else {
                     return;
                 }
@@ -78,16 +88,16 @@ export class Notice {
 
         if (visibility === 'auto-dismiss') {
             setTimeout(() => {
-                $(notice).fadeOut();
+                $(nativeElement).fadeOut();
             }, 5000); // 5 seconds
         }
 
         if (interaction === 'clickable') {
-            $(notice).click(function () {
-                $(notice).fadeOut();
+            $(nativeElement).click(function () {
+                $(nativeElement).fadeOut();
             });
         }
 
-        $(notice).show();
+        $(nativeElement).show();
     }
 }
