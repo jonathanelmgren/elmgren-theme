@@ -6,7 +6,7 @@ get_header();
 <?php
 woocommerce_breadcrumb();
 ?>
-<div class="flex flex-col-reverse gap-y-5 lg:grid lg:grid-cols-2 lg:gap-x-8 my-3">
+<div class="flex flex-col-reverse gap-y-5 lg:grid lg:grid-cols-2 lg:gap-x-8">
     <div class="flex flex-col gap-4">
         <h1 class="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl"><?php the_title() ?></h1>
 
