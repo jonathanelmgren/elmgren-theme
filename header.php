@@ -27,8 +27,8 @@ $sticky_absolute_class = $is_absolute && $is_sticky ? ' fixed top-0 z-50 ' : ($i
 
 <body <?php body_class('font-primary'); ?>>
     <?php wp_body_open(); ?>
-    <header role="banner" style="<?php $header_colors->the_styles('margin-bottom: ' . $header_margin_to_content . 'rem;') ?>" class="<?php $header_colors->the_classes('w-full' . $sticky_absolute_class) ?>">
+    <header role="banner" style="<?php $header_colors->the_styles() ?>" class="<?php $header_colors->the_classes('w-full' . $sticky_absolute_class) ?>">
         <?php get_template_part('templates/header/navigation-main', null, ['border_colors' => $border_colors,]); ?>
         <?php get_template_part('templates/header/navigation-mobile', null, ['header_colors' => $header_colors]); ?>
     </header>
-    <main id="content" role="main" class='<?= elm_the_page_width() ?>'>
+    <main id="content" role="main" class='<?= elm_the_page_width() ?>' style="<?php echo 'margin-block: ' . $header_margin_to_content . 'rem;' ?>">
