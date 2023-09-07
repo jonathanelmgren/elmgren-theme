@@ -40,11 +40,13 @@
         <?php endforeach; ?>
 
     <?php endif; ?>
-    <div data-product-variant-price></div>
+    <div data-product-variant-price>
+        <?= $variant_id > 0 ? $product->get_price_html() : '' ?>
+    </div>
 
     <div data-add-to-cart-container class="flex">
         <?php woocommerce_quantity_input(['classes' => 'max-w-[5rem] rounded-l border-gray-300']); ?>
-        <button <?= $is_variable && !$variant_id ? 'disabled' : '' ?> type="submit" name="add-to-cart" value="<?= $variant_id ? esc_attr($variant_id) : esc_attr($product->get_id()); ?>" class="bg-primary rounded-r hover:bg-primary-600 text-white px-8">
+        <button <?= $is_variable && !$variant_id ? 'disabled' : '' ?> type="submit" name="add-to-cart" value="<?= esc_attr($product->get_id()) ?>" class="bg-primary rounded-r hover:bg-primary-600 text-white px-8">
             <?php _e('Add to cart', 'woocommerce') ?>
         </button>
     </div>

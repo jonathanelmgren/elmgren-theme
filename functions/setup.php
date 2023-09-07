@@ -33,6 +33,10 @@ function elm_enqueue_styles_and_scripts()
         }
     }
 
+    if (is_cart()) {
+        wp_enqueue_script('elm-cart-js', JS_PATH . 'cart.js', ['jquery'], false, true);
+    }
+
     // Styles
     wp_enqueue_style('elm-main-css', CSS_PATH . 'main.css');
 }

@@ -57,8 +57,11 @@
                                 </div>
 
                                 <div class="mt-4 sm:mt-0 sm:pr-9">
-                                    <label for="quantity-0" class="sr-only"><?php _e('Quantity', 'woocommerce') ?>, <?php echo $product->get_name() ?></label>
-                                    <input type="number" value="<?php echo $quantity ?>" id="quantity-0" name="quantity-0" class="max-w-[4rem] rounded-md border border-gray-300 py-1.5 text-left text-base font-medium leading-5 text-gray-700 shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-1 focus:ring-indigo-500 sm:text-sm" />
+                                    <form class='flex flex-col max-w-[4rem] gap-1' action="<?php echo esc_url(wc_get_cart_url()); ?>" method="post">
+                                        <?php wp_nonce_field('woocommerce-cart', 'woocommerce-cart-nonce'); ?>
+                                        <input data-cart-qty-input type="number" value="<?php echo $quantity ?>" id="quantity-<?php echo esc_attr($cart_item_key); ?>" name="cart[<?php echo esc_attr($cart_item_key); ?>][qty]" class="rounded-md border border-gray-300 py-1.5 text-left text-base font-medium leading-5 text-gray-700 shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-1 focus:ring-indigo-500 sm:text-sm" />
+                                        <button class="text-xs hidden items-center" type="submit" name="update_cart" value="<?php esc_attr_e('Update cart', 'woocommerce'); ?>">Update</button>
+                                    </form>
                                     <div class="absolute right-0 top-0">
                                         <?php get_template_part('templates/global/remove', null, ['href' => esc_url(wc_get_cart_remove_url($cart_item_key))]) ?>
                                     </div>
@@ -118,7 +121,7 @@
                 </div>
             </dl>
 
-            <div class="mt-6 text-center bg-primary py-2 text-white">
+            <div class="mt-6">
                 <?php do_action('woocommerce_proceed_to_checkout'); ?>
             </div>
         </section>
