@@ -46,12 +46,7 @@
                                     <label for="quantity-0" class="sr-only"><?php _e('Quantity', 'woocommerce') ?>, <?php echo $product->get_name() ?></label>
                                     <input type="number" value="<?php echo $quantity ?>" id="quantity-0" name="quantity-0" class="max-w-[4rem] rounded-md border border-gray-300 py-1.5 text-left text-base font-medium leading-5 text-gray-700 shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-1 focus:ring-indigo-500 sm:text-sm" />
                                     <div class="absolute right-0 top-0">
-                                        <a href="<?= esc_url(wc_get_cart_remove_url($cart_item_key)) ?>" class="-m-2 inline-flex p-2 text-gray-400 hover:text-gray-500">
-                                            <span class="sr-only"><?php _e('Remove', 'woocommerce') ?></span>
-                                            <svg class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
-                                                <path d="M6.28 5.22a.75.75 0 00-1.06 1.06L8.94 10l-3.72 3.72a.75.75 0 101.06 1.06L10 11.06l3.72 3.72a.75.75 0 101.06-1.06L11.06 10l3.72-3.72a.75.75 0 00-1.06-1.06L10 8.94 6.28 5.22z" />
-                                            </svg>
-                                        </a>
+                                        <?php get_template_part('templates/global/remove', null, ['href' => esc_url(wc_get_cart_remove_url($cart_item_key))]) ?>
                                     </div>
                                 </div>
                             </div>
@@ -80,7 +75,29 @@
                     <dt class="text-sm text-gray-600"><?php esc_attr_e('Subtotal', 'woocommerce'); ?></dt>
                     <dd class="text-sm font-medium text-gray-900"><?php wc_cart_totals_subtotal_html(); ?></dd>
                 </div>
-                <!-- Todo: Add shipping, coupons etcetera from native cart.php template -->
+                <?php wc_get_template('cart/cart-total-coupons.php') ?>
+                <!-- Shipping Section -->
+                <?php if (WC()->cart->needs_shipping() && WC()->cart->show_shipping()) : ?>
+                    <?php wc_cart_totals_shipping_html(); ?>
+                <?php elseif (WC()->cart->needs_shipping() && 'yes' === get_option('woocommerce_enable_shipping_calc')) : ?>
+
+                    <div class="flex items-center justify-between border-t border-gray-200 pt-4">
+                        <dt class="text-sm text-gray-600"><?php esc_html_e('Shipping', 'woocommerce'); ?></dt>
+                        <dd class="text-sm text-gray-900">
+                            <?php woocommerce_shipping_calculator(); ?>
+                        </dd>
+                    </div>
+
+                <?php endif; ?>
+                <!-- Fees -->
+                <?php foreach (WC()->cart->get_fees() as $fee) : ?>
+                    <div class="flex items-center justify-between border-t border-gray-200 pt-4">
+                        <dt class="text-sm text-gray-600"><?= esc_html($fee->name) ?></dt>
+                        <dd class="text-sm text-gray-900"><?php wc_cart_totals_fee_html($fee); ?></dd>
+                    </div>
+                <?php endforeach; ?>
+                <!-- Taxes -->
+                <?php wc_get_template('cart/cart-tax.php') ?>
                 <div class="flex items-center justify-between border-t border-gray-200 pt-4">
                     <dt class="text-base font-bold text-gray-900"><?= __('Total', 'woocommerce') ?></dt>
                     <dd class="text-base text-gray-900"><?php wc_cart_totals_order_total_html(); ?></dd>
