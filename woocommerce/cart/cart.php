@@ -1,6 +1,4 @@
-<div>
-    <h1 class="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl"><?php the_title() ?></h1>
-    <div class="mt-12 lg:grid lg:grid-cols-12 lg:items-start lg:gap-x-12 xl:gap-x-16">
+    <div class="lg:grid lg:grid-cols-12 lg:items-start lg:gap-x-12 xl:gap-x-16">
         <section aria-labelledby="cart-heading" class="lg:col-span-7">
             <h2 id="cart-heading" class="sr-only"><?php _e('Items in your shopping cart', 'elmgren') ?></h2>
             <ul role="list" class="divide-y divide-gray-200 border-b border-t border-gray-200">
@@ -19,6 +17,22 @@
                         esc_attr($product->get_id()),
                         esc_attr($product->get_sku())
                     );
+
+                    // Get product permalink base
+                    $base_permalink = $product->get_permalink();
+
+                    // Collect variations
+                    $variation_query_args = [];
+                    foreach ($variations as $key => $variation_value) {
+                        if (str_contains($base_permalink, $key)) {
+                            continue;
+                        }
+                        $variation_query_args[$key] = $variation_value;
+                    }
+
+                    // Construct the URL
+                    $product_permalink_with_variations = add_query_arg($variation_query_args, $base_permalink);
+
                     ?>
 
                     <li class="flex py-6 sm:py-10">
@@ -31,7 +45,7 @@
                                 <div>
                                     <div class="flex justify-between">
                                         <h3 class="text-sm">
-                                            <a href="#" class="font-medium text-gray-700 hover:text-gray-800"><?= $parent_name ?? $product->get_name() ?></a>
+                                            <a href="<?= $product_permalink_with_variations ?>" class="font-medium text-gray-700 hover:text-gray-800"><?= $parent_name ?? $product->get_name() ?></a>
                                         </h3>
                                     </div>
                                     <div class="mt-1 flex text-sm">
@@ -104,9 +118,8 @@
                 </div>
             </dl>
 
-            <div class="mt-6">
-                <button type="submit" class="w-full rounded-md border border-transparent bg-indigo-600 px-4 py-3 text-base font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 focus:ring-offset-gray-50"><?= __('Checkout', 'woocommerce') ?></button>
+            <div class="mt-6 text-center bg-primary py-2 text-white">
+                <?php do_action('woocommerce_proceed_to_checkout'); ?>
             </div>
         </section>
     </div>
-</div>

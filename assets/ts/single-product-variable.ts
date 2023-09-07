@@ -5,10 +5,15 @@ jQuery(function ($) {
     const attribute_length = $('div[data-product-attribute]').length;
     const productImage = $('img[data-product-image]')
     const variantPriceContainer = $('div[data-product-variant-price]')
+    const parentId = submit_btn.val()
+
 
     let selectedAttributes: Record<string, string> = {};
 
     $('div[data-product-attribute] button').on('click', function () {
+        const input = $(this).find('input')
+        $(`input[name="${$(input).attr('name')}"]`).prop('checked', false)
+        input.prop('checked', true)
         selectedAttributes = {}
 
         if ($(this).hasClass('active')) {
@@ -46,10 +51,10 @@ jQuery(function ($) {
                 variantPriceContainer.html(price_html)
 
                 submit_btn.prop('disabled', false);
-                submit_btn.attr('variation-id', variation_id)
+                submit_btn.val(variation_id)
             } else {
                 submit_btn.prop('disabled', true);
-                submit_btn.removeAttr('variation-id')
+                submit_btn.val(parentId || '')
             }
         }
 

@@ -131,6 +131,7 @@ class Elm_Notice
     {
         register_rest_route('elm-notice/v1', '/add', [
             'methods' => 'POST',
+            'permission_callback' => '__return_true',
             'callback' => function ($request) {
 
                 $notice = [];
