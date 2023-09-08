@@ -1,5 +1,4 @@
 <?php
-
 class Elm_Notice
 {
     public const STATUSES = ['success', 'warning', 'error', 'info'];
@@ -7,16 +6,12 @@ class Elm_Notice
 
     public static function init()
     {
-        add_action('init', [__CLASS__, 'start_session']);
-        add_action('wp_head', [__CLASS__, 'display']);
+        add_action('wp_footer', [__CLASS__, 'display']);
         add_action('rest_api_init', [__CLASS__, 'ajax_notice']);
-    }
 
-    public static function start_session()
-    {
-        if (!session_id()) {
-            session_start();
-        }
+        // Remove WC notices
+        remove_action('woocommerce_before_shop_loop', 'woocommerce_output_all_notices', 10);
+        remove_action('woocommerce_before_single_product', 'woocommerce_output_all_notices', 10);
     }
 
     public static function add($message, $type = 'success', $variant = 'top-fixed', $settings = [])
@@ -28,47 +23,60 @@ class Elm_Notice
             throw new Exception('Invalid notice variant: ' . $variant);
         }
 
-        // Define default settings and merge with provided settings
         $default_settings = [
-            'visibility' => 'persistent',  // Options: 'auto-dismiss', 'persistent'
-            'interaction' => 'static'        // Options: 'static', 'clickable'
+            'visibility' => 'persistent',
+            'interaction' => 'static'
         ];
-
         $settings = array_merge($default_settings, $settings);
-        $target = isset($settings['target']) ? $settings['target'] : '';
 
-        $_SESSION['elm_notices'][] = [
+        $notice_data = [
             'message' => $message,
             'type' => $type,
             'variant' => $variant,
             'settings' => $settings,
-            'target' => $target
+            'target' => $settings['target'] ?? ''
         ];
+
+        $existing_notices = get_transient('elm_notices') ?: [];
+        $existing_notices[] = $notice_data;
+        set_transient('elm_notices', $existing_notices, 60);
     }
 
     public static function display()
     {
-        if (!empty($_SESSION['elm_notices'])) {
-            foreach ($_SESSION['elm_notices'] as $notice) {
-                $el = self::generate_html($notice);
-                echo $el;
+        $notices = get_transient('elm_notices');
+        if (is_array($notices)) {
+            foreach ($notices as $notice) {
+                self::echo_notice($notice);
             }
-            unset($_SESSION['elm_notices']);  // Clear notices after displaying
+            delete_transient('elm_notices');
         }
+        self::interrupt_wc_notices();
     }
 
-    public static function generate_html($notice)
+    private static function echo_notice($notice, $escape = true)
     {
-        $data_attributes = 'data-variant="' . esc_attr($notice['variant']) . '"';
-        $data_attributes .= ' data-visibility="' . esc_attr($notice['settings']['visibility']) . '"';
-        $data_attributes .= ' data-interaction="' . esc_attr($notice['settings']['interaction']) . '"';
+        echo self::generate_html($notice, $escape);
+    }
 
-        if ($notice['variant'] === 'inline' && !empty($notice['target'])) {
-            $data_attributes .= ' data-target="' . esc_attr($notice['target']) . '"';
+    public static function generate_html($notice, $escape = true)
+    {
+        $message = $notice['message'];
+        $type = isset($notice['type']) ? $notice['type'] : 'success';
+        $variant = isset($notice['variant']) ? $notice['variant'] : 'top-fixed';
+        $visibility = isset($notice['settings']['visibility']) ? $notice['settings']['visibility'] : 'persistent';
+        $interaction = isset($notice['settings']['interaction']) ? $notice['settings']['interaction'] : 'static';
+        $target = isset($notice['target']) ? $notice['target'] : null;
+
+        $data_attributes = 'data-variant="' . esc_attr($variant) . '"';
+        $data_attributes .= ' data-visibility="' . esc_attr($visibility) . '"';
+        $data_attributes .= ' data-interaction="' . esc_attr($interaction) . '"';
+
+        if ($variant === 'inline' && $target !== null) {
+            $data_attributes .= ' data-target="' . esc_attr($target) . '"';
         }
 
-        $type = $notice['type'];
-        $variant = $notice['variant'];
+
         $attrs = ['bg', 'border', 'text'];
         $tw_color_settings = [];
         foreach ($attrs as $attr) {
@@ -116,15 +124,10 @@ class Elm_Notice
         // Position is defined with jQuery
         $el = '<div style="' . $notice_colors->get_styles('border-width:1px;') . '" class="' . $notice_colors->get_classes($container_width . ' ' . $text_align . ' elm-notice hidden p-3 text-md z-50 ' . $position_classes) . '" ' . $data_attributes . '>';
         $el .= '<span class="block ' . $content_width . '">';
-        $el .= esc_html($notice['message']);
+        $el .= $escape ? esc_html($message) : $message;
         $el .= '</span>';
         $el .= '</div>';
         return $el;
-    }
-
-    public static function mock($message = 'This is a mock notice', $type = 'success', $variant = 'top-fixed', $settings = [])
-    {
-        self::add($message, $type, $variant, $settings);
     }
 
     public static function ajax_notice()
@@ -147,6 +150,26 @@ class Elm_Notice
                 return new WP_REST_Response(self::generate_html($notice), 200);
             },
         ]);
+    }
+
+    public static function interrupt_wc_notices()
+    {
+        $wc_notices = WC()->session->get('wc_notices', []);
+        foreach ($wc_notices as $notice_type => $notices) {
+            if (!in_array($notice_type, self::STATUSES)) {
+                continue; // Skip unknown notice types
+            }
+            foreach ($notices as $n) {
+                $notice = [
+                    'message' => $n['notice'],
+                    'type' => $notice_type,
+                    'variant' => 'top-fixed',
+                    'settings' => []
+                ];
+                self::echo_notice($notice, false);
+            }
+        }
+        WC()->session->set('wc_notices', []);
     }
 }
 

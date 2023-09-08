@@ -6,9 +6,9 @@ trait TailwindColorPickerTrait
 
     public static function init()
     {
-        add_action('wp_enqueue_scripts', [__CLASS__, 'enqueue_assets']);
         add_action('admin_enqueue_scripts', [__CLASS__, 'enqueue_assets']);
         add_action('customize_register', [__CLASS__, 'register_customizer_class']);
+        add_action('wp_head', [__CLASS__, 'inline_css']);
         add_action('init', [__CLASS__, 'register_acf_class']);
     }
 
@@ -62,13 +62,20 @@ trait TailwindColorPickerTrait
     public static function enqueue_assets()
     {
         wp_enqueue_style('wp-color-picker');
-        wp_enqueue_style('tailwind-color-picker-css', TCP_ASSETS_URI . '/color_picker.css');
         wp_enqueue_script('wp-color-picker');
         wp_enqueue_script('jquery');
         wp_enqueue_script('tailwind-color-picker-js', TCP_ASSETS_URI . '/color_picker.js', ['wp-color-picker', 'jquery'], null, true);
         wp_localize_script('tailwind-color-picker-js', 'tailwindColorPicker', array(
             'colors' => defined('TAILWIND_COLORS') ? TAILWIND_COLORS : []
         ));
+    }
+
+    public static function inline_css()
+    {
+        echo '<style>.custom-hover:hover {
+            color: var(--hover-color) !important;
+        }
+        </style>';
     }
 
     public function sanitize($input)

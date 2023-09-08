@@ -115,3 +115,16 @@ if (is_file("/.dockerenv")) {
 
 // Disable woocommerce styles
 add_filter('woocommerce_enqueue_styles', '__return_empty_array');
+function elm_dequeue_woocommerce_block_styles()
+{
+    global $wp_styles;
+
+    foreach ($wp_styles->queue as $style_handle) {
+        $src = $wp_styles->registered[$style_handle]->src;
+        // Here we check if the handle name contains 'build/', which seems to be consistent in your list.
+        if (strpos($src, 'woocommerce') !== false) {
+            wp_dequeue_style($style_handle);
+        }
+    }
+}
+add_action('wp_enqueue_scripts', 'elm_dequeue_woocommerce_block_styles', 100);

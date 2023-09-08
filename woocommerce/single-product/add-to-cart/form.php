@@ -41,7 +41,7 @@
 
     <?php endif; ?>
     <div data-product-variant-price>
-        <?= $variant_id > 0 ? $product->get_price_html() : '' ?>
+        <?= isset($variant_id) && $variant_id > 0 ? $product->get_price_html() : '' ?>
     </div>
 
     <div data-add-to-cart-container class="flex">
