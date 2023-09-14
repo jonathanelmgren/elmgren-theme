@@ -110,4 +110,7 @@ body:not(.wp-admin, .wp-customizer) {
 		@apply border-t border-lightgray-300;
 		@apply my-8; /* Vertical margins */
 	}
+	abbr.required {
+		@apply no-underline;
+	}
 }

@@ -37,6 +37,10 @@ function elm_enqueue_styles_and_scripts()
         wp_enqueue_script('elm-cart-js', JS_PATH . 'cart.js', ['jquery'], false, true);
     }
 
+    if (is_checkout()) {
+        wp_enqueue_script('elm-checkout-js', JS_PATH . 'checkout.js', ['jquery'], false, true);
+    }
+
     // Styles
     wp_enqueue_style('elm-main-css', CSS_PATH . 'main.css');
 }
@@ -117,6 +121,9 @@ if (is_file("/.dockerenv")) {
 add_filter('woocommerce_enqueue_styles', '__return_empty_array');
 function elm_dequeue_woocommerce_block_styles()
 {
+    if (!class_exists('woocommerce')) {
+        return;
+    }
     global $wp_styles;
 
     foreach ($wp_styles->queue as $style_handle) {
@@ -126,5 +133,11 @@ function elm_dequeue_woocommerce_block_styles()
             wp_dequeue_style($style_handle);
         }
     }
+
+    wp_dequeue_style('select2');
+    wp_deregister_style('select2');
+
+    wp_dequeue_script('selectWoo');
+    wp_deregister_script('selectWoo');
 }
 add_action('wp_enqueue_scripts', 'elm_dequeue_woocommerce_block_styles', 100);
