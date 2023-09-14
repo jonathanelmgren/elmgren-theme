@@ -24,6 +24,8 @@ function custom_checkout_fields_class($fields)
     $fields['shipping']['shipping_city']['class'] = array('form-row-wide', 'col-span-full', 'md:col-span-1');
     $fields['shipping']['shipping_state']['class'] = array('form-row-wide', 'col-span-full', 'md:col-span-1');
     $fields['shipping']['shipping_postcode']['class'] = array('form-row-wide', 'col-span-full', 'md:col-span-1');
+    $fields['shipping']['shipping_phone']['class'] = array('form-row-wide', 'col-span-full', 'md:col-span-1');
+    $fields['shipping']['shipping_email']['class'] = array('form-row-wide', 'col-span-full');
 
     return $fields;
 }

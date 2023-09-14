@@ -13,7 +13,7 @@ woocommerce_breadcrumb();
         <section aria-labelledby="information-heading">
             <h2 id="information-heading" class="sr-only"><?php _e('Product information', 'elmgren') ?></h2>
 
-            <div class="flex items-center gap-4">
+            <div class="flex flex-col sm:flex-row sm:items-center sm:gap-4">
                 <?php wc_get_template('single-product/price.php') ?>
                 <?php wc_get_template('single-product/rating.php') ?>
             </div>

@@ -30,7 +30,7 @@ $order_button_text = apply_filters('woocommerce_order_button_text', __('Place or
 
 ?>
 
-<form name="checkout" method="post" class="checkout woocommerce-checkout flex gap-8" action="<?php echo esc_url(wc_get_checkout_url()); ?>" enctype="multipart/form-data">
+<form name="checkout" method="post" class="checkout woocommerce-checkout flex flex-col md:flex-row gap-8" action="<?php echo esc_url(wc_get_checkout_url()); ?>" enctype="multipart/form-data">
 	<?php wp_nonce_field('woocommerce-process_checkout', 'woocommerce-process-checkout-nonce'); ?>
 	<div class="grow">
 		<?php if ($checkout->get_checkout_fields()) : ?>
@@ -39,10 +39,15 @@ $order_button_text = apply_filters('woocommerce_order_button_text', __('Place or
 		<?php endif; ?>
 	</div>
 
-	<div id="order_review" class="woocommerce-checkout-review-order max-w-md w-full">
-		<?php wc_get_template('checkout/review-order.php') ?>
-		<?php wc_get_template('checkout/terms.php'); ?>
-		<?php echo apply_filters('woocommerce_order_button_html', '<button type="submit" class="w-full py-2 text-white mt-4 bg-primary button alt' . esc_attr(wc_wp_theme_get_element_class_name('button') ? ' ' . wc_wp_theme_get_element_class_name('button') : '') . '" name="woocommerce_checkout_place_order" id="place_order" value="' . esc_attr($order_button_text) . '" data-value="' . esc_attr($order_button_text) . '">' . esc_html($order_button_text) . '</button>'); // @codingStandardsIgnoreLine 
-		?>
+	<div id="order_review" class="woocommerce-checkout-review-order md:max-w-sm lg:max-w-md w-full">
+		<h3>
+			<?php esc_html_e('Your order', 'woocommerce'); ?>
+		</h3>
+		<div class='sticky top-5'>
+			<?php wc_get_template('checkout/review-order.php') ?>
+			<?php wc_get_template('checkout/terms.php'); ?>
+			<?php echo apply_filters('woocommerce_order_button_html', '<button type="submit" class="w-full py-2 text-white mt-4 bg-primary button alt' . esc_attr(wc_wp_theme_get_element_class_name('button') ? ' ' . wc_wp_theme_get_element_class_name('button') : '') . '" name="woocommerce_checkout_place_order" id="place_order" value="' . esc_attr($order_button_text) . '" data-value="' . esc_attr($order_button_text) . '">' . esc_html($order_button_text) . '</button>'); // @codingStandardsIgnoreLine 
+			?>
+		</div>
 	</div>
 </form>

@@ -22,10 +22,10 @@
     ?>
 
         <?php foreach ($attributes as $attribute_name => $options) : ?>
-            <div data-product-attribute="<?php echo $attribute_name ?>" class="sm:flex sm:justify-between">
+            <div data-product-attribute="<?php echo $attribute_name ?>">
                 <fieldset>
                     <legend class="block text-sm font-medium text-gray-700"><?php echo wc_attribute_label($attribute_name); ?></legend>
-                    <div class="mt-1 flex gap-4 box-border">
+                    <div class="mt-1 flex gap-4 box-border flex-wrap">
                         <?php foreach ($options as $option) :
                             $isActive = isset($selected_attributes['attribute_' . $attribute_name]) && $selected_attributes['attribute_' . $attribute_name] === $option;
                         ?>
