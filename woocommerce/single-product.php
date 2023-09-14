@@ -22,7 +22,7 @@ woocommerce_breadcrumb();
                 <?php the_content(); ?>
             </div>
         </section>
-        <?php wc_get_template('single-product/add-to-cart/form.php') ?>
+        <?php wc_get_template('single-product/add-to-cart/add-to-cart.php') ?>
     </div>
     <?php wc_get_template('single-product/product-image.php') ?>
 </div>

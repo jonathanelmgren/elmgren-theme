@@ -14,7 +14,7 @@
     $classname = "absolute -right-1 -top-1 rounded-full w-4 h-4 top text-xs grid justify-center content-center";
 
     ?>
-    <a aria-label="View shopping cart" href="<?php echo wc_get_cart_url() ?>" role="button" <?php $colors->the_attrs('relative flex bg-transparent') ?>>
+    <a data-menu-item aria-label="View shopping cart" href="<?php echo wc_get_cart_url() ?>" role="button" <?php $colors->the_attrs('relative flex bg-transparent') ?>>
         <?php elm_the_inline_svg('cart') ?>
         <?php if ($qty > 0) : ?>
             <span <?php $box_colors->the_attrs($classname) ?>><?php echo $qty ?>
