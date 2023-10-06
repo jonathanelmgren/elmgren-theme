@@ -39,7 +39,7 @@ function elm_get_page_width($force_default = false)
         $w = get_field('page_width', $post_id);
     }
     if ($force_default || !$w) {
-        $w = get_theme_mod('page_width_setting', 'width-normal');
+        $w = get_theme_mod('elm_page_width_setting', 'width-normal');
     }
 
     return $w;  // Return the corresponding Tailwind class or an empty string

@@ -164,4 +164,27 @@ class TailwindColor
     {
         echo $this->get_attrs($additional_classes, $additional_styles);
     }
+
+    public function get_color_code($setting)
+    {
+        return $this->get_color_from_class($this->get_class($setting)) ?? $this->settings[$setting]['color'];
+    }
+
+    private function get_color_from_class($class_name) {
+        $color_data = TAILWIND_COLORS;
+        $parts = explode('-', $class_name);
+    
+        if (count($parts) < 2) {
+            return null; // Invalid class name
+        }
+    
+        $color_key = $parts[1]; // 'primary' or 'secondary' etc.
+        $shade = $parts[2] ?? 'DEFAULT'; // '200', '300', etc. or 'DEFAULT'
+    
+        if (isset($color_data[$color_key][$shade])) {
+            return $color_data[$color_key][$shade];
+        }
+    
+        return null; // Color or shade not found
+    }
 }

@@ -23,7 +23,7 @@ function elm_enqueue_styles_and_scripts()
     wp_enqueue_script('jquery');
     wp_enqueue_script('elm-main-js', JS_PATH . 'main.js', ['jquery'], false, true);
 
-    if (is_product()) {
+    if (elm_is_woocommerce_activated() && is_product()) {
         global $product;
         if (is_string($product)) {
             $product = wc_get_product(get_the_ID());
@@ -33,11 +33,11 @@ function elm_enqueue_styles_and_scripts()
         }
     }
 
-    if (is_cart()) {
+    if (elm_is_woocommerce_activated() && is_cart()) {
         wp_enqueue_script('elm-cart-js', JS_PATH . 'cart.js', ['jquery'], false, true);
     }
 
-    if (is_checkout()) {
+    if (elm_is_woocommerce_activated() && is_checkout()) {
         wp_enqueue_script('elm-checkout-js', JS_PATH . 'checkout.js', ['jquery'], false, true);
     }
 
@@ -141,3 +141,103 @@ function elm_dequeue_woocommerce_block_styles()
     wp_deregister_script('selectWoo');
 }
 add_action('wp_enqueue_scripts', 'elm_dequeue_woocommerce_block_styles', 100);
+
+/* function generate_dynamic_text_size_css()
+{
+    $textSettings = ['h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'p'];
+    $colorSettings = [
+        'elm_a_font_color' => ['attr' => 'text', 'fallback' => 'text-primary-500'],
+        'elm_a_font_color_hover' => ['attr' => 'text', 'fallback' => 'text-primary-500', 'prefix' => 'hover'],
+        'elm_button_primary_bg_color' => ['attr' => 'bg', 'fallback' => 'bg-primary-500'],
+        'elm_button_secondary_bg_color' => ['attr' => 'bg', 'fallback' => 'bg-secondary-500'],
+        'elm_button_primary_text_color' => ['attr' => 'text', 'fallback' => 'text-primary-500'],
+        'elm_button_secondary_text_color' => ['attr' => 'text', 'fallback' => 'text-secondary-500'],
+        'elm_button_primary_border_color' => ['attr' => 'border', 'fallback' => 'text-primary-500'],
+        'elm_button_secondary_border_color' => ['attr' => 'border', 'fallback' => 'text-primary-500'],
+        'elm_button_primary_bg_color_hover' => ['prefix' => 'hover', 'attr' => 'bg', 'fallback' => 'bg-primary-500'],
+        'elm_button_secondary_bg_color_hover' => ['prefix' => 'hover', 'attr' => 'bg', 'fallback' => 'bg-secondary-500'],
+        'elm_button_primary_text_color_hover' => ['prefix' => 'hover', 'attr' => 'text', 'fallback' => 'text-primary-500'],
+        'elm_button_secondary_text_color_hover' => ['prefix' => 'hover', 'attr' => 'text', 'fallback' => 'text-secondary-500'],
+        'elm_button_primary_border_color_hover' => ['prefix' => 'hover', 'attr' => 'border', 'fallback' => 'text-primary-500'],
+        'elm_button_secondary_border_color_hover' => ['prefix' => 'hover', 'attr' => 'border', 'fallback' => 'text-primary-500'],
+    ];
+    foreach ($textSettings as $textSetting) {
+        $colorSettings['elm_' . $textSetting . '_font_color'] = ['attr' => 'text', 'fallback' => 'text-gray-600'];
+    }
+    $borderRadius = get_theme_mod('elm_border_radius_setting', '0px');
+    $primaryBorderWidth = get_theme_mod('elm_button_primary_border_width', '0');
+    $secondaryBorderWidth = get_theme_mod('elm_button_secondary_border_width', '0');
+    $textColors = new TailwindColor($colorSettings);
+    echo '<style type="text/css">';
+    foreach ($textSettings as $textSetting) {
+        $font_size = get_theme_mod('elm_' . $textSetting . '_font_size', '1.5');  // Fetch the setting
+        echo $textSetting . ' { font-size: ' . esc_attr($font_size) . 'rem; color: ' . $textColors->get_color_code('elm_' . $textSetting . '_font_color') . ' }';  // Output the CSS
+    }
+    echo 'a { color: ' . $textColors->get_color_code('elm_a_font_color') . ' }';
+    echo 'a:hover { color: ' . $textColors->get_color_code('elm_a_font_color_hover') . ' }';
+    echo 'button, input, a.wp-element-button, a.btn, img,textarea,select,fieldset,blockquote { border-radius: ' . $borderRadius . ' }';
+    echo 'button, a.btn { border-color: ' . $textColors->get_color_code('elm_button_primary_border_color') . ';border-width: ' . $primaryBorderWidth . 'px; background-color: ' . $textColors->get_color_code('elm_button_primary_bg_color') . '; color: ' . $textColors->get_color_code('elm_button_primary_text_color') . ' }';
+    echo 'button.secondary, a.btn.secondary { border-width: ' . $secondaryBorderWidth . 'px; border-color: ' . $textColors->get_color_code('elm_button_secondary_border_color') . ';background-color: ' . $textColors->get_color_code('elm_button_secondary_bg_color') . '; color: ' . $textColors->get_color_code('elm_button_secondary_text_color') . ' }';
+    echo 'button:hover, a.btn:hover { border-color: ' . $textColors->get_color_code('elm_button_primary_border_color_hover') . '; background-color: ' . $textColors->get_color_code('elm_button_primary_bg_color_hover') . '; color: ' . $textColors->get_color_code('elm_button_primary_text_color_hover') . ' }';
+    echo 'button.secondary:hover, a.btn.secondary:hover { border-color: ' . $textColors->get_color_code('elm_button_secondary_border_color_hover') . ';background-color: ' . $textColors->get_color_code('elm_button_secondary_bg_color_hover') . '; color: ' . $textColors->get_color_code('elm_button_secondary_text_color_hover') . ' }';
+    echo '</style>';
+}
+add_action('wp_head', 'generate_dynamic_text_size_css'); */
+
+function elm_register_button_block_styles()
+{
+    register_block_style(
+        'core/button',
+        array(
+            'name'         => 'primary',
+            'label'        => __('Primary', 'text-domain'),
+            'isDefault'    => true,
+        )
+    );
+
+    register_block_style(
+        'core/button',
+        array(
+            'name'         => 'secondary',
+            'label'        => __('Secondary', 'text-domain'),
+        )
+    );
+}
+add_action('init', 'elm_register_button_block_styles');
+
+function elm_add_class_to_list_block($block_content, $block)
+{
+
+    if ('core/button' === $block['blockName']) {
+        $block_content = new WP_HTML_Tag_Processor($block_content);
+        $block_content->next_tag('a');
+        $block_content->add_class('btn');
+        if (str_contains($block_content, 'is-style-secondary')) {
+            $block_content->add_class('secondary');
+        } else {
+            $block_content->add_class('primary');
+        }
+        $block_content->get_updated_html();
+    }
+
+    return $block_content;
+}
+add_filter('render_block', 'elm_add_class_to_list_block', 10, 2);
+
+function elm_remove_default_button_styles($args, $name)
+{
+    if ($name !== 'core/button') {
+        return $args;
+    }
+
+    if (isset($args['styles'])) {
+        $new_styles = array_filter($args['styles'], function ($style) {
+            return !in_array($style['name'], array('fill', 'outline'));
+        });
+        $args['styles'] = array_values($new_styles);
+    }
+
+    return $args;
+}
+
+add_filter('register_block_type_args', 'elm_remove_default_button_styles', 10, 2);

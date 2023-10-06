@@ -19,7 +19,7 @@ class Elm_Walker_Nav_Menu extends Walker_Nav_Menu
     // Helper function to check if a menu item has children
     protected function has_children($item)
     {
-        return in_array('menu-item-has-children', $item->classes);
+        return is_array($item->classes) && in_array('menu-item-has-children', $item->classes);
     }
 
     // Helper function to generate item output

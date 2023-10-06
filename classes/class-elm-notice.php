@@ -10,8 +10,10 @@ class Elm_Notice
         add_action('rest_api_init', [__CLASS__, 'ajax_notice']);
 
         // Remove WC notices
-        remove_action('woocommerce_before_shop_loop', 'woocommerce_output_all_notices', 10);
-        remove_action('woocommerce_before_single_product', 'woocommerce_output_all_notices', 10);
+        if (class_exists('WooCommerce')) {
+            remove_action('woocommerce_before_shop_loop', 'woocommerce_output_all_notices', 10);
+            remove_action('woocommerce_before_single_product', 'woocommerce_output_all_notices', 10);
+        }
     }
 
     public static function add($message, $type = 'success', $variant = 'top-fixed', $settings = [])
@@ -154,6 +156,10 @@ class Elm_Notice
 
     public static function interrupt_wc_notices()
     {
+        if (!class_exists('WooCommerce')) {
+            return;
+        }
+        
         $wc_notices = WC()->session->get('wc_notices', []);
         foreach ($wc_notices as $notice_type => $notices) {
             if (!in_array($notice_type, self::STATUSES)) {

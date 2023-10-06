@@ -7,109 +7,13 @@ body:not(.wp-admin, .wp-customizer) {
 	main {
 		flex: 1;
 	}
-
 	@apply font-primary text-darkgray;
-
-	/* Heading styles */
-	h1,
-	h2,
-	h3,
-	h4,
-	h5,
-	h6 {
-		@apply font-secondary;
-	}
-
-	h1 {
-		@apply text-4xl;
-	}
-
-	h2 {
-		@apply text-3xl;
-	}
-
-	h3 {
-		@apply text-2xl;
-	}
-
-	h4 {
-		@apply text-xl;
-	}
-
-	h5 {
-		@apply text-lg;
-	}
-
-	h6 {
-		@apply text-base;
-	}
-
-	/* Paragraph */
-	p {
-		@apply leading-relaxed; /* Line-height for readability */
-		&:not(.text-*, .has-text*) {
-			@apply text-darkgray-500; /* Dark gray color for visibility */
-		}
-	}
-
-	/* Default link styles */
-	a {
-		@apply transition-colors duration-200; /* Smooth color transition */
-		&:not(.text-*, .has-*) {
-			@apply text-primary-500;
-
-			&:hover {
-				@apply text-primary-600; /* Darker shade on hover */
-			}
-		}
-	}
-
-	/* Blockquotes */
-	blockquote {
-		@apply border-l-4 border-accent-primary pl-4 italic;
-		&:not(.text-*, .has-text*) {
-			@apply text-darkgray-400; /* Slightly muted text color */
-		}
-	}
-
-	/* Default button styles */
-	button,
-	.btn {
-		&:not(.btn--no-style, .components-button) {
-			&:not(.text-*, .has-text*) {
-				@apply text-white;
-			}
-			&:not(.bg-*) {
-				@apply bg-primary-500;
-				&:hover {
-					@apply bg-primary-600; /* Darker shade on hover */
-				}
-
-				&:active {
-					@apply bg-primary-700; /* Even darker shade on active state */
-				}
-			}
-			&:not(.p*) {
-				@apply py-2 px-4; /* Padding */
-			}
-
-			&:disabled {
-				@apply cursor-not-allowed; /* Show not-allowed cursor on disabled */
-				@apply bg-lightgray-600; /* Grayed out color for disabled */
-			}
-		}
-	}
 
 	/* Images */
 	img {
 		@apply max-w-full; /* Ensure images don't overflow their containers */
 	}
 
-	/* Borders */
-	hr {
-		@apply border-t border-lightgray-300;
-		@apply my-8; /* Vertical margins */
-	}
 	abbr.required {
 		@apply no-underline;
 	}

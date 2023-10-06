@@ -10,7 +10,7 @@ class Elm_Ajax
 
     public static function enqueue_scripts()
     {
-        if (is_product()) {
+        if (elm_is_woocommerce_activated() && is_product()) {
             wp_enqueue_script('elm-add-to-cart-ajax-js', JS_PATH . 'add-to-cart-ajax.js', ['jquery'], false, true);
         }
 
