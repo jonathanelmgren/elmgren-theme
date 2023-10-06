@@ -102,7 +102,7 @@ function generate_dynamic_text_size_css()
     $final_css = '<style type="text/css">' . implode(PHP_EOL, $cssRules) . '</style>';
 
     // Cache the CSS for 12 hours
-    set_transient('dynamic_text_size_css', $final_css, 12 * HOUR_IN_SECONDS);
+    set_transient('dynamic_text_size_css', $final_css, 7 * DAY_IN_SECONDS);
 
     echo $final_css;
 }
