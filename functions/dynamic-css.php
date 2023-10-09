@@ -55,7 +55,6 @@ function generate_dynamic_text_size_css()
     }
 
     // Anchor elements
-    $cssRules[] = generateCssRule('a', ['color: ' . $textColors->get_color_code('elm_a_font_color') . ';']);
     $cssRules[] = generateCssRule('a:hover', ['color: ' . $textColors->get_color_code('elm_a_font_color_hover') . ';']);
 
     // General elements

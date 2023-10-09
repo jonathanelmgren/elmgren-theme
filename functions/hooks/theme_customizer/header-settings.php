@@ -28,7 +28,7 @@ function elm_customize_header($wp_customize)
     add_setting_and_control(
         $wp_customize,
         [
-            'setting' => "header_absolute_position",
+            'setting' => "elm_header_absolute_position",
             'settingArgs' => ['default' => false],
             'controlArgs' => [
                 'label' => __("Header position absolute", 'elmgren'),
@@ -40,7 +40,7 @@ function elm_customize_header($wp_customize)
     add_setting_and_control(
         $wp_customize,
         [
-            'setting' => "header_sticky",
+            'setting' => "elm_header_sticky",
             'settingArgs' => ['default' => false],
             'controlArgs' => [
                 'label' => __("Header sticky", 'elmgren'),
@@ -54,7 +54,7 @@ function elm_customize_header($wp_customize)
     add_setting_and_control(
         $wp_customize,
         [
-            'setting' => "header_border",
+            'setting' => "elm_header_border",
             'settingArgs' => ['default' => false],
             'controlArgs' => [
                 'label' => __("Header border", 'elmgren'),

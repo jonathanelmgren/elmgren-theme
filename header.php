@@ -9,10 +9,10 @@
 </head>
 
 <?php
-$is_absolute = get_theme_mod('header_absolute_position', false);
-$is_sticky = get_theme_mod('header_sticky', false);
-$border = get_theme_mod('header_border', false);
-$header_margin_to_content = (float) get_theme_mod('content_spacing_setting', '0');
+$is_absolute = get_theme_mod('elm_header_absolute_position', false);
+$is_sticky = get_theme_mod('elm_header_sticky', false);
+$border = get_theme_mod('elm_header_border', false);
+$header_margin_to_content = (float) get_theme_mod('elm_content_spacing_setting', '0');
 
 $header_colors = new TailwindColor([
     'header_bg_color' => ['attr' => 'bg', 'fallback' => 'transparent'],
