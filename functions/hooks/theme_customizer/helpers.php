@@ -42,3 +42,35 @@ function add_tailwind_color_picker_control($wp_customize, $settingId, $label, $s
         TailwindColorPickerThemeCustomizer::class  // Provide the class name as an argument
     );
 }
+
+function add_tailwind_color_picker_control_with_hover($wp_customize, $settingId, $label, $section)
+{
+    add_setting_and_control(
+        $wp_customize,
+        [
+            'setting' => $settingId,
+            'settingArgs' => [
+                'sanitize_callback' => 'sanitize_tailwind',
+            ],
+            'controlArgs' => [
+                'label' => __($label, 'elmgren'),
+                'section' => $section,
+            ],
+        ],
+        TailwindColorPickerThemeCustomizer::class  // Provide the class name as an argument
+    );
+    add_setting_and_control(
+        $wp_customize,
+        [
+            'setting' => $settingId . '_hover',
+            'settingArgs' => [
+                'sanitize_callback' => 'sanitize_tailwind',
+            ],
+            'controlArgs' => [
+                'label' => __($label . ' - Hover', 'elmgren'),
+                'section' => $section,
+            ],
+        ],
+        TailwindColorPickerThemeCustomizer::class  // Provide the class name as an argument
+    );
+}

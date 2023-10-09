@@ -105,7 +105,7 @@ if ( ! class_exists( 'ACF_Admin' ) ) :
 			// Determine if the current page being viewed is "ACF" related.
 			if ( isset( $screen->post_type ) && $screen->post_type === 'acf-field-group' ) {
 				add_action( 'in_admin_header', array( $this, 'in_admin_header' ) );
-				add_filter( 'admin_footer_text', array( $this, 'admin_footer_text' ) );
+				add_filter( 'admin_elm_footer_text', array( $this, 'admin_elm_footer_text' ) );
 				$this->setup_help_tab();
 			}
 		}
@@ -202,7 +202,7 @@ if ( ! class_exists( 'ACF_Admin' ) ) :
 		 * @param   string $text The admin footer text.
 		 * @return  string
 		 */
-		function admin_footer_text( $text ) {
+		function admin_elm_footer_text( $text ) {
 			// Use RegExp to append "ACF" after the <a> element allowing translations to read correctly.
 			return preg_replace( '/(<a[\S\s]+?\/a>)/', '$1 ' . __( 'and', 'acf' ) . ' <a href="' . acf_add_url_utm_tags( 'https://www.advancedcustomfields.com', 'footer', 'footer' ) . '" target="_blank">ACF</a>', $text, 1 );
 		}

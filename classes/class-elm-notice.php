@@ -118,9 +118,9 @@ class Elm_Notice
                 break;
         }
 
-        $container_width = get_theme_mod('notice_bg_width', 'width-full');
-        $content_width = get_theme_mod('notice_content_width', 'width-normal');
-        $text_align = get_theme_mod('notice_text_align', 'text-center');
+        $container_width = get_theme_mod('elm_notice_bg_width', 'width-full');
+        $content_width = get_theme_mod('elm_notice_content_width', 'width-normal');
+        $text_align = get_theme_mod('elm_notice_text_align', 'text-center');
         $notice_colors = new TailwindColor($tw_color_settings);
 
         // Position is defined with jQuery

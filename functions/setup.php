@@ -142,48 +142,6 @@ function elm_dequeue_woocommerce_block_styles()
 }
 add_action('wp_enqueue_scripts', 'elm_dequeue_woocommerce_block_styles', 100);
 
-/* function generate_dynamic_text_size_css()
-{
-    $textSettings = ['h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'p'];
-    $colorSettings = [
-        'elm_a_font_color' => ['attr' => 'text', 'fallback' => 'text-primary-500'],
-        'elm_a_font_color_hover' => ['attr' => 'text', 'fallback' => 'text-primary-500', 'prefix' => 'hover'],
-        'elm_button_primary_bg_color' => ['attr' => 'bg', 'fallback' => 'bg-primary-500'],
-        'elm_button_secondary_bg_color' => ['attr' => 'bg', 'fallback' => 'bg-secondary-500'],
-        'elm_button_primary_text_color' => ['attr' => 'text', 'fallback' => 'text-primary-500'],
-        'elm_button_secondary_text_color' => ['attr' => 'text', 'fallback' => 'text-secondary-500'],
-        'elm_button_primary_border_color' => ['attr' => 'border', 'fallback' => 'text-primary-500'],
-        'elm_button_secondary_border_color' => ['attr' => 'border', 'fallback' => 'text-primary-500'],
-        'elm_button_primary_bg_color_hover' => ['prefix' => 'hover', 'attr' => 'bg', 'fallback' => 'bg-primary-500'],
-        'elm_button_secondary_bg_color_hover' => ['prefix' => 'hover', 'attr' => 'bg', 'fallback' => 'bg-secondary-500'],
-        'elm_button_primary_text_color_hover' => ['prefix' => 'hover', 'attr' => 'text', 'fallback' => 'text-primary-500'],
-        'elm_button_secondary_text_color_hover' => ['prefix' => 'hover', 'attr' => 'text', 'fallback' => 'text-secondary-500'],
-        'elm_button_primary_border_color_hover' => ['prefix' => 'hover', 'attr' => 'border', 'fallback' => 'text-primary-500'],
-        'elm_button_secondary_border_color_hover' => ['prefix' => 'hover', 'attr' => 'border', 'fallback' => 'text-primary-500'],
-    ];
-    foreach ($textSettings as $textSetting) {
-        $colorSettings['elm_' . $textSetting . '_font_color'] = ['attr' => 'text', 'fallback' => 'text-gray-600'];
-    }
-    $borderRadius = get_theme_mod('elm_border_radius_setting', '0px');
-    $primaryBorderWidth = get_theme_mod('elm_button_primary_border_width', '0');
-    $secondaryBorderWidth = get_theme_mod('elm_button_secondary_border_width', '0');
-    $textColors = new TailwindColor($colorSettings);
-    echo '<style type="text/css">';
-    foreach ($textSettings as $textSetting) {
-        $font_size = get_theme_mod('elm_' . $textSetting . '_font_size', '1.5');  // Fetch the setting
-        echo $textSetting . ' { font-size: ' . esc_attr($font_size) . 'rem; color: ' . $textColors->get_color_code('elm_' . $textSetting . '_font_color') . ' }';  // Output the CSS
-    }
-    echo 'a { color: ' . $textColors->get_color_code('elm_a_font_color') . ' }';
-    echo 'a:hover { color: ' . $textColors->get_color_code('elm_a_font_color_hover') . ' }';
-    echo 'button, input, a.wp-element-button, a.btn, img,textarea,select,fieldset,blockquote { border-radius: ' . $borderRadius . ' }';
-    echo 'button, a.btn { border-color: ' . $textColors->get_color_code('elm_button_primary_border_color') . ';border-width: ' . $primaryBorderWidth . 'px; background-color: ' . $textColors->get_color_code('elm_button_primary_bg_color') . '; color: ' . $textColors->get_color_code('elm_button_primary_text_color') . ' }';
-    echo 'button.secondary, a.btn.secondary { border-width: ' . $secondaryBorderWidth . 'px; border-color: ' . $textColors->get_color_code('elm_button_secondary_border_color') . ';background-color: ' . $textColors->get_color_code('elm_button_secondary_bg_color') . '; color: ' . $textColors->get_color_code('elm_button_secondary_text_color') . ' }';
-    echo 'button:hover, a.btn:hover { border-color: ' . $textColors->get_color_code('elm_button_primary_border_color_hover') . '; background-color: ' . $textColors->get_color_code('elm_button_primary_bg_color_hover') . '; color: ' . $textColors->get_color_code('elm_button_primary_text_color_hover') . ' }';
-    echo 'button.secondary:hover, a.btn.secondary:hover { border-color: ' . $textColors->get_color_code('elm_button_secondary_border_color_hover') . ';background-color: ' . $textColors->get_color_code('elm_button_secondary_bg_color_hover') . '; color: ' . $textColors->get_color_code('elm_button_secondary_text_color_hover') . ' }';
-    echo '</style>';
-}
-add_action('wp_head', 'generate_dynamic_text_size_css'); */
-
 function elm_register_button_block_styles()
 {
     register_block_style(

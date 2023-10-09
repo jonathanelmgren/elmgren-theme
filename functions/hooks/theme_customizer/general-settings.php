@@ -25,19 +25,15 @@ function elm_customize_buttons($wp_customize)
             ]
         );
 
-        add_tailwind_color_picker_control($wp_customize, "elm_button_{$type}_bg_color", "$label Button Background Color", 'elm_button_settings');
-        add_tailwind_color_picker_control($wp_customize, "elm_button_{$type}_text_color", "$label Button Text Color", 'elm_button_settings');
-        add_tailwind_color_picker_control($wp_customize, "elm_button_{$type}_border_color", "$label Button Border Color", 'elm_button_settings');
-
-        add_tailwind_color_picker_control($wp_customize, "elm_button_{$type}_bg_color_hover", "$label Button Background Color - Hover", 'elm_button_settings');
-        add_tailwind_color_picker_control($wp_customize, "elm_button_{$type}_text_color_hover", "$label Button Text Color - Hover", 'elm_button_settings');
-        add_tailwind_color_picker_control($wp_customize, "elm_button_{$type}_border_color_hover", "$label Button Border Color - Hover", 'elm_button_settings');
+        add_tailwind_color_picker_control_with_hover($wp_customize, "elm_button_{$type}_bg_color", "$label Button Background Color", 'elm_button_settings');
+        add_tailwind_color_picker_control_with_hover($wp_customize, "elm_button_{$type}_text_color", "$label Button Text Color", 'elm_button_settings');
+        add_tailwind_color_picker_control_with_hover($wp_customize, "elm_button_{$type}_border_color", "$label Button Border Color", 'elm_button_settings');
     }
 }
 
 function elm_customize_text($wp_customize)
 {
-    $textSettings = ['H1' => 'h1', 'H2' => 'h2', 'H3' => 'h3', 'H4' => 'h4', 'H5' => 'h5', 'H6' => 'h6', 'Normal' => 'p'];
+    $textSettings = ['H1' => 'h1', 'H2' => 'h2', 'H3' => 'h3', 'H4' => 'h4', 'H5' => 'h5', 'H6' => 'h6', 'Normal' => 'p', 'Links' => 'a'];
     $baseSize = 2;
 
     foreach ($textSettings as $label => $tag) {
@@ -74,6 +70,7 @@ function elm_customize_text($wp_customize)
         );
         add_tailwind_color_picker_control($wp_customize, "elm_{$tag}_font_color", "$label Font Color", 'elm_text_colors');
     }
+    add_tailwind_color_picker_control($wp_customize, "elm_a_font_color_hover", "Link Font Color - Hover", 'elm_text_colors');
 }
 
 function elm_customizer_general_settings($wp_customize)

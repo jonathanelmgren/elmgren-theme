@@ -14,9 +14,8 @@ function generate_dynamic_text_size_css()
         return;
     }
 
-    $textElements = ['h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'p'];
+    $textElements = ['h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'p', 'a'];
     $colorSettings = [
-        'elm_a_font_color' => ['attr' => 'text', 'fallback' => 'text-primary-500'],
         'elm_a_font_color_hover' => ['attr' => 'text', 'fallback' => 'text-primary-500', 'prefix' => 'hover'],
         'elm_button_primary_bg_color' => ['attr' => 'bg', 'fallback' => 'bg-primary-500'],
         'elm_button_secondary_bg_color' => ['attr' => 'bg', 'fallback' => 'bg-secondary-500'],
@@ -101,14 +100,14 @@ function generate_dynamic_text_size_css()
 
     $final_css = '<style type="text/css">' . implode(PHP_EOL, $cssRules) . '</style>';
 
-    // Cache the CSS for 12 hours
     set_transient('dynamic_text_size_css', $final_css, 7 * DAY_IN_SECONDS);
 
     echo $final_css;
 }
 add_action('wp_head', 'generate_dynamic_text_size_css');
 
-function clear_dynamic_text_size_cache() {
+function clear_dynamic_text_size_cache()
+{
     delete_transient('dynamic_text_size_css');
 }
 add_action('customize_save_after', 'clear_dynamic_text_size_cache');

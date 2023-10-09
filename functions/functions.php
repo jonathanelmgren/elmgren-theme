@@ -65,7 +65,7 @@ function get_logo_or_blog_name($link_class = '-m-1.5 p-1.5', $img_class = 'w-aut
 function elm_get_footer_setting(string $setting): mixed
 {
     // Fetch setting from Theme Customizer
-    $value = get_theme_mod('footer_' . $setting);
+    $value = get_theme_mod('elm_footer_' . $setting);
     if (!empty($value)) {
         return $value;
     }
