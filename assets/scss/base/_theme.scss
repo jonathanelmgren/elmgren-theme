@@ -1,0 +1,116 @@
+body:not(.wp-admin, .wp-customizer),
+.editor-styles-wrapper {
+	--elm_button_padding: 0.5rem 0.75rem;
+
+	@apply font-primary text-darkgray;
+
+	min-height: 100vh;
+	min-height: 100dvh;
+	display: flex;
+	flex-direction: column;
+	main {
+		flex: 1;
+	}
+	abbr.required {
+		@apply no-underline;
+	}
+
+	/* Fonts */
+	h1,
+	h2,
+	h3,
+	h4,
+	h5,
+	h6,
+	p,
+	a {
+		margin: 0;
+		line-height: 1.5;
+		font-weight: inherit;
+	}
+	h1 {
+		font-size: var(--elm_h1_font_size);
+		color: var(--elm_h1_font_color);
+	}
+	h2 {
+		font-size: var(--elm_h2_font_size);
+		color: var(--elm_h2_font_color);
+	}
+	h3 {
+		font-size: var(--elm_h3_font_size);
+		color: var(--elm_h3_font_color);
+	}
+	h4 {
+		font-size: var(--elm_h4_font_size);
+		color: var(--elm_h4_font_color);
+	}
+	h5 {
+		font-size: var(--elm_h5_font_size);
+		color: var(--elm_h5_font_color);
+	}
+	h6 {
+		font-size: var(--elm_h6_font_size);
+		color: var(--elm_h6_font_color);
+	}
+	p:not([class*="text-"]) {
+		font-size: var(--elm_p_font_size);
+		color: var(--elm_p_font_color);
+	}
+	a:not([class*="text-"]) {
+		font-size: var(--elm_a_font_size);
+		color: var(--elm_a_font_color);
+		&:hover {
+			color: var(--elm_a_font_color_hover);
+		}
+	}
+
+	/* Buttons */
+	button,
+	a.btn,
+	div.wp-block-button__link.wp-element-button {
+		@apply cursor-pointer inline-block;
+		padding: var(--elm_button_padding);
+		border-color: var(--elm_button_primary_border_color);
+		background-color: var(--elm_button_primary_bg_color);
+		color: var(--elm_button_primary_text_color);
+		border-width: var(--elm_button_primary_border_width);
+		&:hover {
+			border-color: var(--elm_button_primary_border_color_hover);
+			background-color: var(--elm_button_primary_bg_color_hover);
+			color: var(--elm_button_primary_text_color_hover);
+		}
+
+		&.secondary {
+			border-width: var(--elm_button_secondary_border_width);
+			border-color: var(--elm_button_secondary_border_color);
+			background-color: var(--elm_button_secondary_bg_color);
+			color: var(--elm_button_secondary_text_color);
+			&:hover {
+				border-color: var(--elm_button_secondary_border_color_hover);
+				background-color: var(--elm_button_secondary_bg_color_hover);
+				color: var(--elm_button_secondary_text_color_hover);
+			}
+		}
+	}
+
+	/* Default border radius elements */
+	button,
+	input,
+	a.wp-element-button,
+	a.btn,
+	img,
+	textarea,
+	select,
+	fieldset {
+		border-radius: var(--elm_all_border_radius);
+	}
+
+	/* Images */
+	img {
+		@apply max-w-full; /* Ensure images don't overflow their containers */
+	}
+
+	blockquote {
+		@apply pl-4 border-l-4 border-primary;
+	}
+}

@@ -1,7 +1,6 @@
 {
 	"version": 2,
 	"settings": {
-		
 		"appearanceTools": false,
 		"border": {
 			"color": false,
@@ -55,5 +54,33 @@
 			"fontFamilies": []
 		},
 		"useRootPaddingAwareAlignments": false
+	},
+	"styles": {
+		"elements": {
+			"button": {
+				"color": {
+					"text": "#fff",
+					"background": "#32373c"
+				},
+				"spacing": {
+					"padding": "var(--elm_button_padding)"
+				},
+				"typography": {
+					"fontSize": "inherit",
+					"fontFamily": "inherit",
+					"lineHeight": "inherit",
+					"textDecoration": "none"
+				},
+				"border": {
+					"width": "0",
+					"radius": "var(--elm_all_border_radius)"
+				}
+			},
+			"link": {
+				"typography": {
+					"textDecoration": "underline"
+				}
+			}
+		}
 	}
 }

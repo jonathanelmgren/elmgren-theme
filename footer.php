@@ -10,7 +10,7 @@ $elm_footer_icon_colors = new TailwindColor([
 ]);
 ?>
 <footer class="overflow-hidden pt-20 sm:pt-24 pb-4 sm:pb-4 <?php $footer_colors->the_class('elm_footer_bg_color') ?>" style="<?php $footer_colors->the_style('elm_footer_bg_color') ?>">
-    <div class="<?php echo elm_get_page_width(true) ?>">
+    <div class="<?php echo elm_get_page_width(true) ?> flex flex-col gap-8">
         <?php get_template_part('templates/footer/footer-nav'); ?>
         <?php get_template_part('templates/footer/footer-socials', null, ['elm_footer_icon_colors' => $elm_footer_icon_colors]); ?>
         <?php get_template_part('templates/footer/footer-copyright', null, ['footer_colors' => $footer_colors]); ?>

@@ -3,9 +3,11 @@ if (isset($args['border_colors'])) {
     $border_colors = $args['border_colors'];
 }
 
+$border = get_theme_mod('elm_header_border', false);
+
 ?>
 
-<div class="<?php $border_colors->the_classes('w-full relative') ?>" style="<?php $border_colors->the_styles() ?>">
+<div class="<?php $border_colors->the_classes('w-full relative') ?><?= $border ? ' border-b-2' : '' ?>" style="<?php $border_colors->the_styles() ?>">
     <nav class="z-50 flex <?php elm_the_page_width(true) ?> items-center justify-between py-6" aria-label="Global">
         <?php get_template_part('templates/header/logo'); ?>
 

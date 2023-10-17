@@ -19,7 +19,7 @@ $header_colors = new TailwindColor([
 ]);
 
 $border_colors = new TailwindColor([
-    'header_border_color' => ['attr' => 'border', 'fallback' => 'transparent', 'active' => $border, 'extra_attrs' => 'border-b-2'],
+    'header_border_color' => ['attr' => 'border', 'fallback' => 'transparent', 'active' => $border],
 ]);
 
 $sticky_absolute_class = $is_absolute && $is_sticky ? ' fixed top-0 z-50 ' : ($is_absolute ? ' absolute ' : ($is_sticky ? ' sticky top-0 z-50 ' : ''));

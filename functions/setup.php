@@ -15,6 +15,7 @@ function elm_setup()
         'footer-menu' => esc_html__('Footer Menu', 'elmgren'),
     ));
 }
+add_action('after_setup_theme', 'elm_setup');
 
 // Register public styles and scripts
 function elm_enqueue_styles_and_scripts()
@@ -199,3 +200,14 @@ function elm_remove_default_button_styles($args, $name)
 }
 
 add_filter('register_block_type_args', 'elm_remove_default_button_styles', 10, 2);
+
+function elm_deregister_button_block_editor_styles()
+{
+    wp_deregister_style('wp-block-buttons');
+    wp_deregister_style('wp-block-button');
+    wp_dequeue_style('global-styles-inline-css');
+    wp_deregister_style('global-styles-inline-css');
+}
+add_filter('should_load_separate_core_block_assets', '__return_true');
+add_filter('styles_inline_size_limit', '__return_zero');
+add_action('enqueue_block_editor_assets', 'elm_deregister_button_block_editor_styles', 100);
