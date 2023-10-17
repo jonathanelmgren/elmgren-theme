@@ -8,13 +8,13 @@ function elm_setup()
     add_theme_support('title-tag');
     add_theme_support('post-thumbnails');
     add_post_type_support('page', 'excerpt');
+    //add_theme_support('editor-styles');
 
     register_nav_menus(array(
         'main-menu' => esc_html__('Main Menu', 'elmgren'),
         'footer-menu' => esc_html__('Footer Menu', 'elmgren'),
     ));
 }
-add_action('after_setup_theme', 'elm_setup');
 
 // Register public styles and scripts
 function elm_enqueue_styles_and_scripts()
@@ -44,10 +44,10 @@ function elm_enqueue_styles_and_scripts()
     // Styles
     wp_enqueue_style('elm-main-css', CSS_PATH . 'main.css');
 }
-add_action('wp_enqueue_scripts', 'elm_enqueue_styles_and_scripts');
+add_action('wp_enqueue_scripts', 'elm_enqueue_styles_and_scripts', 300);
+add_action('enqueue_block_editor_assets', 'elm_enqueue_styles_and_scripts', 300);
 
 // Create generic function to include all files in specific folders
-
 if (!function_exists('elm_include_folder')) {
     function elm_include_folder($folder)
     {
