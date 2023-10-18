@@ -9,7 +9,7 @@ const glob = require('glob');
 dotenv.config();
 
 // Dynamic entries for TypeScript and SCSS
-const tsEntries = glob.sync('./assets/ts/*.ts').reduce((acc, filePath) => {
+const tsEntries = glob.sync('./assets/ts/*.ts*').reduce((acc, filePath) => {
     const entry = path.basename(filePath, '.ts');
     acc[`ts_${entry}`] = `./${filePath}`;
     return acc;

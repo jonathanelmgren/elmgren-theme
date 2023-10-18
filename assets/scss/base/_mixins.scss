@@ -1,26 +1,25 @@
-@mixin button-styles($type: 'primary') {
-	padding: var(--elm_button_padding);
-	border-color: var(--elm_button_primary_border_color);
-	background-color: var(--elm_button_primary_bg_color);
-	color: var(--elm_button_primary_text_color);
-	border-width: var(--elm_button_primary_border_width);
+@mixin button-styles($type: 'primary', $size: 'medium') {
+	// Common styles for all buttons
+	padding: var(--elm_button_padding, 0.5rem 0.75rem);
+	border-color: var(--elm_button_#{$type}_border_color);
+	background-color: var(--elm_button_#{$type}_bg_color);
+	color: var(--elm_button_#{$type}_text_color);
+	border-width: var(--elm_button_#{$type}_border_width);
 	width: auto;
-    font-size: var(--elm_p_font_size);
-	&:hover {
-		border-color: var(--elm_button_primary_border_color_hover);
-		background-color: var(--elm_button_primary_bg_color_hover);
-		color: var(--elm_button_primary_text_color_hover);
-	}
-	@if $type == 'secondary' {
-		border-width: var(--elm_button_secondary_border_width);
-		border-color: var(--elm_button_secondary_border_color);
-		background-color: var(--elm_button_secondary_bg_color);
-		color: var(--elm_button_secondary_text_color);
+	font-size: var(--elm_p_font_size);
 
-		&:hover {
-			border-color: var(--elm_button_secondary_border_color_hover);
-			background-color: var(--elm_button_secondary_bg_color_hover);
-			color: var(--elm_button_secondary_text_color_hover);
-		}
+	// Sizing conditionals
+	@if $size == 'small' {
+		--elm_button_padding: 0.4rem 0.6rem; // 80% of the original padding
+		font-size: calc(var(--elm_p_font_size) * 0.8); // 80% of the original size
+	} @else if $size == 'large' {
+		--elm_button_padding: 0.6rem 0.9rem; // 120% of the original padding
+		font-size: calc(var(--elm_p_font_size) * 1.2); // 120% of the original size
+	}
+
+	&:hover {
+		border-color: var(--elm_button_#{$type}_border_color_hover);
+		background-color: var(--elm_button_#{$type}_bg_color_hover);
+		color: var(--elm_button_#{$type}_text_color_hover);
 	}
 }

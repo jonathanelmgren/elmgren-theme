@@ -44,6 +44,7 @@ function elm_enqueue_styles_and_scripts()
 
     if (is_admin()) {
         wp_enqueue_script('elm-gutenberg-js', JS_PATH . 'gutenberg.js', ['jquery'], false, true);
+        wp_enqueue_script('elm-gutenberg-react-js', JS_PATH . 'gutenberg-settings.tsx.js', ['wp-blocks', 'wp-dom-ready', 'wp-edit-post'], false, true);
     }
 
     // Styles

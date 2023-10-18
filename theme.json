@@ -53,15 +53,16 @@
 			"fontSizes": [],
 			"fontFamilies": []
 		},
+		"blocks": {
+			"core/button": {
+				"width": false
+			}
+		},
 		"useRootPaddingAwareAlignments": false
 	},
 	"styles": {
 		"elements": {
 			"button": {
-				"color": {
-					"text": "#fff",
-					"background": "#32373c"
-				},
 				"spacing": {
 					"padding": "var(--elm_button_padding)"
 				},

@@ -1,7 +1,5 @@
 body:not(.wp-admin, .wp-customizer),
 .editor-styles-wrapper {
-	--elm_button_padding: 0.5rem 0.75rem;
-
 	@apply font-primary text-darkgray;
 
 	min-height: 100vh;
@@ -65,23 +63,48 @@ body:not(.wp-admin, .wp-customizer),
 	}
 
 	/* Buttons */
-	button,
-	a.btn,
-	.wp-block-button__link.wp-element-button {
-		@apply cursor-pointer inline-block;
-		@include button-styles;
-
-		&.secondary {
-			@include button-styles('secondary');
-		}
-	}
-	/* Gutenberg button */
 	div.wp-block-button {
-		&.is-style-secondary .wp-block-button__link.wp-element-button {
-			@include button-styles('secondary');
+		--elm_button_padding: 0.5rem 0.75rem;
+
+		.wp-block-button__link,
+		button,
+		a.btn {
+			@include button-styles;
 		}
-		.wp-block-button__link.wp-element-button {
-			width: auto;
+		&.is-size-small {
+			.wp-block-button__link,
+			button,
+			a.btn {
+				@include button-styles('primary', 'small');
+			}
+		}
+		&.is-size-large {
+			.wp-block-button__link,
+			button,
+			a.btn {
+				@include button-styles('primary', 'large');
+			}
+		}
+		&.is-style-secondary {
+			.wp-block-button__link,
+			button,
+			a.btn {
+				@include button-styles('secondary');
+			}
+			&.is-size-small {
+				.wp-block-button__link,
+				button,
+				a.btn {
+					@include button-styles('secondary', 'small');
+				}
+			}
+			&.is-size-large {
+				.wp-block-button__link,
+				button,
+				a.btn {
+					@include button-styles('secondary', 'large');
+				}
+			}
 		}
 	}
 
