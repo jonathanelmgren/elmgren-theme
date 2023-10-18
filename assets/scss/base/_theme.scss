@@ -52,11 +52,11 @@ body:not(.wp-admin, .wp-customizer),
 		font-size: var(--elm_h6_font_size);
 		color: var(--elm_h6_font_color);
 	}
-	p:not([class*="text-"]) {
+	p:not([class^='text-']) {
 		font-size: var(--elm_p_font_size);
 		color: var(--elm_p_font_color);
 	}
-	a:not([class*="text-"]) {
+	a:not([class^='text-']):not(.btn) {
 		font-size: var(--elm_a_font_size);
 		color: var(--elm_a_font_color);
 		&:hover {
@@ -67,29 +67,21 @@ body:not(.wp-admin, .wp-customizer),
 	/* Buttons */
 	button,
 	a.btn,
-	div.wp-block-button__link.wp-element-button {
+	.wp-block-button__link.wp-element-button {
 		@apply cursor-pointer inline-block;
-		padding: var(--elm_button_padding);
-		border-color: var(--elm_button_primary_border_color);
-		background-color: var(--elm_button_primary_bg_color);
-		color: var(--elm_button_primary_text_color);
-		border-width: var(--elm_button_primary_border_width);
-		&:hover {
-			border-color: var(--elm_button_primary_border_color_hover);
-			background-color: var(--elm_button_primary_bg_color_hover);
-			color: var(--elm_button_primary_text_color_hover);
-		}
+		@include button-styles;
 
 		&.secondary {
-			border-width: var(--elm_button_secondary_border_width);
-			border-color: var(--elm_button_secondary_border_color);
-			background-color: var(--elm_button_secondary_bg_color);
-			color: var(--elm_button_secondary_text_color);
-			&:hover {
-				border-color: var(--elm_button_secondary_border_color_hover);
-				background-color: var(--elm_button_secondary_bg_color_hover);
-				color: var(--elm_button_secondary_text_color_hover);
-			}
+			@include button-styles('secondary');
+		}
+	}
+	/* Gutenberg button */
+	div.wp-block-button {
+		&.is-style-secondary .wp-block-button__link.wp-element-button {
+			@include button-styles('secondary');
+		}
+		.wp-block-button__link.wp-element-button {
+			width: auto;
 		}
 	}
 

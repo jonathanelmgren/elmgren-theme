@@ -1,0 +1,26 @@
+@mixin button-styles($type: 'primary') {
+	padding: var(--elm_button_padding);
+	border-color: var(--elm_button_primary_border_color);
+	background-color: var(--elm_button_primary_bg_color);
+	color: var(--elm_button_primary_text_color);
+	border-width: var(--elm_button_primary_border_width);
+	width: auto;
+    font-size: var(--elm_p_font_size);
+	&:hover {
+		border-color: var(--elm_button_primary_border_color_hover);
+		background-color: var(--elm_button_primary_bg_color_hover);
+		color: var(--elm_button_primary_text_color_hover);
+	}
+	@if $type == 'secondary' {
+		border-width: var(--elm_button_secondary_border_width);
+		border-color: var(--elm_button_secondary_border_color);
+		background-color: var(--elm_button_secondary_bg_color);
+		color: var(--elm_button_secondary_text_color);
+
+		&:hover {
+			border-color: var(--elm_button_secondary_border_color_hover);
+			background-color: var(--elm_button_secondary_bg_color_hover);
+			color: var(--elm_button_secondary_text_color_hover);
+		}
+	}
+}

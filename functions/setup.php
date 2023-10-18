@@ -42,6 +42,10 @@ function elm_enqueue_styles_and_scripts()
         wp_enqueue_script('elm-checkout-js', JS_PATH . 'checkout.js', ['jquery'], false, true);
     }
 
+    if (is_admin()) {
+        wp_enqueue_script('elm-gutenberg-js', JS_PATH . 'gutenberg.js', ['jquery'], false, true);
+    }
+
     // Styles
     wp_enqueue_style('elm-main-css', CSS_PATH . 'main.css');
 }

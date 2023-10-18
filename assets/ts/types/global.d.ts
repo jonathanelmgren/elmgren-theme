@@ -35,6 +35,7 @@ declare namespace acf {
         data: any;
         setData(name: string, value: any): void;
         getData(name: string): any;
+        val(): any;
     }
 
     // Fetches a field object.
