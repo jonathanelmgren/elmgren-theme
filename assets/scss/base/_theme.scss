@@ -2,13 +2,6 @@ body:not(.wp-admin, .wp-customizer),
 .editor-styles-wrapper {
 	@apply font-primary text-darkgray;
 
-	min-height: 100vh;
-	min-height: 100dvh;
-	display: flex;
-	flex-direction: column;
-	main {
-		flex: 1;
-	}
 	abbr.required {
 		@apply no-underline;
 	}
@@ -50,12 +43,12 @@ body:not(.wp-admin, .wp-customizer),
 		font-size: var(--elm_h6_font_size);
 		color: var(--elm_h6_font_color);
 	}
-	p:not([class^='text-']) {
+	p {
 		font-size: var(--elm_p_font_size);
 		color: var(--elm_p_font_color);
 	}
-	a:not([class^='text-']):not(.btn) {
-		font-size: var(--elm_a_font_size);
+	a:not(.btn) {
+		font-size: var(--elm_p_font_size);
 		color: var(--elm_a_font_color);
 		&:hover {
 			color: var(--elm_a_font_color_hover);

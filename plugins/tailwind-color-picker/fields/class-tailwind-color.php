@@ -9,7 +9,7 @@ class TailwindColor
         'border' => 'border-color',
     ];
 
-    public function __construct(array $settings, string | bool $fallback = false)
+    public function __construct(array $settings)
     {
         foreach ($settings as $setting => $option) {
             $attr = $option['attr'];
@@ -17,18 +17,24 @@ class TailwindColor
             $fallback = $option['fallback'] ?? false;
             $active = $option['active'] ?? true;
             $extra_attrs = $option['extra_attrs'] ?? ''; // setting specific extra styles
-            $value = get_theme_mod($setting);
-            $value = !empty($value) ? $value : get_field($setting);
-            $value = !empty($value) ? $value : $fallback;
+            $value = self::get_value($setting, $fallback);
 
-            if (is_string($value) && (str_starts_with('#', $value) || str_starts_with('rgb', $value))) {
-                $value = ['color' => $value, 'tailwind' => null];
-            } elseif (is_string($value)) {
-                $value = ['tailwind' => $value, 'color' => null];
-            }
-
-            $this->settings[$setting] = ['attr' => $attr, 'fallback' => $fallback, 'prefix' => $prefix, 'color' => $value['color'] ?? null, 'tailwind' => $value['tailwind'] ?? null, 'active' => $active, 'extra_attrs' => $extra_attrs];
+            $this->settings[$setting] = ['attr' => $attr, 'prefix' => $prefix, 'color' => $value['color'] ?? null, 'tailwind' => $value['tailwind'] ?? null, 'active' => $active, 'extra_attrs' => $extra_attrs];
         }
+    }
+
+    public static function get_value($setting, $fallback = false)
+    {
+        $value = get_theme_mod($setting);
+        $value = !empty($value) ? $value : get_field($setting);
+        $value = !empty($value) ? $value : $fallback;
+        
+        if (is_string($value) && (str_starts_with('#', $value) || str_starts_with('rgb', $value))) {
+            $value = ['color' => $value, 'tailwind' => null];
+        } elseif (is_string($value)) {
+            $value = ['tailwind' => $value, 'color' => null];
+        }
+        return $value;
     }
 
     public function get_style(string $setting): string
@@ -170,21 +176,22 @@ class TailwindColor
         return $this->get_color_from_class($this->get_class($setting)) ?? $this->settings[$setting]['color'];
     }
 
-    private function get_color_from_class($class_name) {
+    private function get_color_from_class($class_name)
+    {
         $color_data = TAILWIND_COLORS;
         $parts = explode('-', $class_name);
-    
+
         if (count($parts) < 2) {
             return null; // Invalid class name
         }
-    
+
         $color_key = $parts[1]; // 'primary' or 'secondary' etc.
         $shade = $parts[2] ?? 'DEFAULT'; // '200', '300', etc. or 'DEFAULT'
-    
+
         if (isset($color_data[$color_key][$shade])) {
             return $color_data[$color_key][$shade];
         }
-    
+
         return null; // Color or shade not found
     }
 }

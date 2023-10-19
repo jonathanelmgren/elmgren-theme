@@ -8,7 +8,7 @@ class Elm_Mobile_Walker_Nav_Menu extends Elm_Walker_Nav_Menu
     {
         $args = $this->initialize_args($args);
         $indent = str_repeat("	", $depth);
-        $attributes = 'class="flex justify-between py-2 items-center" data-menu-item data-is-mobile';
+        $attributes = $this->get_combined_attributes($item, $depth, $args);
         $arrow_down = $this->has_children($item) ? elm_get_inline_svg('arrow_down') : '';
         $attributes .= $this->has_children($item) ? ' data-has-children' : '';
         $item_output = $this->generate_item_output($item, $attributes, $args, $arrow_down);
@@ -43,12 +43,7 @@ class Elm_Mobile_Walker_Nav_Menu extends Elm_Walker_Nav_Menu
 
     protected function get_combined_attributes($item, $depth, $args): string
     {
-        $settings = [
-            'header_link_color' => ['attr' => 'text', 'fallback' => 'text-gray-600'],
-            'header_link_color_hover' => ['attr' => 'text', 'prefix' => 'hover', 'fallback' => 'text-gray-900']
-        ];
-
-        $attrs = elm_get_classes_and_styles_from_theme_settings($settings, '', '', false, $additional_classes);
+        $attrs = "class='flex justify-between py-2 items-center no-underline' style='' data-is-mobile data-menu-item";
         return $attrs;
     }
 }

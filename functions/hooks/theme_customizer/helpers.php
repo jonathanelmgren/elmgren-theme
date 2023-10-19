@@ -25,7 +25,7 @@ function add_setting_and_control($wp_customize, $args, $controlClass = null)
     }
 }
 
-function add_tailwind_color_picker_control($wp_customize, $settingId, $label, $section)
+function add_tailwind_color_picker_control($wp_customize, $settingId, $label, $section, $default = null)
 {
     add_setting_and_control(
         $wp_customize,
@@ -33,6 +33,7 @@ function add_tailwind_color_picker_control($wp_customize, $settingId, $label, $s
             'setting' => $settingId,
             'settingArgs' => [
                 'sanitize_callback' => 'sanitize_tailwind',
+                'default' => $default
             ],
             'controlArgs' => [
                 'label' => __($label, 'elmgren'),

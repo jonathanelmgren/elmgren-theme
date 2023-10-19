@@ -46,7 +46,7 @@ function elm_get_page_width($force_default = false)
 }
 
 // Function to display either the logo or the blog name
-function get_logo_or_blog_name($link_class = '-m-1.5 p-1.5', $img_class = 'w-auto')
+function get_logo_or_blog_name($link_class = 'no-underline', $img_class = 'w-auto')
 {
     $logo_height = get_theme_mod('logo_height_setting', '8');
     $home_url = home_url();

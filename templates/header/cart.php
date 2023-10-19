@@ -4,12 +4,13 @@
     }
     $qty = WC()->cart->get_cart_contents_count();
 
+    $linkColor = TailwindColor::get_value('header_link_color', 'gray-600');
     $colors = new TailwindColor([
-        'elm_woo_cart_bg_color' => ['attr' => 'text'],
+        'elm_woo_cart_bg_color' => ['attr' => 'text', 'fallback' => $linkColor],
     ]);
     $box_colors = new TailwindColor([
-        'elm_woo_cart_qty_bg_color' => ['attr' => 'bg'],
-        'elm_woo_cart_text_color' => ['attr' => 'text'],
+        'elm_woo_cart_qty_bg_color' => ['attr' => 'bg', 'fallback' => 'primary-500'],
+        'elm_woo_cart_text_color' => ['attr' => 'text', 'fallback' => $linkColor],
     ]);
     $classname = "absolute -right-1 -top-1 rounded-full w-4 h-4 top text-xs grid justify-center content-center";
 

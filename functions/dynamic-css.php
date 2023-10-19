@@ -28,10 +28,10 @@ function getButtonColors()
 function getTailwindColors($textElements)
 {
     $colorSettings = getButtonColors();
-    $colorSettings['elm_a_font_color_hover'] = ['attr' => 'text', 'fallback' => 'text-primary-500', 'prefix' => 'hover'];
+    $colorSettings['elm_a_font_color_hover'] = ['attr' => 'text', 'fallback' => 'primary-500', 'prefix' => 'hover'];
 
     foreach ($textElements as $textElement) {
-        $colorSettings['elm_' . $textElement . '_font_color'] = ['attr' => 'text', 'fallback' => 'text-gray-600'];
+        $colorSettings['elm_' . $textElement . '_font_color'] = ['attr' => 'text', 'fallback' => 'gray-600'];
     }
 
     return $textColors = new TailwindColor($colorSettings);
@@ -55,9 +55,9 @@ function generateRootCssVariables()
     $textElements = ['h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'p', 'a'];
     $colors = getTailwindColors($textElements);
 
-    $variables[] = generateRootCssVariable('elm_all_border_radius', get_theme_mod('elm_border_radius_setting', '0px'));
-    $variables[] = generateRootCssVariable('elm_button_primary_border_width', get_theme_mod('elm_button_primary_border_width', '0') . 'px');
-    $variables[] = generateRootCssVariable('elm_button_secondary_border_width', get_theme_mod('elm_button_secondary_border_width', '0') . 'px');
+    $variables[] = generateRootCssVariable('elm_all_border_radius', get_theme_mod('elm_border_radius_setting'));
+    $variables[] = generateRootCssVariable('elm_button_primary_border_width', get_theme_mod('elm_button_primary_border_width') . 'px');
+    $variables[] = generateRootCssVariable('elm_button_secondary_border_width', get_theme_mod('elm_button_secondary_border_width') . 'px');
     $variables[] = generateRootCssVariable('elm_a_font_color_hover', $colors->get_color_code('elm_a_font_color_hover'));
 
     // Button colors
@@ -67,7 +67,9 @@ function generateRootCssVariables()
 
     // Text sizes
     foreach ($textElements as $textElement) {
-        $variables[] = generateRootCssVariable('elm_' . $textElement . '_font_size', get_theme_mod('elm_' . $textElement . '_font_size', '1.5') . 'rem');
+        if ($textElement !== 'a') {
+            $variables[] = generateRootCssVariable('elm_' . $textElement . '_font_size', get_theme_mod('elm_' . $textElement . '_font_size') . 'rem');
+        }
     }
 
     // Text colors

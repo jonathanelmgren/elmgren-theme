@@ -25,7 +25,14 @@ class Elm_Walker_Nav_Menu extends Walker_Nav_Menu
     // Helper function to generate item output
     protected function generate_item_output($item, $attributes, $args, $additional_content = '')
     {
-        return $args->before . '<a href="' . esc_attr($item->url) . '" ' . $attributes . '>' . $args->link_before . '<span class="menu-item-text">' . $item->title . '</span>' . $args->link_after . $additional_content . '</a>' . $args->after;
+        $settings = [
+            'header_link_color' => ['attr' => 'text', 'fallback' => 'gray-600'],
+            'header_link_color_hover' => ['attr' => 'text', 'prefix' => 'hover', 'fallback' => 'gray-900']
+        ];
+        $colors = new TailwindColor($settings);
+        $classes = $colors->get_classes();
+        $styles = $colors->get_styles();
+        return $args->before . '<a href="' . esc_attr($item->url) . '" ' . $attributes . '>' . $args->link_before . '<span class="menu-item-text ' . $classes . '" style="' . $styles . '">' . $item->title . '</span>' . $args->link_after . $additional_content . '</a>' . $args->after;
     }
 
     public function start_el(&$output, $item, $depth = 0, $args = [], $id = 0): void

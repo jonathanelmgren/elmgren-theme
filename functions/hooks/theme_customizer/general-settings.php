@@ -10,7 +10,7 @@ function elm_customize_buttons($wp_customize)
             [
                 'setting' => "elm_button_{$type}_border_width",
                 'settingArgs' => [
-                    'default' => '1',
+                    'default' => '0',
                 ],
                 'controlArgs' => [
                     'label' => __("$label Button Border Width", 'elmgren'),
@@ -37,40 +37,32 @@ function elm_customize_text($wp_customize)
     $baseSize = 2;
 
     foreach ($textSettings as $label => $tag) {
-        $baseSize *= 0.9;
-        add_setting_and_control(
-            $wp_customize,
-            [
-                'setting' => "elm_{$tag}_font_size",
-                'settingArgs' => [
-                    'default' => $baseSize,
-                ],
-                'controlArgs' => [
-                    'label' => __("$label Font Size", 'elmgren'),
-                    'section' => 'elm_text_sizes',
-                    'type' => 'range',
-                    'input_attrs' => [
-                        'min' => '0.5',
-                        'max' => '3',
-                        'step' => '0.1',
+        if ($tag !== 'a') {
+            $baseSize *= 0.9;
+            add_setting_and_control(
+                $wp_customize,
+                [
+                    'setting' => "elm_{$tag}_font_size",
+                    'settingArgs' => [
+                        'default' => $baseSize,
                     ],
-                ],
-            ]
-        );
+                    'controlArgs' => [
+                        'label' => __("$label Font Size", 'elmgren'),
+                        'section' => 'elm_text_sizes',
+                        'type' => 'range',
+                        'input_attrs' => [
+                            'min' => '0.5',
+                            'max' => '4',
+                            'step' => '0.2',
+                        ],
+                    ],
+                ]
+            );
+        }
 
-        add_setting_and_control(
-            $wp_customize,
-            [
-                'setting' => "elm_{$tag}_font_color",
-                'settingArgs' => [
-                    'sanitize_callback' => 'sanitize_tailwind',
-                ],
-                'controlArgs' => []
-            ]
-        );
-        add_tailwind_color_picker_control($wp_customize, "elm_{$tag}_font_color", "$label Font Color", 'elm_text_colors');
+        add_tailwind_color_picker_control($wp_customize, "elm_{$tag}_font_color", "$label Font Color", 'elm_text_colors', 'text-primary-500');
     }
-    add_tailwind_color_picker_control($wp_customize, "elm_a_font_color_hover", "Link Font Color - Hover", 'elm_text_colors');
+    add_tailwind_color_picker_control($wp_customize, "elm_a_font_color_hover", "Link Font Color - Hover", 'elm_text_colors', 'text-primary-300');
 }
 
 function elm_customizer_general_settings($wp_customize)
@@ -116,20 +108,14 @@ function elm_customizer_general_settings($wp_customize)
         [
             'setting' => 'elm_page_width_setting',
             'settingArgs' => [
-                'default' => '0px',
+                'default' => 'width-wide',
             ],
             'controlArgs' => [
                 'label' => __('Page width', 'elmgren'),
                 'description' => 'Set the general page width for your website',
                 'section' => 'elm_general_section',
                 'type' => 'select',
-                'choices'  => [
-                    'width-narrow'   => 'Narrow',
-                    'width-normal'   => 'Normal',
-                    'width-wide'     => 'Wide',
-                    'width-ultrawide' => 'Ultrawide',
-                    'width-full'     => 'Fullwidth',
-                ],
+                'choices'  => ELM_PAGE_WIDTHS_REVERSE,
             ],
         ],
     ];
