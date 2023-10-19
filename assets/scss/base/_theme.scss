@@ -1,3 +1,7 @@
+:root {
+	--elm_button_padding_inline: 0.75rem;
+	--elm_button_padding_block: 0.5rem;
+}
 body:not(.wp-admin, .wp-customizer),
 .editor-styles-wrapper {
 	@apply font-primary text-gray;
@@ -67,6 +71,9 @@ body:not(.wp-admin, .wp-customizer),
 			&.is-size-large {
 				@include button-styles('secondary', 'large');
 			}
+			&.is-style-long {
+				--elm_button_padding_inline: calc(var(--elm_button_padding_inline) * 1.5);
+			}
 		}
 		&.is-size-small {
 			@include button-styles('primary', 'small');
@@ -74,16 +81,22 @@ body:not(.wp-admin, .wp-customizer),
 		&.is-size-large {
 			@include button-styles('primary', 'large');
 		}
+		&.is-style-long {
+			--elm_button_padding_inline: calc(var(--elm_button_padding_inline) * 1.5);
+		}
 	}
 
 	/* Gutenberg Buttons */
 	div.wp-block-button {
-		--elm_button_padding: 0.5rem 0.75rem;
-
+		--elm_button_padding_inline: 0.75rem;
+		--elm_button_padding_block: 0.5rem;
 		.wp-block-button__link,
 		button:not(.no-style),
 		a.btn {
 			@include button-styles;
+		}
+		&.is-style-long {
+			--elm_button_padding_inline: calc(var(--elm_button_padding_inline) * 1.5);
 		}
 		&.is-size-small {
 			.wp-block-button__link,
@@ -104,6 +117,9 @@ body:not(.wp-admin, .wp-customizer),
 			button:not(.no-style),
 			a.btn {
 				@include button-styles('secondary');
+			}
+			&.is-style-long {
+				--elm_button_padding_inline: calc(var(--elm_button_padding_inline) * 1.5);
 			}
 			&.is-size-small {
 				.wp-block-button__link,

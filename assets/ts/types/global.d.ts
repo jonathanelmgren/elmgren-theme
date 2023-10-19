@@ -4,6 +4,7 @@ interface JQuery {
 
 declare namespace productVariations {
     const availableVariations: Record<string, any> | undefined
+    const productPriceHtml: string | undefined
 }
 
 declare namespace elmAjax {

@@ -1,4 +1,4 @@
-<form id="add-to-cart" class='flex flex-col gap-4'>
+<form id="add-to-cart" class='flex flex-col gap-4 border-t-2 border-lightgray-500 pt-4'>
     <?php
     global $product;
 
@@ -40,13 +40,14 @@
         <?php endforeach; ?>
 
     <?php endif; ?>
-    <div data-product-variant-price>
-        <?= isset($variant_id) && $variant_id > 0 ? $product->get_price_html() : '' ?>
-    </div>
+    <p class="text-lg text-gray-400 sm:text-xl" data-product-variant-price>
+        <?php wc_get_template('single-product/price.php') ?>
+    </p>
+
 
     <div data-add-to-cart-container class="flex">
-        <?php woocommerce_quantity_input(['classes' => ['max-w-[5rem] rounded-r-none border-theme-button-primary border-opacity-100 [&.disabled]:border-opacity-50', $is_variable && !$variant_id ? ' disabled' : '']]); ?>
-        <button <?= $is_variable && !$variant_id ? 'disabled' : '' ?> type="submit" name="add-to-cart" value="<?= esc_attr($product->get_id()) ?>" class="rounded-l-none border-l-0">
+        <?php woocommerce_quantity_input(['classes' => ['max-w-[4rem] rounded-r-none border-theme-button-primary border-opacity-100 [&.disabled]:border-opacity-50', $is_variable && !$variant_id ? ' disabled' : '']]); ?>
+        <button <?= $is_variable && !$variant_id ? 'disabled' : '' ?> type="submit" name="add-to-cart" value="<?= esc_attr($product->get_id()) ?>" class="rounded-l-none border-l-0" style="--elm_button_padding_inline: 2.5rem">
             <?php _e('Add to cart', 'woocommerce') ?>
         </button>
     </div>

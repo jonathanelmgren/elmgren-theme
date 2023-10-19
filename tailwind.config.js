@@ -143,7 +143,8 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        ...themeColors, ...{
+        ...themeColors,
+        ...{
           'theme-color-h1': 'rgba(var(--elm_h1_font_color-r),var(--elm_h1_font_color-g),var(--elm_h1_font_color-b), var(--tw-text-opacity, 1))',
           'theme-color-h2': 'rgba(var(--elm_h2_font_color-r),var(--elm_h2_font_color-g),var(--elm_h2_font_color-b), var(--tw-text-opacity, 1))',
           'theme-color-h3': 'rgba(var(--elm_h3_font_color-r),var(--elm_h3_font_color-g),var(--elm_h3_font_color-b), var(--tw-text-opacity, 1))',
@@ -180,10 +181,6 @@ module.exports = {
       backgroundColor: {
         'theme-button-primary': 'rgba(var(--elm_button_primary_bg_color-r),var(--elm_button_primary_bg_color-g),var(--elm_button_primary_bg_color-b), var(--tw-border-opacity, 1))',
         'theme-button-secondary': 'rgba(var(--elm_button_secondary_bg_color-r),var(--elm_button_secondary_bg_color-g),var(--elm_button_secondary_bg_color-b), var(--tw-border-opacity, 1))',
-      },
-      textColor: {
-        'theme-button-primary': 'rgba(var(--elm_button_primary_text_color-r),var(--elm_button_primary_text_color-g),var(--elm_button_primary_text_color-b), var(--tw-border-opacity, 1))',
-        'theme-button-secondary': 'rgba(var(--elm_button_secondary_text_color-r),var(--elm_button_secondary_text_color-g),var(--elm_button_secondary_text_color-b), var(--tw-border-opacity, 1))',
       },
       borderWidth: {
         'theme-button-primary': 'var(--elm_button_primary_border_width)',
@@ -222,3 +219,26 @@ module.exports = {
   ],
 }
 
+// Helper function to create rgba colors with CSS variables
+const rgbaColor = (variable) => {
+  return `rgba(var(--${variable}-r),var(--${variable}-g),var(--${variable}-b), var(--tw-text-opacity, 1))`;
+};
+
+// Helper function to create fontSize with CSS variables
+const fontSize = (variable) => {
+  return `var(--${variable})`;
+};
+
+const customizerColors = [
+  'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'p', 'a',
+  'button-primary', 'button-secondary'
+];
+
+const themeSettings = customizerColors.reduce((acc, key) => {
+  acc[`theme-color-${key}`] = rgbaColor(`elm_${key}_font_color`);
+  acc[`theme-button-${key}`] = rgbaColor(`elm_${key}_bg_color`);
+  acc[`theme-button-${key}`] = rgbaColor(`elm_${key}_text_color`);
+  acc[`theme-button-${key}`] = rgbaColor(`elm_${key}_border_color`);
+  acc[`theme-${key}`] = fontSize(`elm_${key}_font_size`);
+  return acc;
+}, {});

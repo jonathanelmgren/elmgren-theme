@@ -14,6 +14,6 @@ function elm_localize_product_variations()
 
     $available_variations = $product->get_available_variations();
 
-    wp_localize_script('elm-main-js', 'productVariations', ['availableVariations' => $available_variations]);
+    wp_localize_script('elm-main-js', 'productVariations', ['availableVariations' => $available_variations, 'productPriceHtml' => $product->get_price_html()]);
 }
 add_action('wp_enqueue_scripts', 'elm_localize_product_variations');

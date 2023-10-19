@@ -26,4 +26,4 @@ if (is_string($product)) {
 }
 
 ?>
-<p class="text-lg text-gray-400 sm:text-xl"><?php echo $product->get_price_html(); ?></p>
+<?php echo $product->get_price_html(); ?>

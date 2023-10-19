@@ -4,9 +4,9 @@ jQuery(function ($) {
     const submit_btn = $('button[name="add-to-cart"]');
     const attribute_length = $('div[data-product-attribute]').length;
     const productImage = $('img[data-product-image]')
-    const variantPriceContainer = $('div[data-product-variant-price]')
+    const variantPriceContainer = $('[data-product-variant-price]')
     const parentId = submit_btn.val()
-
+    const originalPrice = productVariations.productPriceHtml
 
     let selectedAttributes: Record<string, string> = {};
 
@@ -44,17 +44,23 @@ jQuery(function ($) {
             });
             const qtyInput = $('[data-add-to-cart-container] .quantity input')
             if (matchingVariation && Object.keys(selectedAttributes).length === attribute_length) {
-                const { image, variation_id, price_html } = matchingVariation
+                let { image, variation_id, price_html } = matchingVariation
+                price_html = price_html && price_html.length > 0 ? price_html : originalPrice
                 const { src, alt } = image
                 productImage.attr('src', src)
                 productImage.attr('alt', alt)
 
-                variantPriceContainer.html(price_html)
+                if (price_html !== originalPrice) {
+                    variantPriceContainer.html(price_html)
+                }
 
                 submit_btn.prop('disabled', false);
                 qtyInput.removeClass('disabled')
                 submit_btn.val(variation_id)
             } else {
+                if (originalPrice) {
+                    variantPriceContainer.html(originalPrice)
+                }
                 qtyInput.addClass('disabled')
                 submit_btn.prop('disabled', true);
                 submit_btn.val(parentId || '')

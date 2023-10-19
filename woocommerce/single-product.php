@@ -18,7 +18,7 @@ woocommerce_breadcrumb();
 
         <section aria-labelledby="information-heading">
             <h2 id="information-heading" class="sr-only"><?php _e('Product information', 'elmgren') ?></h2>
-            <?php the_content(); ?>
+                <?php the_content(); ?>
         </section>
         <?php wc_get_template('single-product/add-to-cart/add-to-cart.php') ?>
     </div>
