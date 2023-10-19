@@ -60,7 +60,7 @@ function elm_customize_text($wp_customize)
             );
         }
 
-        add_tailwind_color_picker_control($wp_customize, "elm_{$tag}_font_color", "$label Font Color", 'elm_text_colors', 'text-primary-500');
+        add_tailwind_color_picker_control($wp_customize, "elm_{$tag}_font_color", "$label Font Color", 'elm_text_colors', ['tailwind' => 'gray-500']);
     }
     add_tailwind_color_picker_control($wp_customize, "elm_a_font_color_hover", "Link Font Color - Hover", 'elm_text_colors', 'text-primary-300');
 }

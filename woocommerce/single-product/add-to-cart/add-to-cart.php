@@ -24,14 +24,14 @@
         <?php foreach ($attributes as $attribute_name => $options) : ?>
             <div data-product-attribute="<?php echo $attribute_name ?>">
                 <fieldset>
-                    <legend class="block text-sm font-medium text-gray-700"><?php echo wc_attribute_label($attribute_name); ?></legend>
+                    <legend><?php echo wc_attribute_label($attribute_name); ?></legend>
                     <div class="mt-1 flex gap-4 box-border flex-wrap">
                         <?php foreach ($options as $option) :
                             $isActive = isset($selected_attributes['attribute_' . $attribute_name]) && $selected_attributes['attribute_' . $attribute_name] === $option;
                         ?>
-                            <button data-attr-button type="button" class="block cursor-pointer rounded border-lightgray-600 border-2 p-4 [&.active]:border-primary <?= $isActive ? 'active' : '' ?>">
+                            <button data-attr-button type="button" class="border-theme-button-primary [&.active]:border-opacity-100 border-opacity-30 hover:border-opacity-60 no-style px-4 py-2 <?= $isActive ? 'active' : '' ?>">
                                 <input <?= $isActive ? 'checked' : '' ?> type="radio" name="attribute_<?php echo esc_attr($attribute_name); ?>" value="<?php echo esc_attr($option); ?>" class="sr-only">
-                                <p class="text-base font-medium text-gray-900"><?php echo ucfirst(esc_html($option)); ?></p>
+                                <p><?php echo ucfirst(esc_html($option)); ?></p>
                             </button>
                         <?php endforeach; ?>
                     </div>
@@ -45,8 +45,8 @@
     </div>
 
     <div data-add-to-cart-container class="flex">
-        <?php woocommerce_quantity_input(['classes' => 'max-w-[5rem] rounded-l border-gray-300']); ?>
-        <button <?= $is_variable && !$variant_id ? 'disabled' : '' ?> type="submit" name="add-to-cart" value="<?= esc_attr($product->get_id()) ?>" class="bg-primary rounded-r hover:bg-primary-600 text-white px-8">
+        <?php woocommerce_quantity_input(['classes' => ['max-w-[5rem] rounded-r-none border-theme-button-primary border-opacity-100 [&.disabled]:border-opacity-50', $is_variable && !$variant_id ? ' disabled' : '']]); ?>
+        <button <?= $is_variable && !$variant_id ? 'disabled' : '' ?> type="submit" name="add-to-cart" value="<?= esc_attr($product->get_id()) ?>" class="rounded-l-none border-l-0">
             <?php _e('Add to cart', 'woocommerce') ?>
         </button>
     </div>

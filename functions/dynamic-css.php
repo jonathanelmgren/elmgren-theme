@@ -11,13 +11,12 @@ function getButtonColors()
     foreach ($styles as $style) {
         foreach ($attrs as $attr) {
             $key = "elm_button_{$style}_{$attr}_color";
-            $fallback = "{$attr}-{$style}-500";
-            $colorSettings[$key] = ['attr' => $attr, 'fallback' => $fallback];
+            $colorSettings[$key] = ['attr' => $attr];
 
             // Include hover states
             foreach ($states as $state) {
                 $hoverKey = "{$key}_{$state}";
-                $colorSettings[$hoverKey] = ['attr' => $attr, 'fallback' => $fallback, 'prefix' => $state];
+                $colorSettings[$hoverKey] = ['attr' => $attr, 'prefix' => $state];
             }
         }
     }
@@ -37,10 +36,35 @@ function getTailwindColors($textElements)
     return $textColors = new TailwindColor($colorSettings);
 }
 
-function generateRootCssVariable($variable, $value)
+function hexToRgb($hexColor)
 {
+    $hexColor = ltrim($hexColor, '#');
+
+    if (strlen($hexColor) == 3) {
+        $r = hexdec(substr($hexColor, 0, 1) . substr($hexColor, 0, 1));
+        $g = hexdec(substr($hexColor, 1, 1) . substr($hexColor, 1, 1));
+        $b = hexdec(substr($hexColor, 2, 1) . substr($hexColor, 2, 1));
+    } else {
+        $r = hexdec(substr($hexColor, 0, 2));
+        $g = hexdec(substr($hexColor, 2, 2));
+        $b = hexdec(substr($hexColor, 4, 2));
+    }
+
+    return [$r, $g, $b];
+}
+
+function generateRootCssVariable($variable, $value, $opacityVariable = 'text')
+{
+    $cssVariables = [];
     $value = empty($value) ? 'inherit' : $value;
-    return "--{$variable}: {$value};";
+    if (str_starts_with($value, '#')) {
+        [$r, $g, $b] = hexToRgb($value);
+        $cssVariables[] = "--{$variable}-r: {$r};";
+        $cssVariables[] = "--{$variable}-g: {$g};";
+        $cssVariables[] = "--{$variable}-b: {$b};";
+    }
+    $cssVariables[] = "--{$variable}: {$value};";
+    return implode(PHP_EOL, $cssVariables);
 }
 
 function generateRootCssVariables()
@@ -62,7 +86,7 @@ function generateRootCssVariables()
 
     // Button colors
     foreach (getButtonColors() as $buttonColorKey => $val) {
-        $variables[] = generateRootCssVariable($buttonColorKey, $colors->get_color_code($buttonColorKey));
+        $variables[] = generateRootCssVariable($buttonColorKey, $colors->get_color_code($buttonColorKey), $val['attr']);
     }
 
     // Text sizes

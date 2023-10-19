@@ -25,7 +25,7 @@ $border_colors = new TailwindColor([
 $sticky_absolute_class = $is_absolute && $is_sticky ? ' fixed top-0 z-50 ' : ($is_absolute ? ' absolute ' : ($is_sticky ? ' sticky top-0 z-50 ' : ''));
 ?>
 
-<body <?php body_class('font-primary text-darkgray min-h-screen flex flex-col'); ?>>
+<body <?php body_class('font-primary text-gray min-h-screen flex flex-col'); ?>>
     <?php wp_body_open(); ?>
     <header role="banner" style="<?php $header_colors->the_styles() ?>" class="<?php $header_colors->the_classes('w-full' . $sticky_absolute_class) ?>">
         <?php get_template_part('templates/header/navigation-main', null, ['border_colors' => $border_colors,]); ?>

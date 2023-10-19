@@ -8,7 +8,7 @@ class Elm_Footer_Walker_Nav_Menu extends Elm_Walker_Nav_Menu
     {
         $footer_menu_colors = new TailwindColor([
             'elm_footer_menu_link_color' => ['attr' => 'text', 'fallback' => 'gray-600'],
-            'elm_footer_menu_link_color_hover' => ['attr' => 'text', 'prefix' => 'hover', 'fallback' => 'gray-900']
+            'elm_footer_menu_link_color_hover' => ['attr' => 'text', 'prefix' => 'hover', 'fallback' => 'gray-400']
         ]);
 
         $class = $footer_menu_colors->get_classes('text-sm leading-6');

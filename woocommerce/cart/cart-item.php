@@ -51,7 +51,7 @@ $product_permalink_with_variations = add_query_arg($variation_query_args, $base_
                         <p class="text-gray-500 [&:not(:first-child)]:border-l [&:not(:first-child)]:pl-2 [&:not(:first-child)]:ml-2"><?= ucfirst($variation) ?></p>
                     <?php endforeach; ?>
                 </div>
-                <p class="mt-1 text-sm font-medium text-gray-900"><?php echo WC()->cart->get_product_price($product) ?></p>
+                <p class="mt-1 text-sm font-medium text-gray-400"><?php echo WC()->cart->get_product_price($product) ?></p>
             </div>
 
             <div class="mt-4 sm:mt-0 sm:pr-9">

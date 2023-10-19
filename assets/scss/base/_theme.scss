@@ -1,6 +1,6 @@
 body:not(.wp-admin, .wp-customizer),
 .editor-styles-wrapper {
-	@apply font-primary text-darkgray;
+	@apply font-primary text-gray;
 
 	abbr.required {
 		@apply no-underline;
@@ -56,44 +56,65 @@ body:not(.wp-admin, .wp-customizer),
 	}
 
 	/* Buttons */
+	button:not(.no-style),
+	a.btn {
+		@include button-styles;
+		&.is-style-secondary {
+			@include button-styles('secondary');
+			&.is-size-small {
+				@include button-styles('secondary', 'small');
+			}
+			&.is-size-large {
+				@include button-styles('secondary', 'large');
+			}
+		}
+		&.is-size-small {
+			@include button-styles('primary', 'small');
+		}
+		&.is-size-large {
+			@include button-styles('primary', 'large');
+		}
+	}
+
+	/* Gutenberg Buttons */
 	div.wp-block-button {
 		--elm_button_padding: 0.5rem 0.75rem;
 
 		.wp-block-button__link,
-		button,
+		button:not(.no-style),
 		a.btn {
 			@include button-styles;
 		}
 		&.is-size-small {
 			.wp-block-button__link,
-			button,
+			button:not(.no-style),
 			a.btn {
 				@include button-styles('primary', 'small');
 			}
 		}
 		&.is-size-large {
 			.wp-block-button__link,
-			button,
+			button:not(.no-style),
 			a.btn {
 				@include button-styles('primary', 'large');
 			}
 		}
 		&.is-style-secondary {
 			.wp-block-button__link,
-			button,
+			button:not(.no-style),
 			a.btn {
 				@include button-styles('secondary');
 			}
 			&.is-size-small {
 				.wp-block-button__link,
-				button,
+				button:not(.no-style),
 				a.btn {
 					@include button-styles('secondary', 'small');
 				}
 			}
 			&.is-size-large {
 				.wp-block-button__link,
-				button,
+				button:not(.no-style),
 				a.btn {
 					@include button-styles('secondary', 'large');
 				}

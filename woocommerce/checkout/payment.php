@@ -26,7 +26,7 @@ if (!wp_doing_ajax()) {
 	<?php if (WC()->cart->needs_payment()) : ?>
 		<div class="mt-10 border-t border-gray-200 pt-10">
 			<fieldset>
-				<legend class="text-lg font-medium text-gray-900  mb-4">Payment method</legend>
+				<legend class="text-lg font-medium text-gray-400  mb-4">Payment method</legend>
 				<div class="flex flex-row md:flex-col flex-wrap gap-4">
 					<?php
 					if (!empty($available_gateways)) {

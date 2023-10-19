@@ -6,7 +6,7 @@ $footer_colors = new TailwindColor([
 ]);
 $elm_footer_icon_colors = new TailwindColor([
     'elm_footer_icon_color' => ['attr' => 'text', 'fallback' => 'gray-600'],
-    'elm_footer_icon_color_hover' => ['attr' => 'text', 'prefix' => 'hover', 'fallback' => 'gray-900'],
+    'elm_footer_icon_color_hover' => ['attr' => 'text', 'prefix' => 'hover', 'fallback' => 'gray-400'],
 ]);
 ?>
 <footer class="overflow-hidden pt-20 sm:pt-24 pb-4 sm:pb-4 <?php $footer_colors->the_class('elm_footer_bg_color') ?>" style="<?php $footer_colors->the_style('elm_footer_bg_color') ?>">

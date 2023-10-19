@@ -27,7 +27,7 @@ class Elm_Walker_Nav_Menu extends Walker_Nav_Menu
     {
         $settings = [
             'header_link_color' => ['attr' => 'text', 'fallback' => 'gray-600'],
-            'header_link_color_hover' => ['attr' => 'text', 'prefix' => 'hover', 'fallback' => 'gray-900']
+            'header_link_color_hover' => ['attr' => 'text', 'prefix' => 'hover', 'fallback' => 'gray-400']
         ];
         $colors = new TailwindColor($settings);
         $classes = $colors->get_classes();

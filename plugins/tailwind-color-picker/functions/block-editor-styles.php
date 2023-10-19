@@ -6,6 +6,9 @@ function tailwind_color_picker_setup()
     $palette = [];
 
     foreach (TAILWIND_COLORS as $colorName => $shades) {
+        if (is_string($shades)) {
+            continue;
+        }
         foreach ($shades as $shade => $value) {
             // Prepare a human-readable name
             $humanReadableShade = strtoupper($shade) === 'DEFAULT' ? 'Default' : $shade;

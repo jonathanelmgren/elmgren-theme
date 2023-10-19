@@ -45,7 +45,7 @@ const themeColors = {
     900: '#C2C2C2',
     950: '#BCBCBC'
   },
-  darkgray: {
+  gray: {
     DEFAULT: '#2E2E2E',
     50: '#8A8A8A',
     100: '#808080',
@@ -142,11 +142,53 @@ module.exports = {
   ],
   theme: {
     extend: {
-      colors: themeColors,
+      colors: {
+        ...themeColors, ...{
+          'theme-color-h1': 'rgba(var(--elm_h1_font_color-r),var(--elm_h1_font_color-g),var(--elm_h1_font_color-b), var(--tw-text-opacity, 1))',
+          'theme-color-h2': 'rgba(var(--elm_h2_font_color-r),var(--elm_h2_font_color-g),var(--elm_h2_font_color-b), var(--tw-text-opacity, 1))',
+          'theme-color-h3': 'rgba(var(--elm_h3_font_color-r),var(--elm_h3_font_color-g),var(--elm_h3_font_color-b), var(--tw-text-opacity, 1))',
+          'theme-color-h4': 'rgba(var(--elm_h4_font_color-r),var(--elm_h4_font_color-g),var(--elm_h4_font_color-b), var(--tw-text-opacity, 1))',
+          'theme-color-h5': 'rgba(var(--elm_h5_font_color-r),var(--elm_h5_font_color-g),var(--elm_h5_font_color-b), var(--tw-text-opacity, 1))',
+          'theme-color-h6': 'rgba(var(--elm_h6_font_color-r),var(--elm_h6_font_color-g),var(--elm_h6_font_color-b), var(--tw-text-opacity, 1))',
+          'theme-color-p': 'rgba(var(--elm_p_font_color-r),var(--elm_p_font_color-g),var(--elm_p_font_color-b), var(--tw-text-opacity, 1))',
+          'theme-color-a': 'rgba(var(--elm_a_font_color-r),var(--elm_a_font_color-g),var(--elm_a_font_color-b), var(--tw-text-opacity, 1))',
+        }
+      },
       fontFamily: {
         'primary': ['Lato', 'ui-sans-serif', 'system-ui', '-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'Roboto', 'Helvetica Neue', 'Arial', 'Noto Sans', 'sans-serif', 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji'],
         'secondary': ['Lato', 'ui-sans-serif', 'system-ui', '-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'Roboto', 'Helvetica Neue', 'Arial', 'Noto Sans', 'sans-serif', 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji'],
-      }
+      },
+      fontSize: {
+        'theme-h1': 'var(--elm_h1_font_size)',
+        'theme-h2': 'var(--elm_h2_font_size)',
+        'theme-h3': 'var(--elm_h3_font_size)',
+        'theme-h4': 'var(--elm_h4_font_size)',
+        'theme-h5': 'var(--elm_h5_font_size)',
+        'theme-h6': 'var(--elm_h6_font_size)',
+        'theme-p': 'var(--elm_p_font_size)',
+      },
+      borderRadius: {
+        'theme': 'var(--elm_all_border_radius)',
+      },
+      padding: {
+        'theme-button': 'var(--elm_button_padding, 0.5rem 0.75rem)',
+      },
+      borderColor: {
+        'theme-button-primary': 'rgba(var(--elm_button_primary_border_color-r),var(--elm_button_primary_border_color-g),var(--elm_button_primary_border_color-b), var(--tw-border-opacity, 1))',
+        'theme-button-secondary': 'rgba(var(--elm_button_secondary_border_color-r),var(--elm_button_secondary_border_color-g),var(--elm_button_secondary_border_color-b), var(--tw-border-opacity, 1))',
+      },
+      backgroundColor: {
+        'theme-button-primary': 'rgba(var(--elm_button_primary_bg_color-r),var(--elm_button_primary_bg_color-g),var(--elm_button_primary_bg_color-b), var(--tw-border-opacity, 1))',
+        'theme-button-secondary': 'rgba(var(--elm_button_secondary_bg_color-r),var(--elm_button_secondary_bg_color-g),var(--elm_button_secondary_bg_color-b), var(--tw-border-opacity, 1))',
+      },
+      textColor: {
+        'theme-button-primary': 'rgba(var(--elm_button_primary_text_color-r),var(--elm_button_primary_text_color-g),var(--elm_button_primary_text_color-b), var(--tw-border-opacity, 1))',
+        'theme-button-secondary': 'rgba(var(--elm_button_secondary_text_color-r),var(--elm_button_secondary_text_color-g),var(--elm_button_secondary_text_color-b), var(--tw-border-opacity, 1))',
+      },
+      borderWidth: {
+        'theme-button-primary': 'var(--elm_button_primary_border_width)',
+        'theme-button-secondary': 'var(--elm_button_secondary_border_width)',
+      },
     }
   },
   plugins: [

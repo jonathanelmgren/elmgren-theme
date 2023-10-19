@@ -47,13 +47,8 @@ function elm_enqueue_styles_and_scripts()
         wp_enqueue_script('elm-gutenberg-react-js', JS_PATH . 'gutenberg-settings.tsx.js', ['wp-blocks', 'wp-dom-ready', 'wp-edit-post'], false, true);
     }
 
-    // Register Styles
-    wp_register_style('elm-main-css', CSS_PATH . 'main.css');
-    wp_register_style('elm-tailwind-css', CSS_PATH . 'tailwind.css', array('elm-main-css'));  // Make elm-main-css a dependency for elm-tailwind-css
-
-    // Enqueue Styles
-    wp_enqueue_style('elm-main-css');
-    wp_enqueue_style('elm-tailwind-css');
+    // Styles
+    wp_enqueue_style('elm-main-css', CSS_PATH . 'main.css');
 }
 add_action('wp_enqueue_scripts', 'elm_enqueue_styles_and_scripts', 10);
 add_action('enqueue_block_editor_assets', 'elm_enqueue_styles_and_scripts', 10);

@@ -12,11 +12,11 @@ $border = get_theme_mod('elm_header_border', false);
         <?php get_template_part('templates/header/logo'); ?>
 
         <div class="flex lg:hidden items-center gap-3">
+            <?php get_template_part('templates/header/cart'); ?>
             <button type="button" data-menu-toggle="open" class="btn--no-style inline-flex items-center justify-center rounded-md">
                 <span class="sr-only"><?php _e('Open main menu', 'elmgren') ?></span>
                 <?php echo elm_the_inline_svg('hamburger_open') ?>
             </button>
-            <?php get_template_part('templates/header/cart'); ?>
         </div>
 
         <div class="hidden lg:flex lg:gap-x-12 items-center">

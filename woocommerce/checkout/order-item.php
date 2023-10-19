@@ -41,7 +41,7 @@ $product_permalink_with_variations = add_query_arg($variation_query_args, $base_
         </div>
 
         <div class="flex flex-1 items-end justify-between pt-2">
-            <p class="mt-1 text-sm font-medium text-gray-900"><?php echo WC()->cart->get_product_price($product) ?></p>
+            <p class="mt-1 text-sm font-medium text-gray-400"><?php echo WC()->cart->get_product_price($product) ?></p>
             <div class="ml-4">
                 <p class="text-sm font-medium text-gray-700">x<?php echo $quantity ?></p>
             </div>

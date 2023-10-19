@@ -94,3 +94,8 @@ function elm_is_woocommerce_activated()
 {
     return class_exists('WooCommerce') ? true : false;
 }
+
+function elm_get_border_radius()
+{
+    return get_theme_mod('elm_border_radius_setting');
+}

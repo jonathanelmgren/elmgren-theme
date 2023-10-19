@@ -18,7 +18,7 @@ if (apply_filters('woocommerce_checkout_show_terms', true) && function_exists('w
 					<input <?php checked($checked, true); ?> id="terms" name="terms" type="checkbox" class="woocommerce-form__input woocommerce-form__input-checkbox input-checkbox h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500" <?php checked($is_checked, 1); ?>>
 				</div>
 				<input type="hidden" name="terms-field" value="1" />
-				<label for="terms" class="text-sm font-medium text-gray-900"><?php wc_terms_and_conditions_checkbox_text(); ?></span>&nbsp;<abbr class="required" title="<?php esc_attr_e('required', 'woocommerce'); ?>">*</abbr></label>
+				<label for="terms" class="text-sm font-medium text-gray-400"><?php wc_terms_and_conditions_checkbox_text(); ?></span>&nbsp;<abbr class="required" title="<?php esc_attr_e('required', 'woocommerce'); ?>">*</abbr></label>
 			</div>
 		<?php endif; ?>
 	</div>

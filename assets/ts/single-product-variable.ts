@@ -42,6 +42,7 @@ jQuery(function ($) {
 
                 return false;
             });
+            const qtyInput = $('[data-add-to-cart-container] .quantity input')
             if (matchingVariation && Object.keys(selectedAttributes).length === attribute_length) {
                 const { image, variation_id, price_html } = matchingVariation
                 const { src, alt } = image
@@ -51,8 +52,10 @@ jQuery(function ($) {
                 variantPriceContainer.html(price_html)
 
                 submit_btn.prop('disabled', false);
+                qtyInput.removeClass('disabled')
                 submit_btn.val(variation_id)
             } else {
+                qtyInput.addClass('disabled')
                 submit_btn.prop('disabled', true);
                 submit_btn.val(parentId || '')
             }

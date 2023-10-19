@@ -10,7 +10,7 @@
 
     <!-- Order summary -->
     <section aria-labelledby="summary-heading" class="mt-16 rounded-lg bg-gray-50 px-4 py-6 sm:p-6 lg:col-span-5 lg:mt-0 lg:p-8 lg:sticky lg:top-10">
-        <h2 id="summary-heading" class="text-lg font-medium text-gray-900"><?php esc_html_e('Cart totals', 'woocommerce'); ?></h2>
+        <h2 id="summary-heading" class="text-lg font-medium text-gray-400"><?php esc_html_e('Cart totals', 'woocommerce'); ?></h2>
         <?php if (wc_coupons_enabled()) : ?>
             <form class='mt-4' action="<?php echo esc_url(wc_get_cart_url()); ?>" method="post">
                 <label for="coupon_code" class="sr-only"><?php esc_html_e('Coupon code', 'woocommerce'); ?></label>

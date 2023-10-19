@@ -7,6 +7,7 @@
 	border-width: var(--elm_button_#{$type}_border_width);
 	width: auto;
 	font-size: var(--elm_p_font_size);
+	text-decoration: none;
 
 	// Sizing conditionals
 	@if $size == 'small' {
@@ -21,5 +22,11 @@
 		border-color: var(--elm_button_#{$type}_border_color_hover);
 		background-color: var(--elm_button_#{$type}_bg_color_hover);
 		color: var(--elm_button_#{$type}_text_color_hover);
+	}
+
+	&:disabled {
+		opacity: 0.5;
+		pointer-events: none;
+		cursor: not-allowed;
 	}
 }

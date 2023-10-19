@@ -16,7 +16,7 @@ $calculator_text          = '';
     <!-- Shipping methods -->
     <div class="flex items-center justify-between border-t border-gray-200 pt-4 relative">
         <dt class="text-sm text-gray-600"><?php echo wp_kses_post($package_name); ?></dt>
-        <dd class="text-sm text-gray-900">
+        <dd class="text-sm text-gray-400">
             <?php if ($available_methods) : ?>
                 <div class="woocommerce-shipping-methods">
                     <?php foreach ($available_methods as $method) : ?>
@@ -54,7 +54,7 @@ $calculator_text          = '';
 
     <div class="flex items-center justify-between border-t border-gray-200 pt-4">
         <dt class="text-sm text-gray-600"><?php esc_html_e('Shipping', 'woocommerce'); ?></dt>
-        <dd class="text-sm text-gray-900">
+        <dd class="text-sm text-gray-400">
             <?php woocommerce_shipping_calculator(); ?>
         </dd>
     </div>

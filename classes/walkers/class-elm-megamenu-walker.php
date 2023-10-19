@@ -43,7 +43,7 @@ class Elm_Mega_Menu_Walker_Nav_Menu extends Elm_Walker_Nav_Menu
     {
         $header_link_colors = new TailwindColor([
             'header_link_color' => ['attr' => 'text', 'fallback' => 'gray-600'],
-            'header_link_color_hover' => ['attr' => 'text', 'prefix' => 'hover', 'fallback' => 'gray-900']
+            'header_link_color_hover' => ['attr' => 'text', 'prefix' => 'hover', 'fallback' => 'gray-400']
         ]);
 
         $class = 'class="items-center gap-x-1 no-underline ';

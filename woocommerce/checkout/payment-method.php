@@ -28,9 +28,9 @@ if (!defined('ABSPATH')) {
 	<span class="flex flex-1">
 		<span class="flex flex-col">
 			<?php if ($gateway->get_icon()) : ?>
-				<span class="block text-sm font-medium text-gray-900"><?php echo $gateway->get_icon(); ?></span>
+				<span class="block text-sm font-medium text-gray-400"><?php echo $gateway->get_icon(); ?></span>
 			<?php else : ?>
-				<span class="block text-sm font-medium text-gray-900"><?php echo $gateway->get_title(); ?></span>
+				<span class="block text-sm font-medium text-gray-400"><?php echo $gateway->get_title(); ?></span>
 			<?php endif; ?>
 
 			<?php if ($gateway->get_description()) : ?>

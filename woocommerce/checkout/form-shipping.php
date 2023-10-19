@@ -27,7 +27,7 @@ $is_checked = apply_filters('woocommerce_ship_to_different_address_checked', 'sh
 			<div class="flex h-5 items-center">
 				<input name="ship_to_different_address" id="ship-to-different-address-checkbox" name="ship-to-different-address-checkbox" type="checkbox" class="woocommerce-form__input woocommerce-form__input-checkbox input-checkbox h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500" <?php checked($is_checked, 1); ?>>
 			</div>
-			<label for="ship-to-different-address-checkbox" class="text-sm font-medium text-gray-900"><?php esc_html_e('Ship to a different address?', 'woocommerce'); ?></label>
+			<label for="ship-to-different-address-checkbox" class="text-sm font-medium text-gray-400"><?php esc_html_e('Ship to a different address?', 'woocommerce'); ?></label>
 		</div>
 
 		<div class="shipping_address <?= $is_checked ? '' : 'hidden' ?>">
