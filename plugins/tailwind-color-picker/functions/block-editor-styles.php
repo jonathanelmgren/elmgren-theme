@@ -38,6 +38,9 @@ function tailwind_generate_color_palette_styles()
     // Output the CSS variables
     echo ':root {';
     foreach (TAILWIND_COLORS as $colorName => $shades) {
+        if (is_string($shades)) {
+            continue;
+        }
         foreach ($shades as $shade => $value) {
             echo "--color-{$colorName}-{$shade}: {$value};";
         }
