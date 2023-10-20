@@ -124,6 +124,8 @@ function elm_customizer_general_settings($wp_customize)
         add_setting_and_control($wp_customize, $args);
     }
 
+    add_tailwind_color_picker_control($wp_customize, "elm_divider_color", "Divider colors", 'elm_general_section', ['tailwind' => 'lightgray-500']);
+
     elm_customize_text($wp_customize);
     elm_customize_buttons($wp_customize);
 }

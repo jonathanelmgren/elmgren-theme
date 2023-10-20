@@ -42,7 +42,8 @@ const plugins = [
                 const changedFiles = compilation.modifiedFiles;
                 if (!changedFiles || changedFiles.has(path.resolve(__dirname, 'tailwind.config.js'))) {
                     const config = getTailwindConfig();
-                    const colors = config.theme.extend.colors;
+                    let colors = config.theme.extend.colors;
+                    colors = Object.fromEntries(Object.entries(colors).filter(([key, value]) => typeof value === 'object'));
                     const phpOutput =
                         `
 // === START: Webpack Generated Block ===

@@ -28,9 +28,10 @@ function getTailwindColors($textElements)
 {
     $colorSettings = getButtonColors();
     $colorSettings['elm_a_font_color_hover'] = ['attr' => 'text', 'fallback' => 'primary-500', 'prefix' => 'hover'];
+    $colorSettings['elm_divider_color'] = ['attr' => 'border', 'fallback' => ['tailwind' => 'lightgray-500']];
 
     foreach ($textElements as $textElement) {
-        $colorSettings['elm_' . $textElement . '_font_color'] = ['attr' => 'text', 'fallback' => 'gray-600'];
+        $colorSettings['elm_' . $textElement . '_font_color'] = ['attr' => 'text', 'fallback' => ['tailwind' => 'gray-600']];
     }
 
     return $textColors = new TailwindColor($colorSettings);
@@ -83,6 +84,7 @@ function generateRootCssVariables()
     $variables[] = generateRootCssVariable('elm_button_primary_border_width', get_theme_mod('elm_button_primary_border_width') . 'px');
     $variables[] = generateRootCssVariable('elm_button_secondary_border_width', get_theme_mod('elm_button_secondary_border_width') . 'px');
     $variables[] = generateRootCssVariable('elm_a_font_color_hover', $colors->get_color_code('elm_a_font_color_hover'));
+    $variables[] = generateRootCssVariable('elm_divider_color', $colors->get_color_code('elm_divider_color'));
 
     // Button colors
     foreach (getButtonColors() as $buttonColorKey => $val) {

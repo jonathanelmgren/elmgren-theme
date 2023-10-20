@@ -1,7 +1,7 @@
 
 jQuery(function ($) {
     $('input[data-cart-qty-input]').on('input', function () {
-        $(this).siblings('button[type="submit"]').toggleClass('hidden block')
+        $(this).siblings('button[type="submit"]').addClass('block').removeClass('hidden')
     })
 });
 jQuery(function ($) {
