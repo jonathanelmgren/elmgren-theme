@@ -6,6 +6,11 @@ jQuery(function ($) {
 });
 jQuery(function ($) {
     $('[data-shipping-calculator-button]').on('click', function () {
-        $('[data-shipping-calculator]').toggleClass('hidden flex')
+        const form = $('[data-shipping-calculator]');
+        if (form.is(':visible')) {
+            form.slideUp(250)
+        } else {
+            form.slideDown(250)
+        }
     })
 });

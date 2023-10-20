@@ -21,13 +21,13 @@ $tax_display_option = get_option('woocommerce_tax_total_display');
 
 <?php if ('itemized' === $tax_display_option) : ?>
     <?php foreach (WC()->cart->get_tax_totals() as $tax) : ?>
-        <div class="flex items-center justify-between border-t border-gray-200 pt-4">
+        <div class="flex items-center justify-between border-t border-theme-divider pt-4">
             <dt class="text-sm text-gray-600"><?= esc_html($tax->label) . $estimated_text; ?></dt>
             <dd class="text-sm text-gray-400"><?= wp_kses_post($tax->formatted_amount); ?></dd>
         </div>
     <?php endforeach; ?>
 <?php else : ?>
-    <div class="flex items-center justify-between border-t border-gray-200 pt-4">
+    <div class="flex items-center justify-between border-t border-theme-divider pt-4">
         <dt class="text-sm text-gray-600"><?= esc_html(WC()->countries->tax_or_vat()) . $estimated_text; ?></dt>
         <dd class="text-sm text-gray-400"><?= wc_cart_totals_taxes_total_html(); ?></dd>
     </div>

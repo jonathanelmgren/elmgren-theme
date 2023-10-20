@@ -36,10 +36,13 @@ $calculator_text          = '';
                 <?php echo esc_html__('Please enter your address to view shipping options.', 'woocommerce'); ?>
             <?php endif; ?>
             <?php if ($show_shipping_calculator) : ?>
-                <?php woocommerce_shipping_calculator($calculator_text); ?>
+                <?php printf('<button type="button" data-shipping-calculator-button class="no-style text-theme-a">%s</button>', esc_html(!empty($button_text) ? $button_text : __('Calculate', 'woocommerce'))); ?>
             <?php endif; ?>
         </dd>
     </div>
+    <?php if ($show_shipping_calculator) : ?>
+        <?php woocommerce_shipping_calculator($calculator_text); ?>
+    <?php endif; ?>
 
     <!-- Shipping destination information -->
     <?php if (is_cart() && $formatted_destination) : ?>
@@ -52,7 +55,7 @@ $calculator_text          = '';
 
 <?php elseif (WC()->cart->needs_shipping() && 'yes' === get_option('woocommerce_enable_shipping_calc')) : ?>
 
-    <div class="flex items-center justify-between border-t border-gray-200 pt-4">
+    <div class="flex items-center justify-between border-t border-theme-divider pt-4">
         <dt class="text-sm text-gray-600"><?php esc_html_e('Shipping', 'woocommerce'); ?></dt>
         <dd class="text-sm text-gray-400">
             <?php woocommerce_shipping_calculator(); ?>

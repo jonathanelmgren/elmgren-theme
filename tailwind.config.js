@@ -153,6 +153,7 @@ module.exports = {
           'theme-h6': 'rgba(var(--elm_h6_font_color-r),var(--elm_h6_font_color-g),var(--elm_h6_font_color-b), var(--tw-text-opacity, 1))',
           'theme-p': 'rgba(var(--elm_p_font_color-r),var(--elm_p_font_color-g),var(--elm_p_font_color-b), var(--tw-text-opacity, 1))',
           'theme-a': 'rgba(var(--elm_a_font_color-r),var(--elm_a_font_color-g),var(--elm_a_font_color-b), var(--tw-text-opacity, 1))',
+          'theme-divider': '#fff'
         }
       },
       fontFamily: {

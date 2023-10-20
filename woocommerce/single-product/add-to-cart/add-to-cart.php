@@ -1,4 +1,4 @@
-<form id="add-to-cart" class='flex flex-col gap-4 border-t-2 border-lightgray-500 pt-4'>
+<form id="add-to-cart" class='flex flex-col gap-4 border-t-2 border-theme-divider pt-4'>
     <?php
     global $product;
 

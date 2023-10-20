@@ -19,7 +19,7 @@ function elm_cart_totals_coupon_amount($coupon)
 ?>
 
 <?php foreach (WC()->cart->get_coupons() as $code => $coupon) : ?>
-    <div class="flex items-center justify-between border-t border-gray-200 pt-4">
+    <div class="flex items-center justify-between border-t border-theme-divider pt-4">
         <dt class="text-sm text-gray-600"><?php wc_cart_totals_coupon_label($coupon); ?></dt>
         <dd><?php elm_cart_totals_coupon_amount($coupon); ?> <?php get_template_part('templates/global/remove', null, ['href' => esc_url(add_query_arg('remove_coupon', rawurlencode($coupon->get_code()), defined('WOOCOMMERCE_CHECKOUT') ? wc_get_checkout_url() : wc_get_cart_url()))]) ?>
         </dd>
