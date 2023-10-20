@@ -19,7 +19,7 @@
 defined('ABSPATH') || exit;
 ?>
 <div>
-	<ul role="list" class="divide-y border-theme-divider border-theme-divider">
+	<ul role="list" class="divide-y border-theme-divider">
 		<?php foreach (WC()->cart->get_cart() as $cart_item_key => $cart_item) : ?>
 			<?php wc_get_template('checkout/order-item.php', ['cart_item_key' => $cart_item_key, 'cart_item' => $cart_item, 'readonly' => true]) ?>
 		<?php endforeach; ?>

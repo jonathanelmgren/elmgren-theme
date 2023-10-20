@@ -46,9 +46,9 @@ $product_permalink_with_variations = add_query_arg($variation_query_args, $base_
                         <a class="text-gray-400 no-underline hover:underline" href="<?= $product_permalink_with_variations ?>"><?= $parent_name ?? $product->get_name() ?></a>
                     </h3>
                 </div>
-                <div class="mt-1 flex text-sm">
+                <div class="mt-1 flex text-sm divide-x divide-theme-divider -mx-2">
                     <?php foreach ($variations as $key => $variation) :  ?>
-                        <p class="text-gray-100 [&:not(:first-child)]:border-l border-lightgray-700 [&:not(:first-child)]:pl-2 [&:not(:first-child)]:ml-2 font-light"><?= ucfirst($variation) ?></p>
+                        <p class="text-gray-100 font-light px-2"><?= ucfirst($variation) ?></p>
                     <?php endforeach; ?>
                 </div>
                 <p class="mt-1 text-sm font-medium text-gray-400"><?php echo WC()->cart->get_product_price($product) ?></p>
