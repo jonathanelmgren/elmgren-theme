@@ -1,0 +1,42 @@
+@mixin button-styles($type: 'primary', $size: 'medium') {
+	--elm_button_padding_inline: 0.75rem;
+	--elm_button_padding_block: 0.5rem;
+	// Common styles for all buttons
+	padding-inline: var(--elm_button_padding_inline);
+	padding-block: var(--elm_button_padding_block);
+	border-color: var(--elm_button_#{$type}_border_color);
+	background-color: var(--elm_button_#{$type}_bg_color);
+	color: var(--elm_button_#{$type}_text_color);
+	border-width: var(--elm_button_#{$type}_border_width);
+	width: auto;
+	font-size: var(--elm_p_font_size);
+	text-decoration: none;
+	text-align: center;
+
+	// Sizing conditionals
+	@if $size == 'small' {
+		padding-inline: calc(var(--elm_button_padding_inline) * 0.8);
+		padding-block: calc(var(--elm_button_padding_block) * 0.8);
+		font-size: calc(var(--elm_p_font_size) * 0.8);
+	} @else if $size == 'large' {
+		padding-inline: calc(var(--elm_button_padding_inline) * 1.2);
+		padding-block: calc(var(--elm_button_padding_block) * 1.2);
+		font-size: calc(var(--elm_p_font_size) * 1.2);
+	} @else if $size == 'xsmall' {
+		padding-inline: calc(var(--elm_button_padding_inline) * 0.6);
+		padding-block: calc(var(--elm_button_padding_block) * 0.6);
+		font-size: calc(var(--elm_p_font_size) * 0.8);
+	}
+
+	&:hover {
+		border-color: var(--elm_button_#{$type}_border_color_hover);
+		background-color: var(--elm_button_#{$type}_bg_color_hover);
+		color: var(--elm_button_#{$type}_text_color_hover);
+	}
+
+	&:disabled {
+		opacity: 0.5;
+		pointer-events: none;
+		cursor: not-allowed;
+	}
+}

@@ -39,14 +39,14 @@ function elm_get_page_width($force_default = false)
         $w = get_field('page_width', $post_id);
     }
     if ($force_default || !$w) {
-        $w = get_theme_mod('page_width_setting', 'width-normal');
+        $w = get_theme_mod('elm_page_width_setting', 'width-normal');
     }
 
     return $w;  // Return the corresponding Tailwind class or an empty string
 }
 
 // Function to display either the logo or the blog name
-function get_logo_or_blog_name($link_class = '-m-1.5 p-1.5', $img_class = 'w-auto')
+function get_logo_or_blog_name($link_class = 'no-underline', $img_class = 'w-auto')
 {
     $logo_height = get_theme_mod('logo_height_setting', '8');
     $home_url = home_url();
@@ -65,7 +65,7 @@ function get_logo_or_blog_name($link_class = '-m-1.5 p-1.5', $img_class = 'w-aut
 function elm_get_footer_setting(string $setting): mixed
 {
     // Fetch setting from Theme Customizer
-    $value = get_theme_mod('footer_' . $setting);
+    $value = get_theme_mod('elm_footer_' . $setting);
     if (!empty($value)) {
         return $value;
     }
@@ -88,4 +88,40 @@ function elm_has_socials(?string $social = null): bool
         }
     }
     return false;
+}
+
+function elm_is_woocommerce_activated()
+{
+    return class_exists('WooCommerce') ? true : false;
+}
+
+function elm_get_border_radius()
+{
+    return get_theme_mod('elm_border_radius_setting');
+}
+
+/**
+ * Echo a breadcrumb item.
+ *
+ * @param array $crumb The breadcrumb item.
+ * @param int $key The current breadcrumb index.
+ * @param int $total The total number of breadcrumbs.
+ */
+function echoBreadcrumbItem(array $crumb, int $key, int $total): void
+{
+    echo '<span class="inline-block">';  // before in Tailwind
+
+    $isLastItem = ($total === $key + 1);
+
+    if (!empty($crumb[1]) && !$isLastItem) {
+        echo '<a href="' . esc_url($crumb[1]) . '" class="text-gray-400 hover:underline text-sm no-underline">' . esc_html($crumb[0]) . '</a>';
+    } else {
+        echo '<span class="text-gray-100 text-sm">' . esc_html($crumb[0]) . '</span>';
+    }
+
+    echo '</span>';  // after in Tailwind
+
+    if (!$isLastItem) {
+        echo '<span class="mx-2 text-gray-200">/</span>';  // delimiter in Tailwind
+    }
 }

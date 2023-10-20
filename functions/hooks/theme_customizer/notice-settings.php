@@ -4,64 +4,61 @@ function elm_customize_notice($wp_customize)
 {
     $attrs = ['bg', 'border', 'text'];
 
-    $wp_customize->add_section('elm_notice_section', array(
-        'title'    => __('Notice Settings', 'elmgren'),
-        'priority' => 30,
-    ));
-
-    // Width for entire wrapper
-    $wp_customize->add_setting('notice_bg_width', [
-        'default' => 'width-full'
-    ]);
-    $wp_customize->add_control('notice_bg_width_control', array(
-        'type' => 'select',
-        'choices' => defined('ELM_PAGE_WIDTHS_REVERSE') ? ELM_PAGE_WIDTHS_REVERSE : [],
-        'label'    => __("Notice width", 'elmgren'),
-        'section'  => 'elm_notice_section',
-        'settings' => 'notice_bg_width',
-    ));
-
-    // Width for content
-    $wp_customize->add_setting('notice_content_width', [
-        'default' => elm_get_page_width(true)
-    ]);
-    $wp_customize->add_control('notice_content_width_control', array(
-        'type' => 'select',
-        'choices' => defined('ELM_PAGE_WIDTHS_REVERSE') ? ELM_PAGE_WIDTHS_REVERSE : [],
-        'label'    => __("Notice content width", 'elmgren'),
-        'section'  => 'elm_notice_section',
-        'settings' => 'notice_content_width',
-    ));
-
-    // Text align
-    $wp_customize->add_setting('notice_text_align', array(
-        'default' => 'text-center'
-    ));
-    $wp_customize->add_control('notice_text_align_control', array(
-        'type' => 'radio',
-        'choices' => [
-            'text-left' => 'Left',
-            'text-center' => 'Center',
-            'text-right' => 'Right',
-        ],
-        'label'    => __("Text align", 'elmgren'),
-        'section'  => 'elm_notice_section',
-        'settings' => 'notice_text_align',
-    ));
+    add_setting_and_control(
+        $wp_customize,
+        [
+            'setting' => "elm_notice_bg_width",
+            'settingArgs' => [
+                'default' => 'width-full',
+            ],
+            'controlArgs' => [
+                'label'    => __("Notice width", 'elmgren'),
+                'section' => 'elm_notice_position_section',
+                'type' => 'select',
+                'choices' => defined('ELM_PAGE_WIDTHS_REVERSE') ? ELM_PAGE_WIDTHS_REVERSE : [],
+            ],
+        ]
+    );
+    add_setting_and_control(
+        $wp_customize,
+        [
+            'setting' => "elm_notice_content_width",
+            'settingArgs' => [
+                'default' => elm_get_page_width(true),
+            ],
+            'controlArgs' => [
+                'label'    => __("Notice content width", 'elmgren'),
+                'section' => 'elm_notice_position_section',
+                'type' => 'select',
+                'choices' => defined('ELM_PAGE_WIDTHS_REVERSE') ? ELM_PAGE_WIDTHS_REVERSE : [],
+            ],
+        ]
+    );
+    add_setting_and_control(
+        $wp_customize,
+        [
+            'setting' => "elm_notice_text_align",
+            'settingArgs' => [
+                'default' => 'text-center',
+            ],
+            'controlArgs' => [
+                'label'    => __("Text align", 'elmgren'),
+                'section' => 'elm_notice_position_section',
+                'type' => 'radio',
+                'choices' => [
+                    'text-left' => 'Left',
+                    'text-center' => 'Center',
+                    'text-right' => 'Right',
+                ],
+            ],
+        ]
+    );
 
     // Colors
     foreach (Elm_Notice::STATUSES as $status) {
         foreach ($attrs as $attr) {
             $capitalize = ucfirst($status);
-            $wp_customize->add_setting("notice_{$status}_{$attr}", array(
-                'transport' => 'refresh',
-                'sanitize_callback' => 'sanitize_tailwind'
-            ));
-            $wp_customize->add_control(new TailwindColorPickerThemeCustomizer($wp_customize, "notice_{$status}_{$attr}_control", array(
-                'label'    => __("{$capitalize} {$attr}", 'elmgren'),
-                'section'  => 'elm_notice_section',
-                'settings' => "notice_{$status}_{$attr}",
-            )));
+            add_tailwind_color_picker_control($wp_customize, "notice_{$status}_{$attr}", __("{$capitalize} {$attr}", 'elmgren'), "elm_notice_{$status}_section");
         }
     }
 }

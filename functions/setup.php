@@ -4,13 +4,11 @@
 function elm_setup()
 {
     add_theme_support('custom-logo');
-    add_theme_support('woocommerce', array(
-        'thumbnail_image_width' => 200,
-        'gallery_thumbnail_image_width' => 100,
-        'single_image_width' => 500,
-    ));
+    add_theme_support('woocommerce');
     add_theme_support('title-tag');
     add_theme_support('post-thumbnails');
+    add_post_type_support('page', 'excerpt');
+    //add_theme_support('editor-styles');
 
     register_nav_menus(array(
         'main-menu' => esc_html__('Main Menu', 'elmgren'),
@@ -19,30 +17,43 @@ function elm_setup()
 }
 add_action('after_setup_theme', 'elm_setup');
 
-// Register styles and scripts
+// Register public styles and scripts
 function elm_enqueue_styles_and_scripts()
 {
-    $dist_path = get_template_directory() . '/dist/';
+    // Scripts
+    wp_enqueue_script('jquery');
+    wp_enqueue_script('elm-main-js', JS_PATH . 'main.js', ['jquery'], false, true);
 
-    // Enqueue styles.
-    foreach (glob($dist_path . 'css/*.css') as $file) {
-        $handle = 'elm-' . basename($file, '.css');
-        $file_url = get_template_directory_uri() . '/dist/css/' . basename($file);
-        wp_enqueue_style($handle, $file_url);
+    if (elm_is_woocommerce_activated() && is_product()) {
+        global $product;
+        if (is_string($product)) {
+            $product = wc_get_product(get_the_ID());
+        }
+        if ($product instanceof WC_Product && $product->is_type('variable')) {
+            wp_enqueue_script('elm-single-product-variable-js', JS_PATH . 'single-product-variable.js', ['jquery'], false, true);
+        }
     }
 
-    // Enqueue scripts.
-    foreach (glob($dist_path . 'js/*.js') as $file) {
-        $handle = 'elm-' . basename($file, '.js');
-        $file_url = get_template_directory_uri() . '/dist/js/' . basename($file);
-        wp_enqueue_script($handle, $file_url, array('jquery'), null, true);
+    if (elm_is_woocommerce_activated() && is_cart()) {
+        wp_enqueue_script('elm-cart-js', JS_PATH . 'cart.js', ['jquery'], false, true);
     }
+
+    if (elm_is_woocommerce_activated() && is_checkout()) {
+        wp_enqueue_script('elm-checkout-js', JS_PATH . 'checkout.js', ['jquery'], false, true);
+    }
+
+    if (is_admin()) {
+        wp_enqueue_script('elm-gutenberg-js', JS_PATH . 'gutenberg.js', ['jquery'], false, true);
+        wp_enqueue_script('elm-gutenberg-react-js', JS_PATH . 'gutenberg-settings.tsx.js', ['wp-blocks', 'wp-dom-ready', 'wp-edit-post'], false, true);
+    }
+
+    // Styles
+    wp_enqueue_style('elm-main-css', CSS_PATH . 'main.css');
 }
-add_action('wp_enqueue_scripts', 'elm_enqueue_styles_and_scripts');
-add_action('enqueue_block_editor_assets', 'elm_enqueue_styles_and_scripts');
+add_action('wp_enqueue_scripts', 'elm_enqueue_styles_and_scripts', 10);
+add_action('enqueue_block_editor_assets', 'elm_enqueue_styles_and_scripts', 10);
 
 // Create generic function to include all files in specific folders
-
 if (!function_exists('elm_include_folder')) {
     function elm_include_folder($folder)
     {
@@ -111,3 +122,97 @@ function elm_use_mailhog(PHPMailer\PHPMailer\PHPMailer $phpmailer)
 if (is_file("/.dockerenv")) {
     add_action('phpmailer_init', 'elm_use_mailhog');
 }
+
+// Disable woocommerce styles
+add_filter('woocommerce_enqueue_styles', '__return_empty_array');
+function elm_dequeue_woocommerce_block_styles()
+{
+    if (!class_exists('woocommerce')) {
+        return;
+    }
+    global $wp_styles;
+
+    foreach ($wp_styles->queue as $style_handle) {
+        $src = $wp_styles->registered[$style_handle]->src;
+        // Here we check if the handle name contains 'build/', which seems to be consistent in your list.
+        if (strpos($src, 'woocommerce') !== false) {
+            wp_dequeue_style($style_handle);
+        }
+    }
+
+    wp_dequeue_style('select2');
+    wp_deregister_style('select2');
+
+    wp_dequeue_script('selectWoo');
+    wp_deregister_script('selectWoo');
+}
+add_action('wp_enqueue_scripts', 'elm_dequeue_woocommerce_block_styles', 100);
+
+function elm_register_button_block_styles()
+{
+    register_block_style(
+        'core/button',
+        array(
+            'name'         => 'primary',
+            'label'        => __('Primary', 'text-domain'),
+            'isDefault'    => true,
+        )
+    );
+
+    register_block_style(
+        'core/button',
+        array(
+            'name'         => 'secondary',
+            'label'        => __('Secondary', 'text-domain'),
+        )
+    );
+}
+add_action('init', 'elm_register_button_block_styles');
+
+function elm_add_class_to_list_block($block_content, $block)
+{
+
+    if ('core/button' === $block['blockName']) {
+        $block_content = new WP_HTML_Tag_Processor($block_content);
+        $block_content->next_tag('a');
+        $block_content->add_class('btn');
+        if (str_contains($block_content, 'is-style-secondary')) {
+            $block_content->add_class('secondary');
+        } else {
+            $block_content->add_class('primary');
+        }
+        $block_content->get_updated_html();
+    }
+
+    return $block_content;
+}
+add_filter('render_block', 'elm_add_class_to_list_block', 10, 2);
+
+function elm_remove_default_button_styles($args, $name)
+{
+    if ($name !== 'core/button') {
+        return $args;
+    }
+
+    if (isset($args['styles'])) {
+        $new_styles = array_filter($args['styles'], function ($style) {
+            return !in_array($style['name'], array('fill', 'outline'));
+        });
+        $args['styles'] = array_values($new_styles);
+    }
+
+    return $args;
+}
+
+add_filter('register_block_type_args', 'elm_remove_default_button_styles', 10, 2);
+
+function elm_deregister_button_block_editor_styles()
+{
+    wp_deregister_style('wp-block-buttons');
+    wp_deregister_style('wp-block-button');
+    wp_dequeue_style('global-styles-inline-css');
+    wp_deregister_style('global-styles-inline-css');
+}
+add_filter('should_load_separate_core_block_assets', '__return_true');
+add_filter('styles_inline_size_limit', '__return_zero');
+add_action('enqueue_block_editor_assets', 'elm_deregister_button_block_editor_styles', 100);

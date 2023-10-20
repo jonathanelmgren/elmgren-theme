@@ -3,128 +3,78 @@
 function elm_customize_header($wp_customize)
 {
 
-    // Section for Header Settings
-    $wp_customize->add_section('elm_header_section', array(
-        'title'    => __('Header Settings', 'elmgren'),
-        'priority' => 30,
-    ));
+    // Logo
+    add_setting_and_control(
+        $wp_customize,
+        [
+            'setting' => "logo_height_setting",
+            'settingArgs' => [
+                'default' => '8',
+            ],
+            'controlArgs' => [
+                'label' => __("Logo height", 'elmgren'),
+                'section' => 'elm_header_logo_section',
+                'type' => 'range',
+                'input_attrs' => array(
+                    'min' => '4',
+                    'max' => '48',
+                    'step' => '1',
+                ),
+            ],
+        ]
+    );
 
-    // Adding setting for logo height
-    $wp_customize->add_setting('logo_height_setting', array(
-        'default'   => '8',  // default height
-        'transport' => 'refresh',
-    ));
+    // Position
+    add_setting_and_control(
+        $wp_customize,
+        [
+            'setting' => "elm_header_absolute_position",
+            'settingArgs' => ['default' => false],
+            'controlArgs' => [
+                'label' => __("Header position absolute", 'elmgren'),
+                'section' => 'elm_header_position_section',
+                'type'     => 'checkbox'
+            ],
+        ]
+    );
+    add_setting_and_control(
+        $wp_customize,
+        [
+            'setting' => "elm_header_sticky",
+            'settingArgs' => ['default' => false],
+            'controlArgs' => [
+                'label' => __("Header sticky", 'elmgren'),
+                'section' => 'elm_header_position_section',
+                'type'     => 'checkbox'
+            ],
+        ]
+    );
 
-    // Adding control for logo height
-    $wp_customize->add_control('logo_height_control', array(
-        'label'    => __('Set Logo Height', 'elmgren'),
-        'section'  => 'elm_header_section',
-        'settings' => 'logo_height_setting',
-        'type'     => 'range',
-        'input_attrs' => array(
-            'min' => '4',
-            'max' => '48',
-            'step' => '1',
-        ),
-    ));
+    // Background & Text colors
+    add_setting_and_control(
+        $wp_customize,
+        [
+            'setting' => "elm_header_border",
+            'settingArgs' => ['default' => false],
+            'controlArgs' => [
+                'label' => __("Header border", 'elmgren'),
+                'section' => 'elm_header_border_section',
+                'type'     => 'checkbox'
+            ],
+        ]
+    );
 
-    // Adding setting for header spacing to content
-    $wp_customize->add_setting('content_spacing_setting', array(
-        'default'   => '0',  // default height
-        'transport' => 'refresh',
-    ));
+    add_tailwind_color_picker_control($wp_customize, 'header_bg_color', 'Header Background Color', 'elm_header_colors_section');
+    add_tailwind_color_picker_control_with_hover($wp_customize, 'header_link_color', 'Header Link Color', 'elm_header_colors_section');
 
-    // Adding control for header spacing to content
-    $wp_customize->add_control('content_spacing_control', array(
-        'label'    => __('Set header spacing to content', 'elmgren'),
-        'section'  => 'elm_header_section',
-        'settings' => 'content_spacing_setting',
-        'type'     => 'range',
-        'input_attrs' => array(
-            'min' => '0',
-            'max' => '12',
-            'step' => '0.5',
-        ),
-    ));
+    if (elm_is_woocommerce_activated()) {
+        // Cart
+        add_tailwind_color_picker_control($wp_customize, 'elm_woo_cart_qty_bg_color', 'Cart quantity background color', 'elm_header_colors_section');
+        add_tailwind_color_picker_control($wp_customize, 'elm_woo_cart_bg_color', 'Cart background color', 'elm_header_colors_section');
+        add_tailwind_color_picker_control($wp_customize, 'elm_woo_cart_text_color', 'Cart number text color', 'elm_header_colors_section');
+    }
 
-    // Absolute header positioning
-    $wp_customize->add_setting('header_absolute_position', array(
-        'default'   => false,
-        'transport' => 'refresh',
-    ));
-    $wp_customize->add_control('header_absolute_position_control', array(
-        'label'    => __('Header Position Absolute', 'elmgren'),
-        'section'  => 'elm_header_section',
-        'settings' => 'header_absolute_position',
-        'type'     => 'checkbox',
-    ));
-
-    // Sticky header
-    $wp_customize->add_setting('header_sticky', array(
-        'default'   => false,
-        'transport' => 'refresh',
-    ));
-    $wp_customize->add_control('header_sticky_control', array(
-        'label'    => __('Sticky Header', 'elmgren'),
-        'section'  => 'elm_header_section',
-        'settings' => 'header_sticky',
-        'type'     => 'checkbox',
-    ));
-
-    // Header background color
-    $wp_customize->add_setting('header_bg_color', array(
-        'transport' => 'refresh',
-        'sanitize_callback' => 'sanitize_tailwind'
-    ));
-    $wp_customize->add_control(new TailwindColorPickerThemeCustomizer($wp_customize, 'header_bg_color_control', array(
-        'label'    => __('Header Background Color', 'elmgren'),
-        'section'  => 'elm_header_section',
-        'settings' => 'header_bg_color',
-        'description' => 'Choose a preset or select your own color.',
-    )));
-
-    // Header link color
-    $wp_customize->add_setting('header_link_color', array(
-        'transport' => 'refresh',
-        'sanitize_callback' => 'sanitize_tailwind'
-    ));
-    $wp_customize->add_control(new TailwindColorPickerThemeCustomizer($wp_customize, 'header_link_color_control', array(
-        'label'    => __('Header Link Color', 'elmgren'),
-        'section'  => 'elm_header_section',
-        'settings' => 'header_link_color',
-    )));
-
-    // Header link color - Hover
-    $wp_customize->add_setting('header_link_color_hover', array(
-        'transport' => 'refresh',
-        'sanitize_callback' => 'sanitize_tailwind'
-    ));
-    $wp_customize->add_control(new TailwindColorPickerThemeCustomizer($wp_customize, 'header_link_color_hover_control', array(
-        'label'    => __('Header Link Color - Hover', 'elmgren'),
-        'section'  => 'elm_header_section',
-        'settings' => 'header_link_color_hover',
-    )));
-
-    // Header border
-    $wp_customize->add_setting('header_border', array(
-        'transport' => 'refresh',
-    ));
-    $wp_customize->add_control('header_border_control', array(
-        'label'    => __('Header border?', 'elmgren'),
-        'section'  => 'elm_header_section',
-        'settings' => 'header_border',
-        'type'     => 'checkbox',
-    ));
-
-    // Header border color
-    $wp_customize->add_setting('header_border_color', array(
-        'transport' => 'refresh',
-        'sanitize_callback' => 'sanitize_tailwind'
-    ));
-    $wp_customize->add_control(new TailwindColorPickerThemeCustomizer($wp_customize, 'header_border_color_control', array(
-        'label'    => __('Header Border color', 'elmgren'),
-        'section'  => 'elm_header_section',
-        'settings' => 'header_border_color',
-    )));
+    // Border settings
+    add_tailwind_color_picker_control($wp_customize, 'header_border_color', 'Header Border color', 'elm_header_border_section');
 }
 add_action('customize_register', 'elm_customize_header');

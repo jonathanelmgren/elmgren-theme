@@ -6,6 +6,9 @@ function tailwind_color_picker_setup()
     $palette = [];
 
     foreach (TAILWIND_COLORS as $colorName => $shades) {
+        if (is_string($shades)) {
+            continue;
+        }
         foreach ($shades as $shade => $value) {
             // Prepare a human-readable name
             $humanReadableShade = strtoupper($shade) === 'DEFAULT' ? 'Default' : $shade;
@@ -30,7 +33,19 @@ function tailwind_generate_color_palette_styles()
 
     if (!$palette) return;
 
+
     echo '<style type="text/css" id="dynamic-color-palette-styles">';
+    // Output the CSS variables
+    echo ':root {';
+    foreach (TAILWIND_COLORS as $colorName => $shades) {
+        if (is_string($shades)) {
+            continue;
+        }
+        foreach ($shades as $shade => $value) {
+            echo "--color-{$colorName}-{$shade}: {$value};";
+        }
+    }
+    echo '}';
     foreach ($palette as $color) {
         $slug = strtolower($color['slug']);
         echo ".has-{$slug}-color { color: {$color['color']}; }";
@@ -38,4 +53,5 @@ function tailwind_generate_color_palette_styles()
     }
     echo '</style>';
 }
-add_action('wp_head', 'generate_color_palette_styles');
+add_action('wp_head', 'tailwind_generate_color_palette_styles');
+add_action('admin_head', 'tailwind_generate_color_palette_styles');

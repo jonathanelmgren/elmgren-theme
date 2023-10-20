@@ -2,9 +2,11 @@
 @import 'tailwindcss/components';
 @import 'tailwindcss/utilities';
 
-@import 'base/base';
+@import 'base/mixins';
 @import 'base/fonts';
 @import 'base/page-widths';
+@import 'base/gutenberg';
+@import 'base/theme';
 
 .element-hover:hover {
 	color: var(--hover-color);

@@ -1,20 +1,20 @@
-.width-narrow {
+.editor-styles-wrapper.width-narrow, .width-narrow {
 	@apply mx-[1rem] sm:mx-[6%] md:mx-[12%] lg:mx-[18%] xl:mx-[24%] 2xl:mx-[30%];
 }
 
-.width-normal {
+.editor-styles-wrapper.width-normal, .width-normal {
 	@apply mx-[1rem] sm:mx-[5%] md:mx-[10%] lg:mx-[15%] xl:mx-[20%] 2xl:mx-[25%];
 }
 
-.width-wide {
+.editor-styles-wrapper.width-wide, .width-wide {
 	@apply mx-[1rem] sm:mx-[4%] md:mx-[8%] lg:mx-[12%] xl:mx-[16%] 2xl:mx-[20%];
 }
 
-.width-ultrawide {
+.editor-styles-wrapper.width-ultrawide, .width-ultrawide {
 	@apply mx-[0.8rem] sm:mx-[2%] md:mx-[4%] lg:mx-[6%] xl:mx-[8%] 2xl:mx-[10%];
 }
 
-.width-full {
+.editor-styles-wrapper.width-full, .width-full {
 	@apply m-0;
 }
 

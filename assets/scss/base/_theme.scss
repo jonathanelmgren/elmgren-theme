@@ -1,0 +1,175 @@
+body:not(.wp-admin, .wp-customizer),
+.editor-styles-wrapper {
+	@apply font-primary text-gray;
+
+	abbr.required {
+		@apply no-underline;
+	}
+
+	/* Fonts */
+	h1,
+	h2,
+	h3,
+	h4,
+	h5,
+	h6,
+	p,
+	a {
+		margin: 0;
+		line-height: 1.5;
+		font-weight: inherit;
+	}
+	h1 {
+		font-size: var(--elm_h1_font_size);
+		color: var(--elm_h1_font_color);
+	}
+	h2 {
+		font-size: var(--elm_h2_font_size);
+		color: var(--elm_h2_font_color);
+	}
+	h3 {
+		font-size: var(--elm_h3_font_size);
+		color: var(--elm_h3_font_color);
+	}
+	h4 {
+		font-size: var(--elm_h4_font_size);
+		color: var(--elm_h4_font_color);
+	}
+	h5 {
+		font-size: var(--elm_h5_font_size);
+		color: var(--elm_h5_font_color);
+	}
+	h6 {
+		font-size: var(--elm_h6_font_size);
+		color: var(--elm_h6_font_color);
+	}
+	p {
+		font-size: var(--elm_p_font_size);
+		color: var(--elm_p_font_color);
+	}
+	a:not(.btn) {
+		font-size: var(--elm_p_font_size);
+		color: var(--elm_a_font_color);
+		&:hover {
+			color: var(--elm_a_font_color_hover);
+		}
+	}
+
+	/* Buttons */
+	button:not(.no-style),
+	a.btn {
+		@include button-styles;
+		&.is-style-secondary {
+			@include button-styles('secondary');
+			&.is-size-xsmall {
+				@include button-styles('secondary', 'xsmall');
+			}
+			&.is-size-small {
+				@include button-styles('secondary', 'small');
+			}
+			&.is-size-large {
+				@include button-styles('secondary', 'large');
+			}
+			&.is-style-long {
+				padding-inline: calc(var(--elm_button_padding_inline) * 1.5);
+			}
+		}
+		&.is-size-xsmall {
+			@include button-styles('primary', 'xsmall');
+		}
+		&.is-size-small {
+			@include button-styles('primary', 'small');
+		}
+		&.is-size-large {
+			@include button-styles('primary', 'large');
+		}
+		&.is-style-long {
+			padding-inline: calc(var(--elm_button_padding_inline) * 1.5);
+		}
+	}
+
+	/* Gutenberg Buttons */
+	div.wp-block-button {
+		.wp-block-button__link,
+		button:not(.no-style),
+		a.btn {
+			@include button-styles;
+		}
+		&.is-style-long {
+			padding-inline: calc(var(--elm_button_padding_inline) * 1.5);
+		}
+		&.is-size-xsmall {
+			.wp-block-button__link,
+			button:not(.no-style),
+			a.btn {
+				@include button-styles('primary', 'xsmall');
+			}
+		}
+		&.is-size-small {
+			.wp-block-button__link,
+			button:not(.no-style),
+			a.btn {
+				@include button-styles('primary', 'small');
+			}
+		}
+		&.is-size-large {
+			.wp-block-button__link,
+			button:not(.no-style),
+			a.btn {
+				@include button-styles('primary', 'large');
+			}
+		}
+		&.is-style-secondary {
+			.wp-block-button__link,
+			button:not(.no-style),
+			a.btn {
+				@include button-styles('secondary');
+			}
+			&.is-style-long {
+				padding-inline: calc(var(--elm_button_padding_inline) * 1.5);
+			}
+			&.is-size-xsmall {
+				.wp-block-button__link,
+				button:not(.no-style),
+				a.btn {
+					@include button-styles('secondary', 'xsmall');
+				}
+			}
+			&.is-size-small {
+				.wp-block-button__link,
+				button:not(.no-style),
+				a.btn {
+					@include button-styles('secondary', 'small');
+				}
+			}
+			&.is-size-large {
+				.wp-block-button__link,
+				button:not(.no-style),
+				a.btn {
+					@include button-styles('secondary', 'large');
+				}
+			}
+		}
+	}
+
+	/* Default border radius elements */
+	button,
+	input,
+	a.wp-element-button,
+	a.btn,
+	img,
+	textarea,
+	select,
+	fieldset {
+		border-radius: var(--elm_all_border_radius);
+	}
+
+	/* Images */
+	img {
+		@apply max-w-full; /* Ensure images don't overflow their containers */
+	}
+
+	blockquote {
+		@apply pl-4 border-l-4 border-primary;
+	}
+}
