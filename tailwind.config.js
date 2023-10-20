@@ -145,14 +145,14 @@ module.exports = {
       colors: {
         ...themeColors,
         ...{
-          'theme-color-h1': 'rgba(var(--elm_h1_font_color-r),var(--elm_h1_font_color-g),var(--elm_h1_font_color-b), var(--tw-text-opacity, 1))',
-          'theme-color-h2': 'rgba(var(--elm_h2_font_color-r),var(--elm_h2_font_color-g),var(--elm_h2_font_color-b), var(--tw-text-opacity, 1))',
-          'theme-color-h3': 'rgba(var(--elm_h3_font_color-r),var(--elm_h3_font_color-g),var(--elm_h3_font_color-b), var(--tw-text-opacity, 1))',
-          'theme-color-h4': 'rgba(var(--elm_h4_font_color-r),var(--elm_h4_font_color-g),var(--elm_h4_font_color-b), var(--tw-text-opacity, 1))',
-          'theme-color-h5': 'rgba(var(--elm_h5_font_color-r),var(--elm_h5_font_color-g),var(--elm_h5_font_color-b), var(--tw-text-opacity, 1))',
-          'theme-color-h6': 'rgba(var(--elm_h6_font_color-r),var(--elm_h6_font_color-g),var(--elm_h6_font_color-b), var(--tw-text-opacity, 1))',
-          'theme-color-p': 'rgba(var(--elm_p_font_color-r),var(--elm_p_font_color-g),var(--elm_p_font_color-b), var(--tw-text-opacity, 1))',
-          'theme-color-a': 'rgba(var(--elm_a_font_color-r),var(--elm_a_font_color-g),var(--elm_a_font_color-b), var(--tw-text-opacity, 1))',
+          'theme-h1': 'rgba(var(--elm_h1_font_color-r),var(--elm_h1_font_color-g),var(--elm_h1_font_color-b), var(--tw-text-opacity, 1))',
+          'theme-h2': 'rgba(var(--elm_h2_font_color-r),var(--elm_h2_font_color-g),var(--elm_h2_font_color-b), var(--tw-text-opacity, 1))',
+          'theme-h3': 'rgba(var(--elm_h3_font_color-r),var(--elm_h3_font_color-g),var(--elm_h3_font_color-b), var(--tw-text-opacity, 1))',
+          'theme-h4': 'rgba(var(--elm_h4_font_color-r),var(--elm_h4_font_color-g),var(--elm_h4_font_color-b), var(--tw-text-opacity, 1))',
+          'theme-h5': 'rgba(var(--elm_h5_font_color-r),var(--elm_h5_font_color-g),var(--elm_h5_font_color-b), var(--tw-text-opacity, 1))',
+          'theme-h6': 'rgba(var(--elm_h6_font_color-r),var(--elm_h6_font_color-g),var(--elm_h6_font_color-b), var(--tw-text-opacity, 1))',
+          'theme-p': 'rgba(var(--elm_p_font_color-r),var(--elm_p_font_color-g),var(--elm_p_font_color-b), var(--tw-text-opacity, 1))',
+          'theme-a': 'rgba(var(--elm_a_font_color-r),var(--elm_a_font_color-g),var(--elm_a_font_color-b), var(--tw-text-opacity, 1))',
         }
       },
       fontFamily: {
@@ -167,6 +167,7 @@ module.exports = {
         'theme-h5': 'var(--elm_h5_font_size)',
         'theme-h6': 'var(--elm_h6_font_size)',
         'theme-p': 'var(--elm_p_font_size)',
+        'theme-a': 'var(--elm_p_font_size)',
       },
       borderRadius: {
         'theme': 'var(--elm_all_border_radius)',

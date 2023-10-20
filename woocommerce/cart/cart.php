@@ -1,7 +1,7 @@
 <div class="lg:grid lg:grid-cols-12 lg:items-start lg:gap-x-12 xl:gap-x-16">
     <section aria-labelledby="cart-heading" class="lg:col-span-7">
         <h2 id="cart-heading" class="sr-only"><?php _e('Items in your shopping cart', 'elmgren') ?></h2>
-        <ul role="list" class="divide-y divide-gray-200 border-gray-200">
+        <ul role="list" class="divide-y divide-lightgray-500">
             <?php foreach (WC()->cart->get_cart() as $cart_item_key => $cart_item) : ?>
                 <?php wc_get_template('cart/cart-item.php', ['cart_item_key' => $cart_item_key, 'cart_item' => $cart_item]) ?>
             <?php endforeach; ?>

@@ -22,6 +22,6 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 ?>
 
-<a href="<?php echo esc_url( wc_get_checkout_url() ); ?>" class="w-full py-2 bg-primary text-white block text-center">
+<a href="<?php echo esc_url( wc_get_checkout_url() ); ?>" class="w-full btn block is-style-large text-center">
 	<?php esc_html_e( 'Proceed to checkout', 'woocommerce' ); ?>
 </a>

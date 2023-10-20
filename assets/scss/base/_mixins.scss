@@ -9,6 +9,7 @@
 	width: auto;
 	font-size: var(--elm_p_font_size);
 	text-decoration: none;
+	text-align: center;
 
 	// Sizing conditionals
 	@if $size == 'small' {

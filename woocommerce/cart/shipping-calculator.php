@@ -22,9 +22,9 @@ do_action('woocommerce_before_shipping_calculator'); ?>
 
 <form action="<?php echo esc_url(wc_get_cart_url()); ?>" method="post">
 
-	<?php printf('<a href="#" class="shipping-calculator-button">%s</a>', esc_html(!empty($button_text) ? $button_text : __('Calculate', 'woocommerce'))); ?>
+	<?php printf('<button type="button" data-shipping-calculator-button class="no-style text-theme-color-a">%s</button>', esc_html(!empty($button_text) ? $button_text : __('Calculate', 'woocommerce'))); ?>
 
-	<section class="shipping-calculator-form absolute left-0 right-0 top-full p-3 bg-lightgray flex flex-col gap-2" style="display:none;">
+	<section data-shipping-calculator class="absolute left-0 right-0 top-full p-3 bg-lightgray flex-col gap-2 hidden">
 
 		<?php if (apply_filters('woocommerce_shipping_calculator_enable_country', true)) : ?>
 			<p id="calc_shipping_country_field">

@@ -14,7 +14,7 @@ $calculator_text          = '';
     <?php do_action('woocommerce_cart_totals_before_shipping'); ?>
 
     <!-- Shipping methods -->
-    <div class="flex items-center justify-between border-t border-gray-200 pt-4 relative">
+    <div class="flex items-center justify-between pt-4 relative">
         <dt class="text-sm text-gray-600"><?php echo wp_kses_post($package_name); ?></dt>
         <dd class="text-sm text-gray-400">
             <?php if ($available_methods) : ?>
