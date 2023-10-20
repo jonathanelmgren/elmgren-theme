@@ -30,8 +30,8 @@ function getSelectedAttributesFromGetRequest(array $attributes): array
 
 <form id="add-to-cart" class="flex flex-col gap-4 border-t-2 border-theme-divider pt-4">
     <?php if ($isVariableProduct) : ?>
-        <?php foreach ($attributes as $attributeName => $options) : ?>
-            <div data-product-attribute="<?php echo $attributeName ?>">
+        <?php foreach ($attributes as $attribute_name => $options) : ?>
+            <div data-product-attribute="<?php echo $attribute_name ?>">
                 <fieldset>
                     <legend><?php echo wc_attribute_label($attribute_name); ?></legend>
                     <div class="mt-1 flex gap-4 box-border flex-wrap">
