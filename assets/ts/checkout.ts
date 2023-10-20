@@ -11,3 +11,9 @@ jQuery(($) => {
         $(this).find('input[type="radio"]').prop('checked', true);
     });
 });
+
+jQuery(($) => {
+    $('#ship-to-different-address-checkbox').on('click', function () {
+        $('[data-shipping-form]').toggleClass('hidden block');
+    });
+});

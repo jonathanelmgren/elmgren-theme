@@ -9,7 +9,7 @@ if (isset($args['header_colors'])) {
         <div class="<?php elm_the_page_width(true) ?>">
             <div class="flex items-center justify-between">
                 <?= get_logo_or_blog_name(); ?>
-                <button data-menu-toggle="close" type="button" class="btn--no-style rounded-md">
+                <button data-menu-toggle="close" type="button" class="no-style rounded-md">
                     <span class="sr-only"><?php _e('Close menu', 'elmgren') ?></span>
                     <?php elm_the_inline_svg('hamburger_close') ?>
                 </button>

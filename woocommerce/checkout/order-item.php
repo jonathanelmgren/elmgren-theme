@@ -25,17 +25,19 @@ $product_permalink_with_variations = add_query_arg($variation_query_args, $base_
 
 <li class="flex py-6">
     <div class="flex-shrink-0">
-        <?php echo $product->get_image('woocommerce_thumbnail', ['class' => 'w-20 rounded-md']) ?>
+        <?php echo $product->get_image('woocommerce_thumbnail', ['class' => 'w-20']) ?>
     </div>
 
     <div class="ml-6 flex flex-1 flex-col">
-        <div class="flex">
-            <div class="min-w-0 flex-1">
-                <h4 class="text-sm">
-                    <a href="<?= $product_permalink_with_variations ?>" class="font-medium text-gray-700 hover:text-gray-800"><?= $parent_name ?? $product->get_name() ?></a>
-                </h4>
-                <?php foreach ($variations as $variation) :  ?>
-                    <p class="mt-1 text-sm text-gray-500"><?= ucfirst($variation) ?></p>
+        <div>
+            <div class="flex justify-between">
+                <h3 class="text-sm">
+                    <a class="text-gray-400 no-underline hover:underline" href="<?= $product_permalink_with_variations ?>"><?= $parent_name ?? $product->get_name() ?></a>
+                </h3>
+            </div>
+            <div class="mt-1 flex text-sm divide-x divide-theme-divider -mx-2">
+                <?php foreach ($variations as $key => $variation) :  ?>
+                    <p class="text-gray-100 font-light px-2"><?= ucfirst($variation) ?></p>
                 <?php endforeach; ?>
             </div>
         </div>

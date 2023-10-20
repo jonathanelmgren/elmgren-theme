@@ -159,7 +159,7 @@ class Elm_Notice
         if (!class_exists('WooCommerce')) {
             return;
         }
-        
+
         $wc_notices = WC()->session->get('wc_notices', []);
         foreach ($wc_notices as $notice_type => $notices) {
             if (!in_array($notice_type, self::STATUSES)) {

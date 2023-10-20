@@ -1,5 +1,4 @@
 <?php
-
 /**
  * Single Product Price
  *
@@ -21,9 +20,9 @@ if (!defined('ABSPATH')) {
 }
 
 global $product;
-if (is_string($product)) {
-    $product = wc_get_product(get_the_ID());
-}
 
-?>
-<?php echo $product->get_price_html(); ?>
+// Retrieve product if it's a string
+$product = is_string($product) ? wc_get_product(get_the_ID()) : $product;
+
+// Display the product price
+echo $product->get_price_html();

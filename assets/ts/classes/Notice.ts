@@ -98,6 +98,6 @@ export class Notice {
             });
         }
 
-        $(nativeElement).show();
+        $(nativeElement).removeClass('hidden');
     }
 }

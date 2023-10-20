@@ -99,3 +99,29 @@ function elm_get_border_radius()
 {
     return get_theme_mod('elm_border_radius_setting');
 }
+
+/**
+ * Echo a breadcrumb item.
+ *
+ * @param array $crumb The breadcrumb item.
+ * @param int $key The current breadcrumb index.
+ * @param int $total The total number of breadcrumbs.
+ */
+function echoBreadcrumbItem(array $crumb, int $key, int $total): void
+{
+    echo '<span class="inline-block">';  // before in Tailwind
+
+    $isLastItem = ($total === $key + 1);
+
+    if (!empty($crumb[1]) && !$isLastItem) {
+        echo '<a href="' . esc_url($crumb[1]) . '" class="text-gray-400 hover:underline text-sm no-underline">' . esc_html($crumb[0]) . '</a>';
+    } else {
+        echo '<span class="text-gray-100 text-sm">' . esc_html($crumb[0]) . '</span>';
+    }
+
+    echo '</span>';  // after in Tailwind
+
+    if (!$isLastItem) {
+        echo '<span class="mx-2 text-gray-200">/</span>';  // delimiter in Tailwind
+    }
+}

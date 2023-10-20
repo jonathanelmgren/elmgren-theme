@@ -13,7 +13,7 @@ $border = get_theme_mod('elm_header_border', false);
 
         <div class="flex lg:hidden items-center gap-3">
             <?php get_template_part('templates/header/cart'); ?>
-            <button type="button" data-menu-toggle="open" class="btn--no-style inline-flex items-center justify-center rounded-md">
+            <button type="button" data-menu-toggle="open" class="no-style inline-flex items-center justify-center rounded-md">
                 <span class="sr-only"><?php _e('Open main menu', 'elmgren') ?></span>
                 <?php echo elm_the_inline_svg('hamburger_open') ?>
             </button>
