@@ -64,7 +64,7 @@
 		"elements": {
 			"button": {
 				"spacing": {
-					"padding": "var(--elm_button_padding)"
+					"padding": "var(--elm_button_padding_block) var(--elm_button_padding_inline)"
 				},
 				"typography": {
 					"fontSize": "inherit",

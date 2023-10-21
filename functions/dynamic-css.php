@@ -81,8 +81,8 @@ function generateRootCssVariables()
     $colors = getTailwindColors($textElements);
 
     $variables[] = generateRootCssVariable('elm_all_border_radius', get_theme_mod('elm_border_radius_setting'));
-    $variables[] = generateRootCssVariable('elm_button_primary_border_width', get_theme_mod('elm_button_primary_border_width') . 'px');
-    $variables[] = generateRootCssVariable('elm_button_secondary_border_width', get_theme_mod('elm_button_secondary_border_width') . 'px');
+    $variables[] = generateRootCssVariable('elm_button_primary_border_width', get_theme_mod('elm_button_primary_border_width', '0') . 'px');
+    $variables[] = generateRootCssVariable('elm_button_secondary_border_width', get_theme_mod('elm_button_secondary_border_width', '0') . 'px');
     $variables[] = generateRootCssVariable('elm_a_font_color_hover', $colors->get_color_code('elm_a_font_color_hover'));
     $variables[] = generateRootCssVariable('elm_divider_color', $colors->get_color_code('elm_divider_color'));
 

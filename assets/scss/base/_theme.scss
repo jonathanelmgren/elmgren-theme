@@ -65,8 +65,18 @@ body:not(.wp-admin, .wp-customizer),
 		}
 	}
 
+	div.wp-block-button__link {
+		white-space: pre-wrap;
+		min-width: 1px;
+		background: none;
+		border: 0;
+		color: inherit;
+		padding: 0;
+	}
+
 	/* Buttons */
 	button:not(.no-style),
+	div[data-type='core/button'],
 	a.btn {
 		@include button-styles;
 		&.is-style-secondary {
@@ -98,74 +108,10 @@ body:not(.wp-admin, .wp-customizer),
 		}
 	}
 
-	/* Gutenberg Buttons */
-	div.wp-block-button {
-		.wp-block-button__link,
-		button:not(.no-style),
-		a.btn {
-			@include button-styles;
-		}
-		&.is-style-long {
-			padding-inline: calc(var(--elm_button_padding_inline) * 1.5);
-		}
-		&.is-size-xsmall {
-			.wp-block-button__link,
-			button:not(.no-style),
-			a.btn {
-				@include button-styles('primary', 'xsmall');
-			}
-		}
-		&.is-size-small {
-			.wp-block-button__link,
-			button:not(.no-style),
-			a.btn {
-				@include button-styles('primary', 'small');
-			}
-		}
-		&.is-size-large {
-			.wp-block-button__link,
-			button:not(.no-style),
-			a.btn {
-				@include button-styles('primary', 'large');
-			}
-		}
-		&.is-style-secondary {
-			.wp-block-button__link,
-			button:not(.no-style),
-			a.btn {
-				@include button-styles('secondary');
-			}
-			&.is-style-long {
-				padding-inline: calc(var(--elm_button_padding_inline) * 1.5);
-			}
-			&.is-size-xsmall {
-				.wp-block-button__link,
-				button:not(.no-style),
-				a.btn {
-					@include button-styles('secondary', 'xsmall');
-				}
-			}
-			&.is-size-small {
-				.wp-block-button__link,
-				button:not(.no-style),
-				a.btn {
-					@include button-styles('secondary', 'small');
-				}
-			}
-			&.is-size-large {
-				.wp-block-button__link,
-				button:not(.no-style),
-				a.btn {
-					@include button-styles('secondary', 'large');
-				}
-			}
-		}
-	}
-
 	/* Default border radius elements */
 	button,
 	input,
-	a.wp-element-button,
+	.wp-element-button a,
 	a.btn,
 	img,
 	textarea,
@@ -181,6 +127,6 @@ body:not(.wp-admin, .wp-customizer),
 
 	blockquote {
 		@apply pl-4 border-l-4;
-		border-color: var(--elm_button_primary_border_color);
+		border-color: var(--color-primary-500);
 	}
 }
