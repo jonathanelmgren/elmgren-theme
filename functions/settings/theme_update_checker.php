@@ -22,8 +22,8 @@ class Theme_Updater
             return $transient;
         }
 
-        // Get the appropriate release from GitHub
-        $release = $this->get_appropriate_release();
+        // Get the latest release from GitHub
+        $release = $this->fetchLatestRelease();
 
         if (!$release) {
             return $transient;
@@ -45,32 +45,35 @@ class Theme_Updater
         return $transient;
     }
 
-    private function get_appropriate_release()
+    private function fetchLatestRelease()
     {
-        $url = "https://api.github.com/repos/{$this->user}/{$this->repo}/releases";
+        $apiUrl = "https://api.github.com/repos/{$this->username}/{$this->repository}/releases";
+        $response = wp_remote_get($apiUrl);
+        $responseBody = wp_remote_retrieve_body($response);
 
-        // Get the JSON response from the provided URL
-        $response = wp_remote_get($url);
-        $response_body = wp_remote_retrieve_body($response);
-
-        // Check for error
-        if (is_wp_error($response) || empty($response_body)) {
+        if (is_wp_error($response) || empty($responseBody)) {
             return false;
         }
 
-        $releases = json_decode($response_body);
+        $releases = json_decode($responseBody);
+        $latestRelease = null;
 
-        if ($this->is_beta()) {
-            // Return the latest beta release
-            foreach ($releases as $release) {
-                if (strpos($release->tag_name, 'beta') !== false) {
-                    return $release;
+        for ($i = 0; $i < min(10, count($releases)); $i++) {
+            $release = $releases[$i];
+
+            // Check if it's a beta release
+            $isBeta = strpos($release->tag_name, 'beta') !== false;
+
+            // If it's not beta or if beta is allowed
+            if (!$isBeta || ($isBeta && $this->is_beta())) {
+                // Compare version and update the latest release if the new one is greater
+                if ($latestRelease === null || version_compare($release->tag_name, $latestRelease->tag_name, '>')) {
+                    $latestRelease = $release;
                 }
             }
         }
 
-        // If not beta or no beta release found, return the latest release
-        return $releases[0];
+        return $latestRelease;
     }
 
     private function get_asset_download_url($url)
