@@ -171,22 +171,29 @@ add_action('init', 'elm_register_button_block_styles');
 
 function elm_add_class_to_list_block($block_content, $block)
 {
-
     if ('core/button' === $block['blockName']) {
         $block_content = new WP_HTML_Tag_Processor($block_content);
         $block_content->next_tag('a');
         $block_content->add_class('btn');
-        if (str_contains($block_content, 'is-style-secondary')) {
-            $block_content->add_class('secondary');
-        } else {
-            $block_content->add_class('primary');
+
+        // Get classes from block attributes.
+        $block_classes = isset($block['attrs']['className']) ? $block['attrs']['className'] : '';
+        if (!empty($block_classes)) {
+            $classes_array = explode(' ', $block_classes);
+            foreach ($classes_array as $class) {
+                if (str_starts_with($class, 'is-')) {
+                    $block_content->add_class($class);
+                }
+            }
         }
-        $block_content->get_updated_html();
+
+        return $block_content->get_updated_html();
     }
 
     return $block_content;
 }
 add_filter('render_block', 'elm_add_class_to_list_block', 10, 2);
+
 
 function elm_remove_default_button_styles($args, $name)
 {

@@ -173,9 +173,6 @@ module.exports = {
       borderRadius: {
         'theme': 'var(--elm_all_border_radius)',
       },
-      padding: {
-        'theme-button': 'var(--elm_button_padding, 0.5rem 0.75rem)',
-      },
       borderColor: {
         'theme-button-primary': 'rgba(var(--elm_button_primary_border_color-r),var(--elm_button_primary_border_color-g),var(--elm_button_primary_border_color-b), var(--tw-border-opacity, 1))',
         'theme-button-secondary': 'rgba(var(--elm_button_secondary_border_color-r),var(--elm_button_secondary_border_color-g),var(--elm_button_secondary_border_color-b), var(--tw-border-opacity, 1))',
