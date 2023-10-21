@@ -180,6 +180,7 @@ body:not(.wp-admin, .wp-customizer),
 	}
 
 	blockquote {
-		@apply pl-4 border-l-4 border-primary;
+		@apply pl-4 border-l-4;
+		border-color: var(--elm_button_primary_border_color);
 	}
 }

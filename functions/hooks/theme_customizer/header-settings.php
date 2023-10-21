@@ -9,16 +9,16 @@ function elm_customize_header($wp_customize)
         [
             'setting' => "logo_height_setting",
             'settingArgs' => [
-                'default' => '8',
+                'default' => '4',
             ],
             'controlArgs' => [
                 'label' => __("Logo height", 'elmgren'),
                 'section' => 'elm_header_logo_section',
                 'type' => 'range',
                 'input_attrs' => array(
-                    'min' => '4',
+                    'min' => '1',
                     'max' => '48',
-                    'step' => '1',
+                    'step' => '0.5',
                 ),
             ],
         ]
