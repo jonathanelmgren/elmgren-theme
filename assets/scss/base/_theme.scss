@@ -12,13 +12,23 @@ body:not(.wp-admin, .wp-customizer),
 	h3,
 	h4,
 	h5,
-	h6,
+	h6 {
+		@apply font-secondary;
+	}
+
 	p,
-	a {
+	a,
+	h1,
+	h2,
+	h3,
+	h4,
+	h5,
+	h6 {
 		margin: 0;
 		line-height: 1.5;
 		font-weight: inherit;
 	}
+
 	h1 {
 		font-size: var(--elm_h1_font_size);
 		color: var(--elm_h1_font_color);
