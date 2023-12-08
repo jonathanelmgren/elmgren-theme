@@ -2,14 +2,14 @@
 
 class Theme_Updater
 {
-    private $user;
-    private $repo;
+    private $username;
+    private $repository;
     private $theme;
 
     public function __construct()
     {
-        $this->user = 'jonathanelmgren';
-        $this->repo = 'elmgren-theme';
+        $this->username = 'jonathanelmgren';
+        $this->repository = 'elmgren-theme';
         $this->theme = wp_get_theme('elmgren-theme');
 
         // Check for updates
