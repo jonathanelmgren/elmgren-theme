@@ -6,10 +6,14 @@
         </div>
     </div>
 
+    <?php do_action('designique_single_product_before_content'); ?>
+    
     <section aria-labelledby="information-heading">
         <h2 id="information-heading" class="sr-only"><?php esc_html_e('Product information', 'elmgren'); ?></h2>
         <?php the_content(); ?>
     </section>
+
+    <?php do_action('designique_single_product_after_content'); ?>
 
     <?php wc_get_template('single-product/add-to-cart/add-to-cart.php'); ?>
 </div>
