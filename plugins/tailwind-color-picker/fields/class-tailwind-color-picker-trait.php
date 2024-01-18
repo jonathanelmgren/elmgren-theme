@@ -1,5 +1,9 @@
 <?php
 
+class TailwindColorPicker {
+    use TailwindColorPickerTrait;
+}
+
 trait TailwindColorPickerTrait
 {
     protected $presets;
