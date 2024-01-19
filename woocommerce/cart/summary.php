@@ -1,6 +1,6 @@
 <dl class="space-y-4">
     <!-- Subtotal -->
-    <?php render_summary_item(__('Subtotal', 'woocommerce'), wc_cart_totals_subtotal_html()); ?>
+    <?php render_summary_item(__('Subtotal', 'woocommerce'), WC()->cart->get_cart_subtotal()); ?>
 
     <!-- Coupons -->
     <?php wc_get_template('cart/cart-total-coupons.php'); ?>

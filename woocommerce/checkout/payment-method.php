@@ -8,7 +8,7 @@ if (!defined('ABSPATH')) {
 $activeClass = $gateway->chosen ? 'active' : '';
 ?>
 
-<label data-payment-method class="relative cursor-pointer rounded-lg border bg-white p-4 shadow-sm focus:outline-none border-gray-300 <?= $activeClass ?>">
+<label data-payment-method class="relative cursor-pointer rounded-lg border bg-white p-4 shadow-sm focus:outline-none border-gray-300 [&.active]:border-primary hover:border-primary-300 <?= $activeClass ?>">
 	<input type="radio" 
 	       name="payment_method" 
 	       value="<?= esc_attr($gateway->id); ?>" 

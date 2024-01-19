@@ -9,7 +9,7 @@ $button_colors = new TailwindColor([
     'button_background_color' => ['attr' => 'bg'],
     'button_background_hover_color' => ['attr' => 'bg', 'prefix' => 'hover'],
 ]);
-$input_class = $base_colors->get_classes('block w-full rounded-md border-0 px-3.5 py-2 shadow-sm ring-1 ring-inset focus:ring-2 focus:ring-inset  sm:text-sm sm:leading-6');
+$input_class = $base_colors->get_classes('block w-full border-0 px-3.5 py-2 shadow-sm ring-1 ring-inset focus:ring-2 focus:ring-inset  sm:text-sm sm:leading-6');
 $label_class = 'block text-sm font-semibold leading-6 ' . $base_colors->get_class('text_color');
 ?>
 
@@ -61,7 +61,7 @@ $label_class = 'block text-sm font-semibold leading-6 ' . $base_colors->get_clas
             </div>
         </div>
         <div class="mt-8 flex justify-end">
-            <button type="submit" style="<?php $button_colors->the_styles() ?>" class="<?php $button_colors->the_classes('rounded-md px-3.5 py-2.5 text-center text-sm font-semibold shadow-sm  focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2') ?>">Send message</button>
+            <button type="submit" style="<?php $button_colors->the_styles() ?>" class="<?php $button_colors->the_classes('px-3.5 py-2.5 text-center text-sm font-semibold shadow-sm  focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2') ?>">Send message</button>
         </div>
     </div>
     <div id="contact-form-notices" class="my-5">

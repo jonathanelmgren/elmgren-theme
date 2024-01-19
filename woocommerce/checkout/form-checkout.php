@@ -27,6 +27,7 @@ woocommerce_breadcrumb();
 			do_action('woocommerce_checkout_shipping');
 		endif;
 		?>
+		<?php wc_get_template('checkout/payment.php'); ?>
 	</div>
 	<div id="order_review" class="woocommerce-checkout-review-order md:max-w-sm lg:max-w-md w-full">
 		<h3><?php esc_html_e('Your order', 'woocommerce'); ?></h3>

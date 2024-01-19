@@ -1,6 +1,7 @@
 <?php
 $readonly = isset($args['readonly']) ? $args['readonly'] : false;
 $cart_item = $args['cart_item'];
+$cart_item_key = $args['cart_item_key'];
 $product   = $cart_item['data'];
 $quantity = $cart_item['quantity'];
 $variations = $cart_item['variation'] ?? [];
@@ -8,7 +9,7 @@ $parent = wc_get_product($product->get_parent_id());
 $parent_name = $parent instanceof WC_Product ? $parent->get_name() : null;
 
 // Get product permalink base
-$base_permalink = $product->get_permalink();
+$base_permalink = apply_filters('woocommerce_cart_item_permalink', $product->is_visible() ? $product->get_permalink($cart_item) : '', $cart_item, $cart_item_key);
 
 // Collect variations
 $variation_query_args = [];
@@ -25,7 +26,15 @@ $product_permalink_with_variations = add_query_arg($variation_query_args, $base_
 
 <li class="flex py-6">
     <div class="flex-shrink-0">
-        <?php echo $product->get_image('woocommerce_thumbnail', ['class' => 'w-20']) ?>
+        <?php
+        $thumbnail = apply_filters('woocommerce_cart_item_thumbnail', $product->get_image('woocommerce_thumbnail', ['class' => 'w-20']), $cart_item, $cart_item_key);
+
+        if (!$product_permalink_with_variations) {
+            echo $thumbnail; // PHPCS: XSS ok.
+        } else {
+            printf('<a href="%s">%s</a>', esc_url($product_permalink_with_variations), $thumbnail); // PHPCS: XSS ok.
+        }
+        ?>
     </div>
 
     <div class="ml-6 flex flex-1 flex-col">

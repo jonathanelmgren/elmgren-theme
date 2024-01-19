@@ -16,7 +16,7 @@ $remove_link = sprintf(
     esc_attr($product->get_sku())
 );
 
-$base_permalink = $product->get_permalink();
+$base_permalink = apply_filters('woocommerce_cart_item_permalink', $product->is_visible() ? $product->get_permalink($cart_item) : '', $cart_item, $cart_item_key);
 $variation_query_args = array_filter($variations, fn ($key) => !str_contains($base_permalink, $key), ARRAY_FILTER_USE_KEY);
 $product_permalink_with_variations = add_query_arg($variation_query_args, $base_permalink);
 
@@ -26,8 +26,15 @@ do_action('woocommerce_before_cart_item');
 
 <li class="flex py-6 sm:py-10">
     <div class="flex-shrink-0">
-        <?php echo $product->get_image('woocommerce_thumbnail', ['class' => 'h-24 w-24 object-cover object-center sm:h-48 sm:w-48']); ?>
-    </div>
+        <?php
+        $thumbnail = apply_filters('woocommerce_cart_item_thumbnail', $product->get_image('woocommerce_thumbnail', ['class' => 'w-24 object-cover object-center sm:w-48']), $cart_item, $cart_item_key);
+
+        if (!$product_permalink_with_variations) {
+            echo $thumbnail; // PHPCS: XSS ok.
+        } else {
+            printf('<a href="%s">%s</a>', esc_url($product_permalink_with_variations), $thumbnail); // PHPCS: XSS ok.
+        }
+        ?> </div>
     <div class="ml-4 flex flex-1 flex-col justify-between sm:ml-6">
         <div class="relative pr-9 sm:grid sm:grid-cols-2 sm:gap-x-6 sm:pr-0">
             <div>

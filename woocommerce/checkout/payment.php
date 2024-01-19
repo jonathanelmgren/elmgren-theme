@@ -9,7 +9,7 @@ if (!wp_doing_ajax()) {
 
 <div id="payment" class="woocommerce-checkout-payment">
 	<?php if (WC()->cart->needs_payment()) : ?>
-		<div class="mt-10 border-t border-theme-divider pt-10">
+		<div class="border-t border-theme-divider">
 			<fieldset>
 				<legend class="text-lg font-medium text-gray-400 mb-4">Payment method</legend>
 				<div class="flex flex-row md:flex-col flex-wrap gap-4">
