@@ -28,7 +28,8 @@ function getSelectedAttributesFromGetRequest(array $attributes): array
 
 ?>
 
-<form id="add-to-cart" class="flex flex-col gap-4 border-t-2 border-theme-divider pt-4">
+<form id="add-to-cart" class="cart flex flex-col gap-4 border-t-2 border-theme-divider pt-4" action="<?php echo esc_url(apply_filters('woocommerce_add_to_cart_form_action', $product->get_permalink())); ?>" method="post" enctype='multipart/form-data'>
+    <?php do_action('elm_single_product_add_to_cart_form_start'); ?>
     <?php if ($isVariableProduct) : ?>
         <?php foreach ($attributes as $attribute_name => $options) : ?>
             <div data-product-attribute="<?php echo $attribute_name ?>">
@@ -67,4 +68,5 @@ function getSelectedAttributesFromGetRequest(array $attributes): array
             <?php _e('Add to cart', 'woocommerce'); ?>
         </button>
     </div>
+    <?php do_action('elm_single_product_add_to_cart_form_end'); ?>
 </form>
